@@ -1,0 +1,5 @@
+SECRET_KEY=change me
+DEBUG=True
+ALLOWED_HOSTS=*
+POSTGRES_USER=local_user
+POSTGRES_PASSWORD=local_password
