@@ -16,10 +16,11 @@ services:
   db:
     image: postgres:alpine
     volumes:
-      - ./database:/var/lib/postgresql/data
+      - ./.database:/var/lib/postgresql/data
     ports:
       - 5432:5432
     environment:
+      - LC_ALL=C.UTF-8
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     env_file:

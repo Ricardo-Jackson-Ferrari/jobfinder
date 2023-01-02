@@ -1,0 +1,17 @@
+[run]
+    branch = True
+    source = .
+omit =
+    .venv/*
+    */__init__.py
+    */settings.py
+    */manage.py
+    */asgi.py
+    */wsgi.py
+    */admin.py
+    */migrations/*
+    */tests/*
+    */tests.py*
+    */apps.py
+    */help.py
+    lab/*
