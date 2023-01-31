@@ -1,6 +1,6 @@
 ## @ start
-.PHONY: run down
-run: ## run docker compose
+.PHONY: up down
+up: ## run docker compose
 	@docker compose -f docker-compose.dev.yaml up
 
 down: ## stop docker compose
