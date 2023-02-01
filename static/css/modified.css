@@ -1,0 +1,395 @@
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+	appearance: textfield;
+}
+
+.current {
+	overflow: hidden;
+}
+
+.select,
+#locale {
+	width: 100%;
+}
+
+.like {
+	margin-right: 10px;
+}
+
+body {
+	margin-top: 83px;
+}
+
+.sticky-bar {
+	z-index: 10;
+	width: 100vw;
+}
+
+.header-area .main-menu ul li a {
+	font-size: 20px;
+}
+
+.auth-section {
+	margin: 200px 0 100px 0;
+}
+
+.form-header {
+	background: #010b1d;
+	padding: 5px;
+	color: #fff;
+}
+
+.form-header h2 {
+	color: inherit;
+}
+
+.auth-container {
+	border: #010b1d 1px solid;
+	border-radius: 10px;
+	padding: 0;
+	overflow: hidden;
+	margin: 0 2px;
+}
+
+.form-body {
+	padding: 30px;
+}
+
+.form-body-top {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	color: #000;
+	margin-bottom: 30px;
+}
+
+.auth-section a {
+	color: #007bff;
+}
+
+.auth-section a:hover {
+	color: #0000ff;
+}
+
+.form-profile {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+
+.height-inherit {
+	height: inherit !important;
+}
+
+.recent-text {
+	font-size: 2rem;
+}
+
+.card-hover:hover {
+	background-color: #eeeeee;
+	color: red !important;
+	cursor: pointer;
+}
+
+.company-jobs .card {
+	height: 100%;
+	transition: transform 0.2s;
+}
+
+.company-jobs .card:hover {
+	transform: scale(1.05);
+}
+
+.dashboard-content > .row div {
+	height: 100%;
+}
+
+.subscription-form {
+	font-size: 1rem;
+	padding: 30px 50px;
+	background-color: #f5f5f5;
+	border: 1px solid #bebebe;
+	border-radius: 10px;
+}
+
+.form-content-default {
+	font-size: 1rem;
+	padding: 30px 50px;
+	background-color: #fff;
+	border: 1px solid #bebebe;
+	border-radius: 10px;
+}
+
+.input-default {
+	display: block;
+	width: 100%;
+	line-height: 40px;
+	border: 1px solid #bebebe;
+	outline: none;
+	background-color: #fff;
+}
+
+.input-file {
+	padding: 0;
+	line-height: 1.9;
+}
+
+.dashboard {
+	padding: 0;
+	width: 100%;
+}
+
+.sidebar {
+	position: fixed;
+	font-size: 1.2rem;
+	top: 83px;
+	bottom: 0;
+	height: calc(100% - 83px);
+	background-color: #010b1d;
+	left: 0;
+	width: 200px;
+	overflow: hidden;
+	box-shadow: 0 20px 35px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar a {
+	padding: 10px;
+	width: 100%;
+	height: 100%;
+	display: table;
+}
+
+.sidebar-menu {
+	flex-direction: column;
+	display: flex;
+	height: 100%;
+	justify-content: space-between;
+}
+.sidebar-menu i {
+	margin-right: 10px;
+}
+
+.fas {
+	height: 20px;
+	width: 20px;
+}
+
+.company-img-socials {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	gap: 5px;
+}
+
+.company-img-socials i {
+	margin: 0;
+	padding: 0;
+}
+
+.company-details {
+	gap: 10px;
+}
+
+.company-socials {
+	display: flex;
+	justify-content: space-between;
+}
+
+.company-socials a i {
+	color: black;
+}
+
+.company-socials a i:hover {
+	color: gray;
+}
+
+.sidebar li:hover {
+	background-color: rgb(80, 101, 140);
+}
+
+.dashboard-content {
+	padding: 20px;
+	margin: 0;
+	margin-left: 200px;
+	box-sizing: border-box;
+	background-color: ghostwhite;
+	min-height: 100vh;
+}
+
+.section-content {
+	background-color: #fff;
+	padding: 10px;
+}
+
+.post-details3 ul li:last-child {
+	margin-bottom: 0;
+}
+
+.modal .small-section-tittle > h4 {
+	margin: 0;
+}
+
+.modal-open {
+	overflow: hidden !important;
+}
+
+.icon-eye {
+	cursor: pointer;
+	zoom: 1.2;
+}
+
+.input-group-icon .single-input {
+	padding-right: 55px;
+}
+
+.input-group-icon .icon-right {
+	position: absolute;
+	right: 20px;
+	top: 0;
+	line-height: 40px;
+	z-index: 3;
+}
+.input-group-icon .icon-right i {
+	color: #797979;
+}
+
+.genric-btn {
+	font-size: 1rem;
+}
+
+.btn-clean {
+	border: none;
+	background-color: inherit;
+	cursor: pointer;
+	zoom: 1.2;
+}
+
+.btn-add {
+	border: none;
+	background-color: #010b1d;
+	cursor: pointer;
+	height: 80%;
+	margin: auto;
+	margin-left: 10px;
+}
+
+.btn-add > i {
+	margin: 0;
+}
+
+.close-btn {
+	color: red;
+	font-weight: bold;
+	float: none;
+}
+
+.close-btn:hover {
+	color: darkred;
+}
+
+.close {
+	position: absolute;
+	right: 20px;
+}
+
+.view {
+	color: blue;
+	font-weight: bold;
+}
+
+.view:hover {
+	color: darkblue;
+}
+
+.cv-view {
+	color: blue;
+	font-weight: bold;
+}
+
+.cv-view:hover {
+	color: darkblue;
+}
+
+.btn-yellow {
+	color: goldenrod;
+	font-weight: bold;
+}
+
+.btn-yellow:hover {
+	color: darkgoldenrod;
+}
+
+.detail-icon {
+	color: skyblue;
+	font-weight: bold;
+}
+
+.detail-icon:hover {
+	color: royalblue;
+}
+
+.item {
+	display: flex;
+	justify-content: space-between;
+}
+
+.nice-select.select-mod > span {
+	display: -webkit-box;
+}
+
+.form-select .nice-select.select-mod .list {
+	border: 2px solid #ddd;
+	border-bottom: none;
+	padding: 0;
+}
+
+.form-select .nice-select.select-mod .list li {
+	border-bottom: 2px solid #ddd;
+}
+
+.form-select .nice-select.select-mod .list li:hover {
+	background-color: #ddd;
+}
+
+.nice-select {
+	font-size: 1rem;
+}
+
+.form-select .nice-select .list .option {
+	font-size: 1rem;
+}
+
+.modal-xl {
+	max-width: 1140px;
+}
+
+.embed-pdf {
+	height: 80vh;
+}
+
+@media (max-width: 991px) {
+	.auth-section {
+		padding: 70px 0 40px;
+		margin: 0;
+	}
+	.sidebar {
+		display: none;
+	}
+	.dashboard-content {
+		margin: 0;
+	}
+}
+
+@media only screen and (min-width: 992px) and (max-width: 1200px) {
+	.auth-section {
+		padding: 80px 0 50px;
+		margin: 0;
+	}
+}
