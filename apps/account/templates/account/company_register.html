@@ -1,0 +1,313 @@
+{% extends 'global/base.html' %}
+{% load static %}
+{% block head %}
+<script src="{% static 'js/auth.js' %}" defer></script>
+{% endblock head %}
+{% block content %}
+<section class="auth-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-5 auth-container">
+                <div class="form-header">
+                    <h2 class="text-center">JobFinder</h2>
+                </div>
+                <div class="form-body">
+                    <div class="form-body-top">
+                        <h3>Registrar-se</h3>
+                        <span
+                            >Possui conta?
+                            <a href="{% url 'account:login' %}">Acesso</a></span
+                        >
+                    </div>
+                    <form action="." method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {% if form.non_field_errors %}
+                            <div class="alert alert-danger mt-10" role="alert">
+                            {% for error in form.non_field_errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                            </div>
+                        {% endif %}
+                        <div class="account-inputs">
+                            <div class="mb-20 text-center">
+                                <h5>
+                                    Dados da conta
+                                </h5>
+                            </div>
+                            <div class="input-group-icon mt-10">
+                                <div class="icon">
+                                    <i
+                                        class="ti-user"
+                                        aria-hidden="true"
+                                    ></i>
+                                </div>
+                                <input
+                                    type="text"
+                                    name="first_name"
+                                    placeholder="nome"
+                                    onfocus="this.placeholder = ''"
+                                    onblur="this.placeholder = 'nome'"
+                                    required=""
+                                    value="{{ form.first_name.value|default:'' }}"
+                                    class="single-input form-control"
+                                />
+                            </div>
+                            {% if form.first_name.errors %}
+                                <div class="alert alert-danger mt-10" role="alert">
+                            {% for error in form.first_name.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                                </div>
+                            {% endif %}
+                            <div class="input-group-icon mt-10">
+                                <div class="icon">
+                                    <i
+                                        class="ti-email"
+                                        aria-hidden="true"
+                                    ></i>
+                                </div>
+                                <input
+                                    type="email"
+                                    name="email"
+                                    placeholder="email"
+                                    onfocus="this.placeholder = ''"
+                                    onblur="this.placeholder = 'email'"
+                                    required=""
+                                    value="{{ form.email.value|default:'' }}"
+                                    class="single-input form-control"
+                                />
+                            </div>
+                            {% if form.email.errors %}
+                                <div class="alert alert-danger mt-10" role="alert">
+                            {% for error in form.email.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                                </div>
+                            {% endif %}
+                            <div class="input-group-icon mt-10">
+                                <div class="icon">
+                                    <i
+                                        class="ti-lock"
+                                        aria-hidden="true"
+                                    ></i>
+                                </div>
+                                <input
+                                    type="password"
+                                    name="password1"
+                                    placeholder="senha"
+                                    onfocus="this.placeholder = ''"
+                                    onblur="this.placeholder = 'senha'"
+                                    required=""
+                                    value="{{ form.password1.value|default:'' }}"
+                                    class="single-input form-control"
+                                />
+                                <div class="icon-right">
+                                    <i
+                                        class="fa fa-eye icon-eye"
+                                        aria-hidden="true"
+                                    ></i>
+                                </div>
+                            </div>
+                            {% if form.password1.errors %}
+                                <div class="alert alert-danger mt-10" role="alert">
+                            {% for error in form.password1.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                                </div>
+                            {% endif %}
+                            <div class="input-group-icon mt-10">
+                                <div class="icon">
+                                    <i
+                                        class="ti-lock"
+                                        aria-hidden="true"
+                                    ></i>
+                                </div>
+                                <input
+                                    type="password"
+                                    name="password2"
+                                    placeholder="confirmação da senha"
+                                    onfocus="this.placeholder = ''"
+                                    onblur="this.placeholder = 'confirmação da senha'"
+                                    required=""
+                                    value="{{ form.password2.value|default:'' }}"
+                                    class="single-input form-control"
+                                />
+                                <div class="icon-right">
+                                    <i
+                                        class="fa fa-eye icon-eye"
+                                        aria-hidden="true"
+                                    ></i>
+                                </div>
+                            </div>
+                            {% if form.password2.errors %}
+                                <div class="alert alert-danger mt-10" role="alert">
+                                {% for error in form.password2.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="profile-inputs mt-20">
+                            <div class="mb-20 text-center">
+                                <h5>
+                                    Dados do perfil
+                                </h5>
+                                <span class="text-danger">(Opcional)</span>
+                            </div>
+                            <div class="form-group mt-10 input-file-group">
+                                <label for="logo" class="input-file-label" id="logo-label">Selecionar Logo</label>
+                                <span id="file-chosen">Nenhum arquivo escolhido</span>
+                                <input 
+                                    type="file"
+                                    name="logo"
+                                    id="logo"
+                                    accept="image/*"
+                                    class="d-none"
+                                    value="{{ form_profile.logo.content_type|default:'' }}"
+                                />
+                            </div>
+                            {% if form_profile.logo.errors %}
+                                <div class="alert alert-danger mt-10" role="alert">
+                                {% for error in form_profile.logo.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                                </div>
+                            {% endif %}
+                            <div class="input-group mt-10">
+                                <input
+                                    type="email"
+                                    name="contact_email"
+                                    placeholder="email de contato"
+                                    onfocus="this.placeholder = ''"
+                                    onblur="this.placeholder = 'email de contato'"
+                                    value="{{ form_profile.contact_email.value|default:'' }}"
+                                    class="single-input form-control"
+                                />
+                            </div>
+                            {% if form_profile.contact_email.errors %}
+                                <div class="alert alert-danger mt-10" role="alert">
+                                {% for error in form_profile.contact_email.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                                </div>
+                            {% endif %}
+                            <div class="input-group mt-10">
+                                <input
+                                    type="text"
+                                    name="website"
+                                    placeholder="website"
+                                    onfocus="this.placeholder = ''"
+                                    onblur="this.placeholder = 'website'"
+                                    value="{{ form_profile.website.value|default:'' }}"
+                                    class="single-input form-control"
+                                />
+                            </div>
+                            {% if form_profile.website.errors %}
+                                <div class="alert alert-danger mt-10" role="alert">
+                                {% for error in form_profile.website.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                                </div>
+                            {% endif %}
+                            <div class="input-group mt-10">
+                                <input
+                                    type="text"
+                                    name="instagram"
+                                    placeholder="instagram"
+                                    onfocus="this.placeholder = ''"
+                                    onblur="this.placeholder = 'instagram'"
+                                    value="{{ form_profile.instagram.value|default:'' }}"
+                                    class="single-input form-control"
+                                />
+                            </div>
+                            {% if form_profile.instagram.errors %}
+                                <div class="alert alert-danger mt-10" role="alert">
+                                {% for error in form_profile.instagram.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                                </div>
+                            {% endif %}
+                            <div class="input-group mt-10">
+                                <input
+                                    type="text"
+                                    name="twitter"
+                                    placeholder="twitter"
+                                    onfocus="this.placeholder = ''"
+                                    onblur="this.placeholder = 'twitter'"
+                                    value="{{ form_profile.twitter.value|default:'' }}"
+                                    class="single-input form-control"
+                                />
+                            </div>
+                            {% if form_profile.twitter.errors %}
+                                <div class="alert alert-danger mt-10" role="alert">
+                                {% for error in form_profile.twitter.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                                </div>
+                            {% endif %}
+                            <div class="input-group mt-10">
+                                <input
+                                    type="text"
+                                    name="facebook"
+                                    placeholder="facebook"
+                                    onfocus="this.placeholder = ''"
+                                    onblur="this.placeholder = 'facebook'"
+                                    value="{{ form_profile.facebook.value|default:'' }}"
+                                    class="single-input form-control"
+                                />
+                            </div>
+                            {% if form_profile.facebook.errors %}
+                                <div class="alert alert-danger mt-10" role="alert">
+                                {% for error in form_profile.facebook.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                                </div>
+                            {% endif %}
+                            <div class="input-group mt-10">
+                                <textarea
+                                    name="description"
+                                    rows="3"
+                                    placeholder="descrição"
+                                    onfocus="this.placeholder = ''"
+                                    onblur="this.placeholder = 'descrição'"
+                                    class="single-textarea form-control"
+                                >{{ form_profile.description.value|default:'' }}</textarea>
+                            </div>
+                            {% if form_profile.description.errors %}
+                                <div class="alert alert-danger mt-10" role="alert">
+                                {% for error in form_profile.description.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="form-group mt-70 text-center">
+                            <button
+                                type="submit"
+                                class="btn btn-post genric-btn circle e-large"
+                            >
+                                Registrar-se
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}
+{% block footer %}
+<script>
+    const file_input = document.getElementById('logo');
+
+    const fileChosen = document.getElementById('file-chosen');
+
+    file_input.addEventListener('change', function(){
+        if(this.files.length){
+            fileChosen.textContent = this.files[0].name
+        }else{
+            fileChosen.textContent = 'Nenhum arquivo escolhido'
+        }
+    })
+</script>
+{% endblock footer %}

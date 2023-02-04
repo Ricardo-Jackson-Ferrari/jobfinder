@@ -7,6 +7,8 @@ name = "pypi"
 django = "*"
 python-decouple = "*"
 ipdb = "*"
+pillow = "*"
+django-widget-tweaks = "*"
 
 [dev-packages]
 isort = "*"

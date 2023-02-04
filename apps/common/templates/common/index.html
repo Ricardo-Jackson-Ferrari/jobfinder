@@ -1,1 +1,266 @@
 {% extends 'global/base.html' %}
+{% load static %}
+{% block content %}
+<!-- slider Area Start-->
+<div class="slider-area">
+    <!-- Mobile Menu -->
+    <div class="slider-active">
+        <div
+            class="single-slider slider-height d-flex align-items-center"
+            data-background="{% get_media_prefix %}hero/h1_hero.jpg"
+        >
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-6 col-lg-9 col-md-10">
+                        <div class="hero__caption">
+                            <h1>
+                                Encontre os empregos de forma fácil
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+                <!-- Search Box -->
+                <div class="row">
+                    <div class="col-xl-8">
+                        <!-- form -->
+                        <form
+                            action="job_listing.html"
+                            class="search-box"
+                        >
+                            <div class="input-group">
+                                <input
+                                    type="text"
+                                    class="form-control h-100"
+                                    placeholder="Emprego ou palavra chave"
+                                    aria-label="Emprego ou palavra chave"
+                                />
+                                <div class="input-group-append">
+                                    <button
+                                        class="btn"
+                                        type="button"
+                                    >
+                                        Encontrar
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- slider Area End-->
+
+<!-- Featured_job_start -->
+<section class="featured-job-area feature-padding">
+    <div class="container">
+        <!-- Section Tittle -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-tittle text-center">
+                    <span>Adicionados recentemente</span>
+                    <h2>Empregos</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-xl-10">
+                <!-- single-job-content -->
+                <div class="single-job-items mb-30">
+                    <div class="job-items">
+                        <div class="company-img">
+                            <a href="job_details.html"
+                                ><img
+                                    src="{% get_media_prefix %}icon/job-list1.png"
+                                    alt=""
+                            /></a>
+                        </div>
+                        <div class="job-tittle">
+                            <a href="job_details.html"
+                                ><h4>Desenvolvedor C#</h4></a
+                            >
+                            <ul>
+                                <li>Empresa de tecnologia</li>
+                                <li>
+                                    <i
+                                        class="fas fa-map-marker-alt"
+                                    ></i
+                                    >Rio de Janeiro - RJ
+                                </li>
+                                <li>R$4500</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="items-link f-right">
+                        <a href="job_details.html">Remoto</a>
+                        <span>5 horas atrás</span>
+                    </div>
+                </div>
+                <!-- single-job-content -->
+                <div class="single-job-items mb-30">
+                    <div class="job-items">
+                        <div class="company-img">
+                            <a href="job_details.html"
+                                ><img
+                                    src="{% get_media_prefix %}icon/job-list2.png"
+                                    alt=""
+                            /></a>
+                        </div>
+                        <div class="job-tittle">
+                            <a href="job_details.html"
+                                ><h4>Auxiliar Administrativo</h4></a
+                            >
+                            <ul>
+                                <li>Agência Criativa</li>
+                                <li>
+                                    <i
+                                        class="fas fa-map-marker-alt"
+                                    ></i
+                                    >São Paulo - SP
+                                </li>
+                                <li>R$1850</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="items-link f-right">
+                        <a href="job_details.html">Presencial</a>
+                        <span>7 horas atrás</span>
+                    </div>
+                </div>
+                <!-- single-job-content -->
+                <div class="single-job-items mb-30">
+                    <div class="job-items">
+                        <div class="company-img">
+                            <a href="job_details.html"
+                                ><img
+                                    src="{% get_media_prefix %}icon/job-list3.png"
+                                    alt=""
+                            /></a>
+                        </div>
+                        <div class="job-tittle">
+                            <a href="job_details.html"
+                                ><h4>Interprete de libras</h4></a
+                            >
+                            <ul>
+                                <li>Agência de comunicação</li>
+                                <li>
+                                    <i
+                                        class="fas fa-map-marker-alt"
+                                    ></i
+                                    >Rio de Janeiro - RJ
+                                </li>
+                                <li>A combinar</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="items-link f-right">
+                        <a href="job_details.html">Presencial</a>
+                        <span>10 horas atrás</span>
+                    </div>
+                </div>
+                <!-- single-job-content -->
+                <div class="single-job-items mb-30">
+                    <div class="job-items">
+                        <div class="company-img">
+                            <a href="job_details.html"
+                                ><img
+                                    src="{% get_media_prefix %}icon/job-list4.png"
+                                    alt=""
+                            /></a>
+                        </div>
+                        <div class="job-tittle">
+                            <a href="job_details.html"
+                                ><h4>Desenvolvedor Python</h4></a
+                            >
+                            <ul>
+                                <li>Empresa de automação</li>
+                                <li>
+                                    <i
+                                        class="fas fa-map-marker-alt"
+                                    ></i
+                                    >Manaus - AM
+                                </li>
+                                <li>A combinar</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="items-link f-right">
+                        <a href="job_details.html">Híbrido</a>
+                        <span>11 horas atrás</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Featured_job_end -->
+<!-- How  Apply Process Start-->
+<div
+    class="apply-process-area apply-bg pt-150 pb-150"
+    data-background="{% get_media_prefix %}gallery/how-applybg.png"
+>
+    <div class="container">
+        <!-- Section Tittle -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-tittle white-text text-center">
+                    <span>Aplicar processo</span>
+                    <h2>Como funciona</h2>
+                </div>
+            </div>
+        </div>
+        <!-- Apply Process Caption -->
+        <div class="row">
+            <div class="col-lg-4 col-md-6">
+                <div class="single-process text-center mb-30">
+                    <div class="process-ion">
+                        <span class="flaticon-search"></span>
+                    </div>
+                    <div class="process-cap">
+                        <h5>Procure o emprego</h5>
+                        <p>
+                            Acesse a área de vagas, utilize a busca
+                            inserindo uma palavra chave e defina os
+                            parametros que desejar.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="single-process text-center mb-30">
+                    <div class="process-ion">
+                        <span
+                            class="flaticon-curriculum-vitae"
+                        ></span>
+                    </div>
+                    <div class="process-cap">
+                        <h5>Candidate-se ao emprego</h5>
+                        <p>
+                            Após escolher uma vaga que lhe interesse
+                            se inscreva e aguarde o posicionamento
+                            da empresa.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="single-process text-center mb-30">
+                    <div class="process-ion">
+                        <span class="flaticon-tour"></span>
+                    </div>
+                    <div class="process-cap">
+                        <h5>Consiga seu emprego</h5>
+                        <p>
+                            Depois de se candidatar para as vagas de
+                            seu interesse e receber um retorno
+                            positivo, conquiste sua vaga!
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- How  Apply Process End-->
+{% endblock content %}

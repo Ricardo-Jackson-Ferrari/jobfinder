@@ -1,0 +1,112 @@
+{% extends 'global/base.html' %}
+{% load static %}
+
+{% block head %}
+<script src="{% static 'js/auth.js' %}" defer></script>
+{% endblock head %}
+{% block content %}
+<section class="auth-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-5 auth-container">
+                <div class="form-header">
+                    <h2 class="text-center">JobFinder</h2>
+                </div>
+                <div class="form-body">
+                    <div class="form-body-top">
+                        <h3>Conectar-se</h3>
+                        <span
+                            >Não possui conta?
+                            <a href="{% url 'account:signup' %}">Cadastro</a></span
+                        >
+                    </div>
+                    <form action="{% url 'account:login' %}" method="POST">
+                        {% csrf_token %}
+                        {% if form.non_field_errors %}
+                            <div class="alert alert-danger mt-10" role="alert">
+                            {% for error in form.non_field_errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                            </div>
+                        {% endif %}
+                        <div class="input-group-icon mt-10">
+                            <div class="icon">
+                                <i
+                                    class="ti-email"
+                                    aria-hidden="true"
+                                ></i>
+                            </div>
+                            <input
+                                type="email"
+                                name="username"
+                                placeholder="email"
+                                onfocus="this.placeholder = ''"
+                                onblur="this.placeholder = 'email'"
+                                required=""
+                                value="{{ form.username.value|default:'' }}"
+                                class="single-input form-control"
+                            />
+                        </div>
+                        {% if form.username.errors %}
+                            <div class="alert alert-danger mt-10" role="alert">
+                            {% for error in form.username.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                            </div>
+                        {% endif %}
+                        <div class="input-group-icon mt-10">
+                            <div class="icon">
+                                <i
+                                    class="ti-lock"
+                                    aria-hidden="true"
+                                ></i>
+                            </div>
+                            <input
+                                type="password"
+                                name="password"
+                                placeholder="senha"
+                                onfocus="this.placeholder = ''"
+                                onblur="this.placeholder = 'senha'"
+                                required=""
+                                value="{{ form.password.value|default:'' }}"
+                                class="single-input form-control"
+                            />
+                            <div class="icon-right">
+                                <i
+                                    class="fa fa-eye icon-eye"
+                                    aria-hidden="true"
+                                ></i>
+                            </div>
+                        </div>
+                        {% if form.password.errors %}
+                            <div class="alert alert-danger mt-10" role="alert">
+                            {% for error in form.password.errors %}
+                                {{ error }}
+                            {% endfor %}
+                            </div>
+                        {% endif %}
+                        <div class="f-right mt-10">
+                            <a href="{% url 'account:recovery' %}"
+                                >Esqueceu a senha?</a
+                            >
+                        </div>
+                        <div class="form-group mt-70 text-center">
+                            <button
+                                type="submit"
+                                class="btn btn-post genric-btn circle e-large"
+                            >
+                                Conectar-se
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="row justify-content-center">
+    <div class="col-6">
+        {% include 'global/partials/_form.html' with form=form2 %}
+    </div>
+</div>
+{% endblock content %}

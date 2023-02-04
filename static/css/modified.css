@@ -141,6 +141,20 @@ body {
 	line-height: 1.9;
 }
 
+.input-file-label {
+	padding: 2px 6px;
+	background-color: #021942;
+	border: solid 1px #010b1d;
+	color: #fff;
+	white-space: nowrap;
+}
+
+.input-file-group {
+	display: flex;
+	overflow: hidden;
+	gap: 5px;
+}
+
 .dashboard {
 	padding: 0;
 	width: 100%;
