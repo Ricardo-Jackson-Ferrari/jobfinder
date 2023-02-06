@@ -19,6 +19,8 @@ class User(AbstractUser):
             'unique': _('A user with that email already exists.'),
         },
     )
+    is_candidate = models.BooleanField('candidate status', default=False)
+    is_company = models.BooleanField('company status', default=False)
     objects = UserManager()
 
     EMAIL_FIELD = 'email'

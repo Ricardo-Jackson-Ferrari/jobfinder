@@ -25,10 +25,10 @@ ACCOUNT_LOGIN_URL = reverse_lazy('account:login')
 
 
 class RegisterBaseView(SuccessMessageMixin, CreateView):
-    form_class: BaseModelForm = None
     form_profile_class: BaseModelForm = None
     success_url = ACCOUNT_LOGIN_URL
     success_message = _('Successfully registered!')
+    user_group: str = ''
 
     def post(
         self, request: HttpRequest, *args: str, **kwargs: Any
@@ -45,6 +45,7 @@ class RegisterBaseView(SuccessMessageMixin, CreateView):
 
     @atomic
     def form_valid(self, form: BaseModelForm, form_profile: BaseModelForm):
+        form.instance.__setattr__(self.user_group, True)
         self.object = form.save()
         form_profile.instance.user = self.object
         form_profile.save()
@@ -101,6 +102,7 @@ class RegisterCandidateView(RegisterBaseView):
     template_name = 'account/candidate_register.html'
     form_class = RegisterCandidateForm
     form_profile_class = ProfileCandidateForm
+    user_group = 'is_candidate'
     extra_context = {
         'title': 'Cadastro Candidato',
     }
@@ -110,6 +112,7 @@ class RegisterCompanyView(RegisterBaseView):
     template_name = 'account/company_register.html'
     form_class = RegisterCompanyForm
     form_profile_class = ProfileCompanyForm
+    user_group = 'is_company'
     extra_context = {
         'title': 'Cadastro Empresa',
     }

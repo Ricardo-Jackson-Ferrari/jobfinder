@@ -21,6 +21,8 @@ class UserAdmin(DjangoUserAdmin):
                     'is_active',
                     'is_staff',
                     'is_superuser',
+                    'is_candidate',
+                    'is_company',
                     'groups',
                     'user_permissions',
                 ),
