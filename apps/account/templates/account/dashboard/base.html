@@ -1,0 +1,14 @@
+{% extends 'global/base.html' %}
+{% block content %}
+<div class="dashboard">
+    {% if user.is_candidate %}
+        {% include 'account/dashboard/sidebar_candidate.html' %}
+    {% elif user.is_company %}
+        {% include 'account/dashboard/sidebar_company.html' %}
+    {% endif %}
+    <div class="dashboard-content">
+        {% block dashboard_content %}
+        {% endblock dashboard_content %}
+    </div>
+</div>
+{% endblock content %}

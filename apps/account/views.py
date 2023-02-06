@@ -1,5 +1,6 @@
 from typing import Any, Dict, Optional, Type
 
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView as DjangoLoginView
 from django.contrib.auth.views import LogoutView as DjangoLogoutView
 from django.contrib.messages.views import SuccessMessageMixin
@@ -99,7 +100,7 @@ class RegisterBaseView(SuccessMessageMixin, CreateView):
 
 
 class RegisterCandidateView(RegisterBaseView):
-    template_name = 'account/candidate_register.html'
+    template_name = 'account/auth/candidate_register.html'
     form_class = RegisterCandidateForm
     form_profile_class = ProfileCandidateForm
     user_group = 'is_candidate'
@@ -109,7 +110,7 @@ class RegisterCandidateView(RegisterBaseView):
 
 
 class RegisterCompanyView(RegisterBaseView):
-    template_name = 'account/company_register.html'
+    template_name = 'account/auth/company_register.html'
     form_class = RegisterCompanyForm
     form_profile_class = ProfileCompanyForm
     user_group = 'is_company'
@@ -119,14 +120,14 @@ class RegisterCompanyView(RegisterBaseView):
 
 
 class RegisterView(TemplateView):
-    template_name = 'account/register.html'
+    template_name = 'account/auth/register.html'
     extra_context = {
         'title': 'Cadastro',
     }
 
 
 class RecoveryView(SuccessMessageMixin, FormView):
-    template_name = 'account/recovery.html'
+    template_name = 'account/auth/recovery.html'
     form_class = RecoveryForm
     success_url = reverse_lazy('account:recovery')
     success_message = 'Solicitação realizada com sucesso!'
@@ -140,12 +141,20 @@ class RecoveryView(SuccessMessageMixin, FormView):
 
 
 class LoginView(DjangoLoginView):
-    template_name = 'account/login.html'
+    template_name = 'account/auth/login.html'
     redirect_authenticated_user = True
+    success_url = reverse_lazy('account:dashboard')
     extra_context = {
         'title': 'Acesso',
     }
 
+    def get_success_url(self) -> str:
+        return self.success_url or super().get_success_url()
+
 
 class LogoutView(DjangoLogoutView):
     next_page = 'account:login'
+
+
+class DashboardView(LoginRequiredMixin, TemplateView):
+    template_name = 'account/dashboard/dashboard.html'
