@@ -5,12 +5,14 @@ from django.contrib.auth.views import LogoutView as DjangoLogoutView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.exceptions import ImproperlyConfigured
 from django.db.transaction import atomic
-from django.forms import BaseModelForm, models, BaseForm
+from django.forms import BaseForm, BaseModelForm, models
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
+from django.utils.translation import gettext_lazy as _
 from django.views.generic import CreateView, FormView, TemplateView
 
+from .facade import send_recovery_email
 from .forms import (
     ProfileCandidateForm,
     ProfileCompanyForm,
@@ -18,7 +20,6 @@ from .forms import (
     RegisterCandidateForm,
     RegisterCompanyForm,
 )
-from .facade import send_recovery_email
 
 ACCOUNT_LOGIN_URL = reverse_lazy('account:login')
 
@@ -27,7 +28,7 @@ class RegisterBaseView(SuccessMessageMixin, CreateView):
     form_class: BaseModelForm = None
     form_profile_class: BaseModelForm = None
     success_url = ACCOUNT_LOGIN_URL
-    success_message = 'Cadastro realizado com sucesso!'
+    success_message = _('Successfully registered!')
 
     def post(
         self, request: HttpRequest, *args: str, **kwargs: Any
@@ -69,7 +70,6 @@ class RegisterBaseView(SuccessMessageMixin, CreateView):
         return form_profile_class(**self.get_form_kwargs())
 
     def get_form_profile_class(self) -> Type[BaseModelForm]:
-        super().get_form_class()
         if self.fields is not None and self.form_profile_class:
             raise ImproperlyConfigured(
                 "Specifying both 'fields' and 'form_profile_class' is not permitted."

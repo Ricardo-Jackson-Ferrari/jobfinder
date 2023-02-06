@@ -2,18 +2,17 @@ from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
+from django.utils.translation import gettext_lazy as _
 
 from .models import ProfileCandidate, ProfileCompany
 
-EMAIL_HELP_TEXT = 'Enter a valid email address'
+EMAIL_HELP_TEXT = _('Enter a valid email address')
 
 
 class RegisterCandidateForm(UserCreationForm):
     first_name = forms.CharField(max_length=30, required=True)
     last_name = forms.CharField(max_length=30, help_text='Opcional')
-    email = forms.EmailField(
-        max_length=254, help_text=EMAIL_HELP_TEXT
-    )
+    email = forms.EmailField(max_length=254, help_text=EMAIL_HELP_TEXT)
 
     class Meta:
         model = get_user_model()
@@ -28,9 +27,7 @@ class RegisterCandidateForm(UserCreationForm):
 
 class RegisterCompanyForm(UserCreationForm):
     first_name = forms.CharField(max_length=30, required=True)
-    email = forms.EmailField(
-        max_length=254, help_text=EMAIL_HELP_TEXT
-    )
+    email = forms.EmailField(max_length=254, help_text=EMAIL_HELP_TEXT)
 
     class Meta:
         model = get_user_model()
@@ -55,14 +52,12 @@ class ProfileCompanyForm(forms.ModelForm):
 
 
 class RecoveryForm(forms.Form):
-    email = forms.EmailField(
-        max_length=254, help_text='Enter a valid email address'
-    )
+    email = forms.EmailField(max_length=254, help_text=EMAIL_HELP_TEXT)
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
         user = get_user_model().objects.filter(email=email)
 
         if not user.exists():
-            raise ValidationError('email not registered')
+            raise ValidationError(_('There is no user with this email.'))
         return email

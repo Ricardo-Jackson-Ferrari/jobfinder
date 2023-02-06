@@ -1,10 +1,10 @@
-from django.core.mail import EmailMultiAlternatives
-from django.utils.translation import gettext_lazy as _
 from django.conf import settings
-from django.utils.html import strip_tags
-from django.template.loader import render_to_string
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+from django.utils.translation import gettext_lazy as _
 
 User = get_user_model()
 
@@ -14,7 +14,7 @@ def send_recovery_email(email: str) -> bool:
     user = User.objects.filter(email=email)
 
     if not user.exists():
-        raise ObjectDoesNotExist(_('Não existe um usuário com este email.'))
+        raise ObjectDoesNotExist(_('There is no user with this email.'))
 
     user = user.first()
     link = generate_change_password_link(user)
@@ -24,10 +24,14 @@ def send_recovery_email(email: str) -> bool:
         'link': link,
     }
 
-    html_content = render_to_string('account/emails/recovery_email.html', context)
+    html_content = render_to_string(
+        'account/emails/recovery_email.html', context
+    )
     text_content = strip_tags(html_content)
     from_email = settings.EMAIL_HOST_USER
-    send_email = EmailMultiAlternatives(subject, text_content, from_email, [email])
+    send_email = EmailMultiAlternatives(
+        subject, text_content, from_email, [email]
+    )
     send_email.attach_alternative(html_content, 'text/html')
 
     return send_email.send()

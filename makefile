@@ -12,7 +12,7 @@ local: ## stop application in localhost without db
 ## @ format
 .PHONY: black isort format
 isort:
-	@pipenv run isort .
+	@pipenv run isort --gitignore .
 blue:
 	@pipenv run blue .
 format: isort blue ## perform formatting on all files with isort and blue

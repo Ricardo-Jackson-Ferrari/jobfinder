@@ -26,7 +26,7 @@ class User(AbstractUser):
     REQUIRED_FIELDS = []
 
 
-class ProfileBase(models.Model):
+class ProfileAbstract(models.Model):
     user = models.OneToOneField(to=User, on_delete=models.CASCADE)
 
     def __str__(self) -> str:
@@ -36,7 +36,7 @@ class ProfileBase(models.Model):
         abstract = True
 
 
-class ProfileCandidate(ProfileBase):
+class ProfileCandidate(ProfileAbstract):
     cv = models.FileField(
         upload_to='cv',
         validators=[FileExtensionValidator(allowed_extensions=('pdf',))],
@@ -45,7 +45,7 @@ class ProfileCandidate(ProfileBase):
     )
 
 
-class ProfileCompany(ProfileBase):
+class ProfileCompany(ProfileAbstract):
     logo = models.ImageField(upload_to='logo_company', blank=True)
     contact_email = models.EmailField(max_length=255, blank=True)
     website = models.CharField(max_length=100, blank=True)
