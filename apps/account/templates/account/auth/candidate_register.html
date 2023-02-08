@@ -48,13 +48,13 @@
                                     onfocus="this.placeholder = ''"
                                     onblur="this.placeholder = 'nome'"
                                     required=""
-                                    value="{{ form.first_name.value|default:'' }}"
+                                    value="{{ form_profile.first_name.value|default:'' }}"
                                     class="single-input form-control"
                                 />
                             </div>
-                            {% if form.first_name.errors %}
+                            {% if form_profile.first_name.errors %}
                                 <div class="alert alert-danger mt-10" role="alert">
-                            {% for error in form.first_name.errors %}
+                            {% for error in form_profile.first_name.errors %}
                                 <span>{{ error }}</span>
                             {% endfor %}
                                 </div>
@@ -69,16 +69,16 @@
                                 <input
                                     type="text"
                                     name="last_name"
-                                    placeholder="sobrenome (Opcional)"
+                                    placeholder="sobrenome"
                                     onfocus="this.placeholder = ''"
-                                    onblur="this.placeholder = 'sobrenome (Opcional)'"
-                                    value="{{ form.last_name.value|default:'' }}"
+                                    onblur="this.placeholder = 'sobrenome'"
+                                    value="{{ form_profile.last_name.value|default:'' }}"
                                     class="single-input form-control"
                                 />
                             </div>
-                            {% if form.last_name.errors %}
+                            {% if form_profile.last_name.errors %}
                                 <div class="alert alert-danger mt-10" role="alert">
-                            {% for error in form.last_name.errors %}
+                            {% for error in form_profile.last_name.errors %}
                                 <span>{{ error }}</span>
                             {% endfor %}
                                 </div>
@@ -187,7 +187,6 @@
                                     id="cv"
                                     accept=".pdf"
                                     class="d-none"
-                                    required=""
                                     value="{{ form_profile.cv.content_type|default:'' }}"
                                 />
                             </div>

@@ -1,0 +1,90 @@
+{% extends 'account/dashboard/base.html' %}
+{% block content_dashboard %}
+<section class="section-content job-manager-section mb-100">
+	<form action="{% url 'account:profile_candidate_update' %}" method="POST" enctype="multipart/form-data" class="form-profile">
+		{% csrf_token %}
+		{% if form.non_field_errors %}
+			<div class="alert alert-danger mt-10" role="alert">
+			{% for error in form.non_field_errors %}
+				<span>{{ error }}</span>
+			{% endfor %}
+			</div>
+		{% endif %}
+		<div class="row">
+			<div
+				class="company-profile d-flex flex-column align-middle m-auto"
+			>
+				<div class="text-center">
+					<h4>{{ user.profilecandidate.first_name }} {{ user.profilecandidate.last_name }}</h4>
+				</div>
+			</div>
+		</div>
+		<div class="row justify-content-center">
+			<div class="col-lg-4 col-md-6">
+				<label for="first_name">Nome</label>
+				<input
+					type="text"
+					class="form-control"
+					name="first_name"
+					id="first_name"
+					required=""
+					value="{{ form.first_name.value|default:'' }}"
+				/>
+				{% if form.first_name.errors %}
+					<div class="alert alert-danger mt-10" role="alert">
+				{% for error in form.first_name.errors %}
+					<span>{{ error }}</span>
+				{% endfor %}
+					</div>
+				{% endif %}
+			</div>
+			<div class="col-lg-4 col-md-6">
+				<label for="last_name">Sobrenome</label>
+				<input
+					type="text"
+					class="form-control"
+					name="last_name"
+					id="last_name"
+					required=""
+					value="{{ form.last_name.value|default:'' }}"
+				/>
+				{% if form.last_name.errors %}
+					<div class="alert alert-danger mt-10" role="alert">
+				{% for error in form.last_name.errors %}
+					<span>{{ error }}</span>
+				{% endfor %}
+					</div>
+				{% endif %}
+			</div>
+		</div>
+		<div class="row justify-content-center">
+			<div class="col-lg-4 col-md-6">
+				<label for="cv_input">Currículo</label>
+				<input
+					class="form-control p-0 input-file"
+					id="cv_input"
+					name="cv"
+					type="file"
+					accept=".pdf"
+				/>
+				{% if form.cv.errors %}
+					<div class="alert alert-danger mt-10" role="alert">
+				{% for error in form.cv.errors %}
+					<span>{{ error }}</span>
+				{% endfor %}
+					</div>
+				{% endif %}
+			</div>
+			<div class="col-lg-4 col-md-6">
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-12 text-center">
+				<button class="btn post-btn" type="submit">
+					Atualizar
+				</button>
+			</div>
+		</div>
+	</form>
+</section>
+{% endblock content_dashboard %}

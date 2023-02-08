@@ -1,8 +1,11 @@
+from unittest.mock import patch
+
 from account.forms import ProfileCandidateForm, RegisterCandidateForm
 from account.models import ProfileCandidate
-from account.views import RegisterBaseView
+from account.views import LoginView, ProfileView, RegisterBaseView
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ImproperlyConfigured
+from django.db import DatabaseError
 from django.forms.models import BaseModelForm
 from django.test import RequestFactory
 from django.urls import reverse_lazy
@@ -128,3 +131,85 @@ class TestRegisterBaseView:
         view.fields = None
         with raises(ImproperlyConfigured):
             view.get_form_profile_class()
+
+    def test_get_error_message(self):
+        assert (
+            RegisterBaseView.error_message
+            == RegisterBaseView().get_error_message()
+        )
+
+    def test_form_valid_without_message_success(self, db):
+        class TestView(RegisterBaseView):
+            success_message = ''
+            form_class = RegisterCandidateForm
+            form_profile_class = ProfileCandidateForm
+            request = RequestFactory().post('')
+
+        data_user = {
+            'email': 'test@example.com',
+            'password1': 'testpassword1',
+            'password2': 'testpassword1',
+        }
+        data_profile = {
+            'first_name': 'test',
+            'last_name': 'user',
+        }
+        form = RegisterCandidateForm(data=data_user)
+        form_profile = ProfileCandidateForm(data=data_profile)
+        assert TestView().form_valid(form, form_profile).status_code == 302
+
+    def test_form_valid_error(self, set_request_message):
+        class TestView(RegisterBaseView):
+            template_name = ''
+            form_class = RegisterCandidateForm
+            form_profile_class = ProfileCandidateForm
+            request = RequestFactory().post('')
+            object = None
+            set_request_message(request)
+
+        form = RegisterCandidateForm()
+        form_profile = ProfileCandidateForm()
+
+        with patch('account.views.atomic') as atomic_mock:
+
+            def raise_exception(*args, **kwargs):
+                raise DatabaseError
+
+            atomic_mock.side_effect = raise_exception
+            response = TestView().form_valid(form, form_profile)
+        assert response.status_code == 200
+
+    def test_form_valid_error_whitout_error_message(self, set_request_message):
+        class TestView(RegisterBaseView):
+            template_name = ''
+            form_class = RegisterCandidateForm
+            form_profile_class = ProfileCandidateForm
+            request = RequestFactory().post('')
+            object = None
+            error_message = ''
+            set_request_message(request)
+
+        form = RegisterCandidateForm()
+        form_profile = ProfileCandidateForm()
+
+        with patch('account.views.atomic') as atomic_mock:
+
+            def raise_exception(*args, **kwargs):
+                raise DatabaseError
+
+            atomic_mock.side_effect = raise_exception
+            response = TestView().form_valid(form, form_profile)
+        assert response.status_code == 200
+
+
+class TestLoginView:
+    def test_get_success_url(self):
+        assert LoginView().get_success_url() == LoginView.success_url
+
+
+class TestProfileView:
+    def test_get_context_data_with_title(self, candidate_user):
+        class TestView(ProfileView):
+            object = candidate_user.profilecandidate
+
+        assert 'title' in TestView().get_context_data().keys()

@@ -10,15 +10,11 @@ EMAIL_HELP_TEXT = _('Enter a valid email address')
 
 
 class RegisterCandidateForm(UserCreationForm):
-    first_name = forms.CharField(max_length=30, required=True)
-    last_name = forms.CharField(max_length=30, help_text='Opcional')
     email = forms.EmailField(max_length=254, help_text=EMAIL_HELP_TEXT)
 
     class Meta:
         model = get_user_model()
         fields = [
-            'first_name',
-            'last_name',
             'email',
             'password1',
             'password2',
@@ -26,13 +22,11 @@ class RegisterCandidateForm(UserCreationForm):
 
 
 class RegisterCompanyForm(UserCreationForm):
-    first_name = forms.CharField(max_length=30, required=True)
     email = forms.EmailField(max_length=254, help_text=EMAIL_HELP_TEXT)
 
     class Meta:
         model = get_user_model()
         fields = [
-            'first_name',
             'email',
             'password1',
             'password2',

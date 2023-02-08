@@ -2,21 +2,33 @@
     <nav class="sidebar-menu">
         <ul>
             <li>
-                <a href="dashboard_candidate.html">
+                <a href="{% url 'account:dashboard' %}">
                     <i class="fas fa-home fa-fw"></i>
-                    <span class="nav-item">Início</span>
+                    <span class="nav-item">Dashboard</span>
                 </a>
             </li>
             <li>
-                <a href="profile_candidate.html">
+                <a href="{% url 'account:profile_company_update' %}">
                     <i class="fas fa-user fa-fw"></i>
                     <span class="nav-item">Perfil</span>
                 </a>
             </li>
             <li>
-                <a href="subscription_manage.html">
-                    <i class="fas fa-file-alt fa-fw"></i>
-                    <span class="nav-item">Inscrições</span>
+                <a href="job_manage.html">
+                    <i class="fas fa-suitcase fa-fw"></i>
+                    <span class="nav-item">Vagas</span>
+                </a>
+            </li>
+            <li>
+                <a href="company_charts.html">
+                    <i class="fas fa-chart-pie fa-fw"></i>
+                    <span class="nav-item">Gráficos</span>
+                </a>
+            </li>
+            <li>
+                <a href="address_manage.html">
+                    <i class="fas fa-map-marker-alt fa-fw"></i>
+                    <span class="nav-item">Endereços</span>
                 </a>
             </li>
         </ul>

@@ -1,17 +1,25 @@
 from typing import Any, Dict, Optional, Type
 
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView as DjangoLoginView
 from django.contrib.auth.views import LogoutView as DjangoLogoutView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.exceptions import ImproperlyConfigured
+from django.db import DatabaseError
 from django.db.transaction import atomic
 from django.forms import BaseForm, BaseModelForm, models
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
-from django.views.generic import CreateView, FormView, TemplateView
+from django.views.generic import (
+    CreateView,
+    DetailView,
+    FormView,
+    TemplateView,
+    UpdateView,
+)
 
 from .facade import send_recovery_email
 from .forms import (
@@ -21,6 +29,8 @@ from .forms import (
     RegisterCandidateForm,
     RegisterCompanyForm,
 )
+from .mixins import CandidateUserMixin, CompanyUserMixin, OwnerUserMixin
+from .models import ProfileCandidate, ProfileCompany
 
 ACCOUNT_LOGIN_URL = reverse_lazy('account:login')
 
@@ -29,6 +39,7 @@ class RegisterBaseView(SuccessMessageMixin, CreateView):
     form_profile_class: BaseModelForm = None
     success_url = ACCOUNT_LOGIN_URL
     success_message = _('Successfully registered!')
+    error_message = _('Error when registering')
     user_group: str = ''
 
     def post(
@@ -44,13 +55,26 @@ class RegisterBaseView(SuccessMessageMixin, CreateView):
         else:
             return self.form_invalid(form, form_profile)
 
-    @atomic
     def form_valid(self, form: BaseModelForm, form_profile: BaseModelForm):
-        form.instance.__setattr__(self.user_group, True)
-        self.object = form.save()
-        form_profile.instance.user = self.object
-        form_profile.save()
-        return redirect(self.get_success_url())
+        # sourcery skip: extract-method
+        try:
+            with atomic():
+                form.instance.__setattr__(self.user_group, True)
+                self.object = form.save()
+                form_profile.instance.user = self.object
+                form_profile.save()
+                if success_message := self.get_success_message(
+                    form.cleaned_data
+                ):
+                    messages.success(self.request, success_message)
+                return redirect(self.get_success_url())
+        except DatabaseError:
+            if error_message := self.get_error_message():
+                messages.error(self.request, error_message)
+            return self.form_invalid(form, form_profile)
+
+    def get_error_message(self):
+        return self.error_message
 
     def form_invalid(
         self, form: BaseModelForm, form_profile: BaseModelForm
@@ -158,3 +182,33 @@ class LogoutView(DjangoLogoutView):
 
 class DashboardView(LoginRequiredMixin, TemplateView):
     template_name = 'account/dashboard/dashboard.html'
+    extra_context = {'title': 'Painel'}
+
+
+class ProfileView(DetailView):
+    template_name = 'account/profile.html'
+    model = ProfileCompany
+    context_object_name = 'company'
+
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        ctx = super().get_context_data(**kwargs)
+        ctx['title'] = f'Perfil | {self.object.user.first_name}'
+        return ctx
+
+
+class ProfileCompanyUpdateView(CompanyUserMixin, OwnerUserMixin, UpdateView):
+    template_name = 'account/dashboard/company/profile_company_update.html'
+    model = ProfileCompany
+    form_class = ProfileCompanyForm
+    extra_context = {'title': 'Editar perfil'}
+    success_url = reverse_lazy('account:profile_company_update')
+
+
+class ProfileCandidateUpdateView(
+    CandidateUserMixin, OwnerUserMixin, UpdateView
+):
+    template_name = 'account/dashboard/candidate/profile_candidate_update.html'
+    model = ProfileCandidate
+    form_class = ProfileCandidateForm
+    extra_context = {'title': 'Editar perfil'}
+    success_url = reverse_lazy('account:profile_candidate_update')

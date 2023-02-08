@@ -1,0 +1,189 @@
+{% extends 'global/base.html' %}
+{% load static %}
+{% block content %}
+<div class="company-content pt-120 pb-120">
+    <div class="container">
+        <div class="row justify-content-between">
+            <!-- Left Content -->
+            <div class="col-12">
+                <!-- job single -->
+                <div class="company-details mb-50">
+                    <div class="company-items">
+                        <div class="row company-details">
+                            <div class="company-img-socials">
+                                <div class="company-img-details">
+                                    <img
+                                        src="{% get_media_prefix %}{% if company.logo %}{{ company.logo }}{% else %}logo/logo_default.png{% endif %}"
+                                        alt=""
+                                    />
+                                </div>
+                                <div class="company-socials">
+                                    {% if company.facebook %}
+                                    <a href="{{ company.facebook }}"
+                                        ><i
+                                            class="fab fa-facebook-f fa-fw"
+                                        ></i
+                                    ></a>
+                                    {% endif %}
+                                    {% if company.instagram %}
+                                    <a href="{{ company.instagram }}"
+                                        ><i
+                                            class="fab fa-instagram fa-fw"
+                                        ></i
+                                    ></a>
+                                    {% endif %}
+                                    {% if company.twitter %}
+                                    <a href="{{ company.twitter }}"
+                                        ><i
+                                        class="fab fa-twitter fa-fw"
+                                        ></i
+                                    ></a>
+                                    {% endif %}
+                                    {% if company.website %}
+                                    <a href="{{ company.website }}"
+                                        ><i
+                                            class="fas fa-globe fa-fw"
+                                        ></i
+                                    ></a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="company-title">
+                                <h4>{{ company.user.first_name }}</h4>
+                                <ul>
+                                    <li>{{ company.short_description }}</li>
+                                    <li>
+                                        <i
+                                            class="fas fa-map-marker-alt"
+                                        ></i
+                                        >Rio de Janeiro - RJ
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="row mt-10">
+                            <p>
+                                {{ company.description }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- job single End -->
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="text-center col-12 mb-10">
+                <h2>Vagas abertas</h2>
+            </div>
+        </div>
+            <div class="row company-jobs">
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <a href="job_details.html">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title text-center">
+                                    Auxiliar Administrativo
+                                </h5>
+                                <p class="card-text">
+                                    Veniam nisi non est proident
+                                    proident culpa proident ut sunt
+                                    eu. Aute enim eu pariatur aute
+                                    voluptate sit ad incididunt aute
+                                    excepteur. Sunt quis
+                                    reprehenderit consequat sunt
+                                    culpa aliquip fugiat laborum
+                                    consectetur duis. Cillum aute
+                                    amet aute incididunt excepteur
+                                    dolor exercitation velit
+                                    exercitation exercitation
+                                    tempor.
+                                </p>
+                            </div>
+                            <div class="card-footer">
+                                <small class="text-muted"
+                                    >Anunciada a 2 dias</small
+                                >
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <a href="job_details.html">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title text-center">
+                                    Desenvolvedor Java Pleno
+                                </h5>
+                                <p class="card-text">
+                                    Culpa duis in officia eu esse
+                                    enim commodo. Dolor et
+                                    consectetur amet incididunt.
+                                    Sint eu sint magna reprehenderit
+                                    dolor. Magna tempor sunt dolore
+                                    mollit culpa sit officia ullamco
+                                    tempor esse.
+                                </p>
+                            </div>
+                            <div class="card-footer">
+                                <small class="text-muted"
+                                    >Anunciada a 5 dias</small
+                                >
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <a href="job_details.html">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title text-center">
+                                    Tech Recruiter
+                                </h5>
+                                <p class="card-text">
+                                    This is a wider card with
+                                    supporting text below as a
+                                    natural lead-in to additional
+                                    content. This card has even
+                                    longer content than the first to
+                                    show that equal height action.
+                                </p>
+                            </div>
+                            <div class="card-footer">
+                                <small class="text-muted"
+                                    >Anunciada a 8 dias</small
+                                >
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <a href="job_details.html">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title text-center">
+                                    Desenvolvedor Front-end Pleno
+                                </h5>
+                                <p class="card-text">
+                                    This is a wider card with
+                                    supporting text below as a
+                                    natural lead-in to additional
+                                    content. This card has even
+                                    longer content than the first to
+                                    show that equal height action.
+                                </p>
+                            </div>
+                            <div class="card-footer">
+                                <small class="text-muted"
+                                    >Anunciada a 9 dias</small
+                                >
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

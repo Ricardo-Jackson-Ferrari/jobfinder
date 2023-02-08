@@ -1,8 +1,8 @@
 {% extends 'account/dashboard/base.html' %}
 {% block content_dashboard %}
     {% if user.is_candidate %}
-        {% include 'account/dashboard/dashboard_candidate.html' %}
+        {% include 'account/dashboard/candidate/dashboard_candidate.html' %}
     {% elif user.is_company %}
-        {% include 'account/dashboard/dashboard_company.html' %}
+        {% include 'account/dashboard/company/dashboard_company.html' %}
     {% endif %}
 {% endblock content_dashboard %}

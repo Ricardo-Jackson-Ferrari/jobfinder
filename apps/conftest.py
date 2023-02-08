@@ -1,3 +1,4 @@
+from account.models import ProfileCandidate, ProfileCompany
 from django.contrib.auth import get_user_model
 from django.contrib.messages.storage.fallback import FallbackStorage
 from model_bakery import baker
@@ -11,12 +12,16 @@ def common_user(db):
 
 @fixture
 def candidate_user(db):
-    return baker.make(get_user_model(), is_candidate=True)
+    user = baker.make(get_user_model(), is_candidate=True)
+    baker.make(ProfileCandidate, user=user)
+    return user
 
 
 @fixture
 def company_user(db):
-    return baker.make(get_user_model(), is_company=True)
+    user = baker.make(get_user_model(), is_company=True)
+    baker.make(ProfileCompany, user=user)
+    return user
 
 
 @fixture

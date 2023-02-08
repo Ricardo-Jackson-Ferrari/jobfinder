@@ -39,6 +39,8 @@ class ProfileAbstract(models.Model):
 
 
 class ProfileCandidate(ProfileAbstract):
+    first_name = models.CharField(_('first name'), max_length=150)
+    last_name = models.CharField(_('last name'), max_length=150)
     cv = models.FileField(
         upload_to='cv',
         validators=[FileExtensionValidator(allowed_extensions=('pdf',))],
@@ -49,9 +51,17 @@ class ProfileCandidate(ProfileAbstract):
 
 class ProfileCompany(ProfileAbstract):
     logo = models.ImageField(upload_to='logo_company', blank=True)
-    contact_email = models.EmailField(max_length=255, blank=True)
+    name = models.CharField(_('name'), max_length=100)
+    contact_email = models.EmailField(
+        _('contact email'), max_length=255, blank=True
+    )
     website = models.CharField(max_length=100, blank=True)
     facebook = models.CharField(max_length=100, blank=True)
     instagram = models.CharField(max_length=100, blank=True)
     twitter = models.CharField(max_length=100, blank=True)
-    description = models.TextField(max_length=500, blank=True)
+    short_description = models.CharField(
+        _('short description'), max_length=50, blank=True
+    )
+    description = models.TextField(
+        _('description'), max_length=500, blank=True
+    )

@@ -2,13 +2,13 @@
 {% block content %}
 <div class="dashboard">
     {% if user.is_candidate %}
-        {% include 'account/dashboard/sidebar_candidate.html' %}
+        {% include 'account/dashboard/candidate/sidebar_candidate.html' %}
     {% elif user.is_company %}
-        {% include 'account/dashboard/sidebar_company.html' %}
+        {% include 'account/dashboard/company/sidebar_company.html' %}
     {% endif %}
     <div class="dashboard-content">
-        {% block dashboard_content %}
-        {% endblock dashboard_content %}
+        {% block content_dashboard %}
+        {% endblock content_dashboard %}
     </div>
 </div>
 {% endblock content %}

@@ -1,0 +1,323 @@
+{% extends 'account/dashboard/base.html' %}
+{% load static %}
+{% block head %}
+<script src="{% static 'js/address_form.js' %}" defer></script>
+<script src="{% static 'js/profile_company.js' %}" defer></script>
+{% endblock head %}
+{% block content_dashboard %}
+<section class="section-content job-manager-section mb-100">
+    <form action="{% url 'account:profile_company_update' %}" method="POST" enctype="multipart/form-data" class="form-profile">
+		{% csrf_token %}
+		{% if form.non_field_errors %}
+			<div class="alert alert-danger mt-10" role="alert">
+			{% for error in form.non_field_errors %}
+				<span>{{ error }}</span>
+			{% endfor %}
+			</div>
+		{% endif %}
+        <div class="row">
+            <div
+                class="company-profile d-flex flex-column align-middle m-auto"
+            >
+                <div class="d-flex mb-10">
+                    <img
+                        class="m-auto"
+                        src="{% get_media_prefix %}{% if company.logo %}{{ company.logo.url }}{% else %}logo/logo_default.png{% endif %}"
+                        alt="Logo da empresa"
+                    />
+                </div>
+                <div class="text-center">
+                    <h4>{{ user.first_name }}</h4>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-4 col-md-6">
+                <label for="name">Nome</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    name="name"
+                    id="name"
+                    required=""
+					value="{{ form.name.value|default:'' }}"
+                />
+                {% if form.name.errors %}
+					<div class="alert alert-danger mt-10" role="alert">
+				{% for error in form.name.errors %}
+					<span>{{ error }}</span>
+				{% endfor %}
+					</div>
+				{% endif %}
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <label for="contact_email">Email</label>
+                <input
+                    type="email"
+                    class="form-control"
+                    name="contact_email"
+                    id="contact_email"
+                    value="{{ form.contact_email.value|default:'' }}"
+                />
+                {% if form.contact_email.errors %}
+					<div class="alert alert-danger mt-10" role="alert">
+				{% for error in form.contact_email.errors %}
+					<span>{{ error }}</span>
+				{% endfor %}
+					</div>
+				{% endif %}
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-4 col-md-6">
+                <label for="short_description">Descrição curta</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    name="short_description"
+                    id="short_description"
+					value="{{ form.short_description.value|default:'' }}"
+                />
+                {% if form.short_description.errors %}
+					<div class="alert alert-danger mt-10" role="alert">
+				{% for error in form.short_description.errors %}
+					<span>{{ error }}</span>
+				{% endfor %}
+					</div>
+				{% endif %}
+            </div>
+            <div class="col-lg-4">
+                <label for="address">Endereço</label>
+                <div class="form-select d-flex">
+                    <select
+                        class="select-mod"
+                        name="address"
+                        id="address"
+                    >
+                        <option value="">---</option>
+                    </select>
+                    <button class="btn-add" type="button">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-4 col-md-6">
+                <label for="website">Website</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    name="website"
+                    id="website"
+                    value="{{ form.website.value|default:'' }}"
+                />
+                {% if form.website.errors %}
+                    <div class="alert alert-danger mt-10" role="alert">
+                {% for error in form.website.errors %}
+                    <span>{{ error }}</span>
+                {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <label for="facebook">Facebook</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    name="facebook"
+                    id="facebook"
+                    value="{{ form.facebook.value|default:'' }}"
+                />
+                {% if form.facebook.errors %}
+                    <div class="alert alert-danger mt-10" role="alert">
+                {% for error in form.facebook.errors %}
+                    <span>{{ error }}</span>
+                {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-4 col-md-6">
+                <label for="instagram">Instagram</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    name="instagram"
+                    id="instagram"
+                    value="{{ form.instagram.value|default:'' }}"
+                />
+                {% if form.instagram.errors %}
+                    <div class="alert alert-danger mt-10" role="alert">
+                {% for error in form.instagram.errors %}
+                    <span>{{ error }}</span>
+                {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <label for="twitter">Twitter</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    name="twitter"
+                    id="twitter"
+                    value="{{ form.twitter.value|default:'' }}"
+                />
+                {% if form.twitter.errors %}
+                    <div class="alert alert-danger mt-10" role="alert">
+                {% for error in form.twitter.errors %}
+                    <span>{{ error }}</span>
+                {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-md-12">
+                <label for="description">Descrição</label>
+                <textarea
+                    name="description"
+                    class="form-control"
+                    id="description"
+                    rows="5"
+                >{{ form.description.value|default:'' }}</textarea>
+                {% if form.description.errors %}
+                    <div class="alert alert-danger mt-10" role="alert">
+                {% for error in form.description.errors %}
+                    <span>{{ error }}</span>
+                {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 text-center">
+                <button class="btn post-btn" type="submit">
+                    Atualizar
+                </button>
+            </div>
+        </div>
+    </form>
+    <div
+    class="modal fade"
+    id="exampleModalLong"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="exampleModalLongTitle"
+    aria-hidden="true"
+    >
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header d-flex justify-content-center">
+                    <h5 class="modal-title" id="exampleModalLongTitle">
+                        Cadastro Endereço
+                    </h5>
+                    <button
+                        type="button"
+                        class="close"
+                        data-dismiss="modal"
+                        aria-label="Fechar"
+                    >
+                        <span aria-hidden="true"></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form
+                        action="address_register"
+                        method="post"
+                        id="form_address"
+                    >
+                        <div class="form-group">
+                            <label for="title">Título</label>
+                            <input
+                                type="text"
+                                id="title"
+                                name="title"
+                                class="form-control"
+                                required
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label for="cep">Cep</label>
+                            <input
+                                type="text"
+                                id="cep"
+                                name="cep"
+                                class="form-control"
+                                maxlength="8"
+                                oninput="this.value = this.value.replace(/\D*/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');"
+                                required
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label for="uf">Estado</label>
+                            <input
+                                type="text"
+                                id="uf"
+                                name="uf"
+                                class="form-control"
+                                required
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label for="city">Cidade</label>
+                            <input
+                                type="text"
+                                id="city"
+                                name="city"
+                                class="form-control"
+                                required
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label for="district">Bairro</label>
+                            <input
+                                type="text"
+                                id="district"
+                                name="district"
+                                class="form-control"
+                                required
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label for="street">Rua</label>
+                            <input
+                                type="text"
+                                id="street"
+                                name="street"
+                                class="form-control"
+                                required
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label for="number">Número</label>
+                            <input
+                                type="text"
+                                id="number"
+                                name="number"
+                                class="form-control"
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label for="complement">Complemento</label>
+                            <input
+                                type="text"
+                                id="complement"
+                                name="complement"
+                                class="form-control"
+                            />
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn post-btn">
+                                Salvar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content_dashboard %}

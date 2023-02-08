@@ -20,3 +20,16 @@ class CandidateUserMixin(BaseUserMixin):
 class CompanyUserMixin(BaseUserMixin):
     def test_func(self):
         return self.request.user.is_company == True
+
+
+class OwnerUserMixin:
+    def dispatch(self, request, *args, **kwargs):
+        if self.request.user.is_candidate:
+            self.kwargs['pk'] = self.request.user.profilecandidate.id
+        if self.request.user.is_company:
+            self.kwargs['pk'] = self.request.user.profilecompany.id
+
+        return self.handle_dispatch(request, *args, **kwargs)
+
+    def handle_dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
