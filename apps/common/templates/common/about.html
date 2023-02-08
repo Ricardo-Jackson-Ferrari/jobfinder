@@ -1,0 +1,68 @@
+{% extends 'global/base.html' %}
+{% load static %}
+{% block content %}
+<div class="slider-area">
+	<div
+		class="single-slider section-overly slider-height2 d-flex align-items-center"
+		data-background="{% get_media_prefix %}hero/about.jpg"
+	>
+		<div class="container">
+			<div class="row">
+				<div class="col-xl-12">
+					<div class="hero-cap text-center">
+						<h2>Sobre nós</h2>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="support-company-area support-padding fix mb-30">
+	<div class="container">
+		<div class="row align-items-center">
+			<div class="col-xl-6 col-lg-6">
+				<div class="right-caption">
+					<!-- Section Tittle -->
+					<div class="section-tittle section-tittle2">
+						<span>O que estamos fazendo</span>
+						<h2>
+							2 mil pessoas talentosas já conquistaram
+							seu emprego
+						</h2>
+					</div>
+					<div class="support-caption">
+						<p class="pera-top">
+							Plataforma otimizada para a melhor
+							interação entre a empresa e o candidato.
+						</p>
+						<p>
+							Chega de ter que se cadastrar e colocar
+							seus dados toda vez, aqui na JobFinder
+							você cadastra seu currículo em PDF e
+							basta se inscrever nas vagas de seu
+							interesse, além disso é fácil buscar
+							pelas vagas de seu interesse e gerenciar
+							as candidaturas, dessa forma tanto a
+							empresa quanto o candidato ganham, pois
+							otimizar a geração de uma relação entre
+							os dois é o que nos move.
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="col-xl-6 col-lg-6">
+				<div class="support-location-img">
+					<img
+						src="{% get_media_prefix %}service/support-img.jpg"
+						alt=""
+					/>
+					<div class="support-img-cap text-center">
+						<p>Desde</p>
+						<span>2022</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock content %}

@@ -79,12 +79,12 @@
 													</a>
 												</li>
 												<li>
-													<a href="about.html"
+													<a href="{% url 'common:about' %}"
 														>Sobre</a
 													>
 												</li>
 												<li>
-													<a href="contact.html"
+													<a href="{% url 'common:contact' %}"
 														>Contato</a
 													>
 												</li>
@@ -181,11 +181,11 @@
 											<a href="job_listing.html">Vagas</a>
 										</li>
 										<li>
-											<a href="contact.html"
+											<a href="{% url 'common:contact' %}"
 												>Contate-nos</a
 											>
 										</li>
-										<li><a href="about.html">Sobre</a></li>
+										<li><a href="{% url 'common:about' %}">Sobre</a></li>
 									</ul>
 								</div>
 							</div>
@@ -306,7 +306,6 @@
 		<script src="{% static 'js/jquery.sticky.js' %}"></script>
 
 		<!-- contact js -->
-		<script src="{% static 'js/contact.js' %}"></script>
 		<script src="{% static 'js/jquery.form.js' %}"></script>
 		<script src="{% static 'js/jquery.validate.min.js' %}"></script>
 		<script src="{% static 'js/mail-script.js' %}"></script>
