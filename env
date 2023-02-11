@@ -1,6 +1,11 @@
-SECRET_KEY=change me
+SECRET_KEY=django-insecure--$wt01+fdjzjip^t$)^!3#2$brqjwk@$*cl3hwq=9x@ue$%$0i
 DEBUG=True
 ALLOWED_HOSTS=*
 POSTGRES_USER=local_user
 POSTGRES_PASSWORD=local_password
 INTERNAL_IPS=127.0.0.1
+EMAIL_BACKEND=django.core.mail.backends.smtp.EmailBackend
+EMAIL_HOST_USER=contato@jobfinder.com.br
+EMAIL_HOST=mailhog
+EMAIL_PORT=1025
+DOMAIN=localhost:8000

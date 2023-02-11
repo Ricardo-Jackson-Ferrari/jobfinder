@@ -2,18 +2,24 @@ version: '3.8'
 
 services:
   app:
+    container_name: app
     build:
       context: .
-
+      dockerfile: dockerfile.dev
     ports:
       - 8000:8000
     command: pipenv run python manage.py runserver 0.0.0.0:8000
+    stdin_open: true
+    tty: true
     volumes:
       - .:/home/python/app
     depends_on:
       db:
         condition: service_healthy
+    links:
+      - 'mailhog'
   db:
+    container_name: db
     image: postgres:alpine
     volumes:
       - ./.database:/var/lib/postgresql/data
@@ -30,3 +36,12 @@ services:
       interval: 3s
       timeout: 3s
       retries: 10
+  mailhog:
+    container_name: mailhog
+    image: mailhog/mailhog:latest
+    restart: always
+    logging:
+      driver: 'none'
+    ports:
+      - 1025:1025
+      - 8025:8025
