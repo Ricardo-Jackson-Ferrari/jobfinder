@@ -1,6 +1,7 @@
 from typing import Any, Dict, Optional, Type
 
 from django.contrib import messages
+from django.contrib.auth import views as auth_views
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView as DjangoLoginView
 from django.contrib.auth.views import LogoutView as DjangoLogoutView
@@ -160,8 +161,10 @@ class RecoveryView(SuccessMessageMixin, FormView):
     }
 
     def form_valid(self, form: BaseForm) -> HttpResponse:
-        send_recovery_email(self.request.POST.get('email'))
-        return super().form_valid(form)
+        if send_recovery_email(self.request.POST.get('email')):
+            return super().form_valid(form)
+        messages.error(self.request, _('Error sending email'))
+        return self.form_invalid(form)
 
 
 class LoginView(DjangoLoginView):
@@ -212,3 +215,10 @@ class ProfileCandidateUpdateView(
     form_class = ProfileCandidateForm
     extra_context = {'title': 'Editar perfil'}
     success_url = reverse_lazy('account:profile_candidate_update')
+
+class PasswordResetView(
+    SuccessMessageMixin, auth_views.PasswordResetConfirmView
+):
+    template_name = 'account/auth/password_reset.html'
+    success_url = reverse_lazy('account:login')
+    success_message = _('Password reset complete')

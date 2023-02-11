@@ -7,7 +7,12 @@
     <title>Recuperação de conta</title>
 </head>
 <body>
-    <h1>Olá {{ name }}</h1>
-    <p>Acesse o <a href="{{ link }}">link</a> para redefinir a senha.</p>
+    <h1>Olá</h1>
+    <p>Recebemos uma solicitação para redefinir a senha da sua conta para este endereço de e-mail. Para iniciar o processo de redefinição de senha da sua conta, clique no link abaixo.</p>
+    <a href="{{ protocol }}://{{ domain }}{% url 'account:password_reset_confirm' uidb64=uid token=token %}">{{ protocol }}://{{ domain }}{% url 'account:password_reset_confirm' uidb64=uid token=token %}</a>
+    <p>Este link só pode ser usado uma vez. Se você precisar redefinir sua senha novamente, visite <a href="{{ protocol }}://{{domain}}{% url 'account:recovery' %}">{{ protocol }}://{{domain}}{% url 'account:recovery' %}</a> e solicite outra reinicialização.</p>
+    <p>Se você não fez essa solicitação, basta ignorar este e-mail.</p>
+    <p>Sinceramente,</p>
+    <p>A equipe do JobFinder.</p>
 </body>
 </html>

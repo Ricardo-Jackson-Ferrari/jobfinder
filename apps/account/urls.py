@@ -21,12 +21,17 @@ urlpatterns = [
         views.RegisterCompanyView.as_view(),
         name='company_signup',
     ),
+    path('logout/', views.LogoutView.as_view(), name='logout'),
     path(
         'recovery/',
         views.RecoveryView.as_view(),
         name='recovery',
     ),
-    path('logout/', views.LogoutView.as_view(), name='logout'),
+    path(
+        'reset/<uidb64>/<token>/',
+        views.PasswordResetView.as_view(),
+        name='password_reset_confirm',
+    ),
     path('dashboard/', views.DashboardView.as_view(), name='dashboard'),
     path('profile/<int:pk>/', views.ProfileView.as_view(), name='profile'),
     path(
