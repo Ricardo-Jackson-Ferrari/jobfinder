@@ -32,6 +32,7 @@ urlpatterns = [
         views.PasswordResetView.as_view(),
         name='password_reset_confirm',
     ),
+    path('settings/', views.SettingsView.as_view(), name='settings'),
     path('dashboard/', views.DashboardView.as_view(), name='dashboard'),
     path('profile/<int:pk>/', views.ProfileView.as_view(), name='profile'),
     path(

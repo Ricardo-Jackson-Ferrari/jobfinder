@@ -222,3 +222,12 @@ class PasswordResetView(
     template_name = 'account/auth/password_reset.html'
     success_url = reverse_lazy('account:login')
     success_message = _('Password reset complete')
+
+
+class SettingsView(
+    SuccessMessageMixin, LoginRequiredMixin, auth_views.PasswordChangeView
+):
+    template_name = 'account/auth/settings.html'
+    success_url = reverse_lazy('account:settings')
+    success_message = _('Password change complete')
+    extra_context = {'title': _('Settings')}
