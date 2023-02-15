@@ -1,3 +1,4 @@
+from address.models import Address
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import FileExtensionValidator
 from django.db import models
@@ -52,6 +53,9 @@ class ProfileCandidate(ProfileAbstract):
 class ProfileCompany(ProfileAbstract):
     logo = models.ImageField(upload_to='logo_company', blank=True)
     name = models.CharField(_('name'), max_length=100)
+    address = models.ForeignKey(
+        to=Address, on_delete=models.SET_NULL, blank=True, null=True
+    )
     contact_email = models.EmailField(
         _('contact email'), max_length=255, blank=True
     )

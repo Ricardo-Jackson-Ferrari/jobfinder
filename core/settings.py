@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     # Own
     'account',
     'common',
+    'address',
 ]
 
 if DEBUG:

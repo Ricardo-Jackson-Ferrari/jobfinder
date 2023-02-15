@@ -1,3 +1,4 @@
+from address.models import Address
 from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
@@ -40,6 +41,11 @@ class ProfileCandidateForm(forms.ModelForm):
 
 
 class ProfileCompanyForm(forms.ModelForm):
+    def __init__(self, user=None, *args, **kwargs) -> None:
+        super(ProfileCompanyForm, self).__init__(*args, **kwargs)
+        if user:
+            self.fields['address'].queryset = Address.objects.filter(user=user)
+
     class Meta:
         model = ProfileCompany
         exclude = ('user',)

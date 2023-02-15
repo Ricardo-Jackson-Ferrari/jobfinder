@@ -41,6 +41,11 @@ urlpatterns = [
         name='profile_company_update',
     ),
     path(
+        'company/address/',
+        views.AddressCompany.as_view(),
+        name='company_address',
+    ),
+    path(
         'candidate/profile_update/',
         views.ProfileCandidateUpdateView.as_view(),
         name='profile_candidate_update',

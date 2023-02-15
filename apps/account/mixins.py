@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.utils.translation import gettext_lazy as _
 
@@ -22,12 +23,24 @@ class CompanyUserMixin(BaseUserMixin):
         return self.request.user.is_company == True
 
 
-class OwnerUserMixin:
+class OwnerProfileMixin:
     def dispatch(self, request, *args, **kwargs):
         if self.request.user.is_candidate:
             self.kwargs['pk'] = self.request.user.profilecandidate.id
         if self.request.user.is_company:
             self.kwargs['pk'] = self.request.user.profilecompany.id
+
+        return self.handle_dispatch(request, *args, **kwargs)
+
+    def handle_dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+
+class OwnerUserMixin:
+    def dispatch(self, request, *args, **kwargs):
+        obj = self.get_object()
+        if obj.user != self.request.user:
+            return HttpResponse('Unauthorized', status=401)
 
         return self.handle_dispatch(request, *args, **kwargs)
 

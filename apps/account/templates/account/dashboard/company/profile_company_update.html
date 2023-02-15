@@ -1,7 +1,6 @@
 {% extends 'account/dashboard/base.html' %}
 {% load static %}
 {% block head %}
-<script src="{% static 'js/address_form.js' %}" defer></script>
 <script src="{% static 'js/profile_company.js' %}" defer></script>
 {% endblock head %}
 {% block content_dashboard %}
@@ -93,8 +92,11 @@
                         class="select-mod"
                         name="address"
                         id="address"
+                        value="{{ form.address.value }}"
                     >
-                        <option value="">---</option>
+                        {% for k, v in form.fields.address.choices %}
+                        <option value="{{ k }}" {% if form.address.value == k %} selected{% endif %}>{{ v }}</option>
+                        {% endfor %}
                     </select>
                     <button class="btn-add" type="button">
                         <i class="fas fa-plus"></i>
@@ -225,95 +227,12 @@
                 </div>
                 <div class="modal-body">
                     <form
-                        action="address_register"
-                        method="post"
+                        action="{% url 'address:create' %}"
+                        method="POST"
                         id="form_address"
                     >
-                        <div class="form-group">
-                            <label for="title">Título</label>
-                            <input
-                                type="text"
-                                id="title"
-                                name="title"
-                                class="form-control"
-                                required
-                            />
-                        </div>
-                        <div class="form-group">
-                            <label for="cep">Cep</label>
-                            <input
-                                type="text"
-                                id="cep"
-                                name="cep"
-                                class="form-control"
-                                maxlength="8"
-                                oninput="this.value = this.value.replace(/\D*/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');"
-                                required
-                            />
-                        </div>
-                        <div class="form-group">
-                            <label for="uf">Estado</label>
-                            <input
-                                type="text"
-                                id="uf"
-                                name="uf"
-                                class="form-control"
-                                required
-                            />
-                        </div>
-                        <div class="form-group">
-                            <label for="city">Cidade</label>
-                            <input
-                                type="text"
-                                id="city"
-                                name="city"
-                                class="form-control"
-                                required
-                            />
-                        </div>
-                        <div class="form-group">
-                            <label for="district">Bairro</label>
-                            <input
-                                type="text"
-                                id="district"
-                                name="district"
-                                class="form-control"
-                                required
-                            />
-                        </div>
-                        <div class="form-group">
-                            <label for="street">Rua</label>
-                            <input
-                                type="text"
-                                id="street"
-                                name="street"
-                                class="form-control"
-                                required
-                            />
-                        </div>
-                        <div class="form-group">
-                            <label for="number">Número</label>
-                            <input
-                                type="text"
-                                id="number"
-                                name="number"
-                                class="form-control"
-                            />
-                        </div>
-                        <div class="form-group">
-                            <label for="complement">Complemento</label>
-                            <input
-                                type="text"
-                                id="complement"
-                                name="complement"
-                                class="form-control"
-                            />
-                        </div>
-                        <div class="text-center">
-                            <button type="submit" class="btn post-btn">
-                                Salvar
-                            </button>
-                        </div>
+                    {% csrf_token %}
+                    {% include 'address/forms/create_address.html' %}
                     </form>
                 </div>
             </div>

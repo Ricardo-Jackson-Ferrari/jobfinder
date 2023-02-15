@@ -1,0 +1,206 @@
+{% if form.non_field_errors %}
+<div class="alert alert-danger mt-10" role="alert">
+	{% for error in form.non_field_errors %}
+	<span>{{ error }}</span>
+	{% endfor %}
+</div>
+{% endif %}
+<div class="form-group">
+	<label for="title">Título</label>
+	<input
+		type="text"
+		id="title"
+		name="title"
+		class="form-control"
+		required=""
+		value="{{ form.title.value|default:'' }}"
+	/>
+	{% if form.title.errors %}
+	<div class="alert alert-danger mt-10" role="alert">
+		{% for error in form.title.errors %}
+		<span>{{ error }}</span>
+		{% endfor %}
+	</div>
+	{% endif %}
+</div>
+<div class="form-group">
+	<label for="zipcode">Cep</label>
+	<input
+		type="text"
+		id="zipcode"
+		name="zipcode"
+		class="form-control"
+		maxlength="8"
+		oninput="this.value = this.value.replace(/\D*/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');"
+		required=""
+		value="{{ form.zipcode.value|default:'' }}"
+	/>
+	{% if form.zipcode.errors %}
+	<div class="alert alert-danger mt-10" role="alert">
+		{% for error in form.zipcode.errors %}
+		<span>{{ error }}</span>
+		{% endfor %}
+	</div>
+	{% endif %}
+</div>
+<div class="form-select">
+	<label for="uf">Estado</label>
+	<select name="uf" required="" id="uf" class="select-mod">
+		<option value="" selected="">---------</option>
+	  
+		<option value="AC">Acre</option>
+	  
+		<option value="AL">Alagoas</option>
+	  
+		<option value="AP">Amapá</option>
+	  
+		<option value="AM">Amazonas</option>
+	  
+		<option value="BA">Bahia</option>
+	  
+		<option value="CE">Ceará</option>
+	  
+		<option value="DF">Distrito Federal</option>
+	  
+		<option value="ES">Espírito Santo</option>
+	  
+		<option value="GO">Goiás</option>
+	  
+		<option value="MA">Maranhão</option>
+	  
+		<option value="MT">Mato Grosso</option>
+	  
+		<option value="MS">Mato Grosso do Sul</option>
+	  
+		<option value="MG">Minas Gerais</option>
+	  
+		<option value="PA">Pará</option>
+	  
+		<option value="PB">Paraíba</option>
+	  
+		<option value="PR">Paraná</option>
+	  
+		<option value="PE">Pernambuco</option>
+	  
+		<option value="PI">Piauí</option>
+	  
+		<option value="RJ">Rio de Janeiro</option>
+	  
+		<option value="RN">Rio Grande do Norte</option>
+	  
+		<option value="RS">Rio Grande do Sul</option>
+	  
+		<option value="RO">Rondônia</option>
+	  
+		<option value="RR">Roraima</option>
+	  
+		<option value="SC">Santa Catarina</option>
+	  
+		<option value="SP">São Paulo</option>
+	  
+		<option value="SE">Sergipe</option>
+	  
+		<option value="TO">Tocantins</option>
+	  
+	  </select>
+	
+	{% if form.uf.errors %}
+	<div class="alert alert-danger mt-10" role="alert">
+		{% for error in form.uf.errors %}
+		<span>{{ error }}</span>
+		{% endfor %}
+	</div>
+	{% endif %}
+</div>
+<div class="form-group">
+	<label for="city">Cidade</label>
+	<input
+		type="text"
+		id="city"
+		name="city"
+		class="form-control"
+		required=""
+		value="{{ form.city.value|default:'' }}"
+	/>
+	{% if form.city.errors %}
+	<div class="alert alert-danger mt-10" role="alert">
+		{% for error in form.city.errors %}
+		<span>{{ error }}</span>
+		{% endfor %}
+	</div>
+	{% endif %}
+</div>
+<div class="form-group">
+	<label for="district">Bairro</label>
+	<input
+		type="text"
+		id="district"
+		name="district"
+		class="form-control"
+		required=""
+		value="{{ form.district.value|default:'' }}"
+	/>
+	{% if form.district.errors %}
+	<div class="alert alert-danger mt-10" role="alert">
+		{% for error in form.district.errors %}
+		<span>{{ error }}</span>
+		{% endfor %}
+	</div>
+	{% endif %}
+</div>
+<div class="form-group">
+	<label for="street">Rua</label>
+	<input
+		type="text"
+		id="street"
+		name="street"
+		class="form-control"
+		required=""
+		value="{{ form.street.value|default:'' }}"
+	/>
+	{% if form.street.errors %}
+	<div class="alert alert-danger mt-10" role="alert">
+		{% for error in form.street.errors %}
+		<span>{{ error }}</span>
+		{% endfor %}
+	</div>
+	{% endif %}
+</div>
+<div class="form-group">
+	<label for="number">Número</label>
+	<input
+		type="text"
+		id="number"
+		name="number"
+		class="form-control"
+		value="{{ form.number.value|default:'' }}"
+	/>
+	{% if form.number.errors %}
+	<div class="alert alert-danger mt-10" role="alert">
+		{% for error in form.number.errors %}
+		<span>{{ error }}</span>
+		{% endfor %}
+	</div>
+	{% endif %}
+</div>
+<div class="form-group">
+	<label for="complement">Complemento</label>
+	<input
+		type="text"
+		id="complement"
+		name="complement"
+		class="form-control"
+		value="{{ form.complement.value|default:'' }}"
+	/>
+	{% if form.complement.errors %}
+	<div class="alert alert-danger mt-10" role="alert">
+		{% for error in form.complement.errors %}
+		<span>{{ error }}</span>
+		{% endfor %}
+	</div>
+	{% endif %}
+</div>
+<div class="submit-msg"></div>
+<div class="text-center">
+	<button type="submit" class="btn post-btn">Salvar</button>
+</div>

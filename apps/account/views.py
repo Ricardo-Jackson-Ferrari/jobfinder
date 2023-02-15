@@ -30,7 +30,7 @@ from .forms import (
     RegisterCandidateForm,
     RegisterCompanyForm,
 )
-from .mixins import CandidateUserMixin, CompanyUserMixin, OwnerUserMixin
+from .mixins import CandidateUserMixin, CompanyUserMixin, OwnerProfileMixin
 from .models import ProfileCandidate, ProfileCompany
 
 ACCOUNT_LOGIN_URL = reverse_lazy('account:login')
@@ -195,26 +195,42 @@ class ProfileView(DetailView):
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         ctx = super().get_context_data(**kwargs)
-        ctx['title'] = f'Perfil | {self.object.user.first_name}'
+        ctx['title'] = f'Profile | {self.object.name}'
         return ctx
 
 
-class ProfileCompanyUpdateView(CompanyUserMixin, OwnerUserMixin, UpdateView):
+class ProfileCompanyUpdateView(
+    CompanyUserMixin, OwnerProfileMixin, UpdateView
+):
     template_name = 'account/dashboard/company/profile_company_update.html'
     model = ProfileCompany
     form_class = ProfileCompanyForm
-    extra_context = {'title': 'Editar perfil'}
+    extra_context = {'title': _('Edit profile')}
     success_url = reverse_lazy('account:profile_company_update')
+
+    def get_form(
+        self, form_class: Optional[Type[BaseModelForm]] = None
+    ) -> BaseModelForm:
+        """Return an instance of the form to be used in this view."""
+        if form_class is None:
+            form_class = self.get_form_class()
+        return form_class(self.request.user, **self.get_form_kwargs())
 
 
 class ProfileCandidateUpdateView(
-    CandidateUserMixin, OwnerUserMixin, UpdateView
+    CandidateUserMixin, OwnerProfileMixin, UpdateView
 ):
     template_name = 'account/dashboard/candidate/profile_candidate_update.html'
     model = ProfileCandidate
     form_class = ProfileCandidateForm
-    extra_context = {'title': 'Editar perfil'}
+    extra_context = {'title': _('Edit profile')}
     success_url = reverse_lazy('account:profile_candidate_update')
+
+
+class AddressCompany(CompanyUserMixin, TemplateView):
+    template_name = 'account/dashboard/company/address.html'
+    extra_context = {'title': _('Address management')}
+
 
 class PasswordResetView(
     SuccessMessageMixin, auth_views.PasswordResetConfirmView
