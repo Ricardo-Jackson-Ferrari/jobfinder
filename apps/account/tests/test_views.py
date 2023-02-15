@@ -2,14 +2,23 @@ from unittest.mock import patch
 
 from account.forms import ProfileCandidateForm, RegisterCandidateForm
 from account.models import ProfileCandidate
-from account.views import LoginView, ProfileView, RegisterBaseView
+from account.views import (
+    LoginView,
+    ProfileCompanyUpdateView,
+    ProfileView,
+    RecoveryForm,
+    RecoveryView,
+    RegisterBaseView,
+)
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ImproperlyConfigured
 from django.db import DatabaseError
 from django.forms.models import BaseModelForm
+from django.http import HttpResponse
 from django.test import RequestFactory
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.utils.translation import gettext_lazy as _
+from model_bakery import baker
 from pytest import raises
 
 ACCOUNT_RECOVERY_URL = reverse_lazy('account:recovery')
@@ -17,13 +26,40 @@ ACCOUNT_REGISTER_CANDIDATE_URL = reverse_lazy('account:candidate_signup')
 
 
 class TestRecoveryView:
-    def test_form_valid(self, client, common_user):
+    def test_form_valid_with_success_send_recovery_mail(
+        self, client, common_user
+    ):
         response = client.post(
             ACCOUNT_RECOVERY_URL, {'email': common_user.email}
         )
         assert response.status_code == 302
         assert response.url == ACCOUNT_RECOVERY_URL
         assert response.has_header('location') is True
+
+    def test_form_valid_with_send_recovery_email_returning_false(
+        self, mocker, common_user, set_request_message
+    ):
+        factory = RequestFactory()
+        request = factory.post(
+            reverse('account:recovery'), {'email': common_user.email}
+        )
+        request.user = common_user
+        set_request_message(request)
+        form = RecoveryForm(request.POST)
+        form.is_valid()
+
+        # Patch the send_recovery_email function
+        mocker.patch('account.views.send_recovery_email', return_value=False)
+
+        # Run the test
+        view = RecoveryView()
+        view.request = request
+        response = view.form_valid(form)
+
+        # Check the response
+        assert isinstance(response, HttpResponse)
+        assert response.status_code == 200
+        assert response.template_name == ['account/auth/recovery.html']
 
     def test_form_invalid(self, client, common_user):
         response = client.post(
@@ -208,8 +244,36 @@ class TestLoginView:
 
 
 class TestProfileView:
-    def test_get_context_data_with_title(self, candidate_user):
+    def test_get_context_data_with_title(self, company_user):
         class TestView(ProfileView):
-            object = candidate_user.profilecandidate
+            object = company_user.profilecompany
 
         assert 'title' in TestView().get_context_data().keys()
+
+
+class TestProfileCompanyUpdateView:
+    def test_get_form(self, mocker, company_user, common_user):
+        factory = RequestFactory()
+        request = factory.get(reverse('account:profile_company_update'))
+        request.user = company_user
+        baker.make('Address', user=common_user)
+        baker.make('Address', user=company_user)
+
+        view = ProfileCompanyUpdateView()
+        view.request = request
+        form = view.get_form()
+
+        assert form.fields['address'].queryset.count() == 1
+
+    def test_get_form_without_form_class(
+        self, mocker, company_user, common_user
+    ):
+        factory = RequestFactory()
+        request = factory.get(reverse('account:profile_company_update'))
+        request.user = company_user
+
+        view = ProfileCompanyUpdateView()
+        view.request = request
+        form = view.get_form(form_class=view.form_class)
+
+        assert form.fields['address'].queryset.count() == 0
