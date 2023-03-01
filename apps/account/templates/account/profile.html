@@ -78,109 +78,27 @@
             </div>
         </div>
             <div class="row company-jobs">
+                {% for job in jobs %}
                 <div class="col-lg-4 col-md-6 mb-4">
-                    <a href="job_details.html">
+                    <a href="{% url 'job:detail' job.title|slugify job.id %}">
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="card-title text-center">
-                                    Auxiliar Administrativo
+                                    {{ job.title }}
                                 </h5>
                                 <p class="card-text">
-                                    Veniam nisi non est proident
-                                    proident culpa proident ut sunt
-                                    eu. Aute enim eu pariatur aute
-                                    voluptate sit ad incididunt aute
-                                    excepteur. Sunt quis
-                                    reprehenderit consequat sunt
-                                    culpa aliquip fugiat laborum
-                                    consectetur duis. Cillum aute
-                                    amet aute incididunt excepteur
-                                    dolor exercitation velit
-                                    exercitation exercitation
-                                    tempor.
+                                    {{ job.description }}
                                 </p>
                             </div>
                             <div class="card-footer">
                                 <small class="text-muted"
-                                    >Anunciada a 2 dias</small
+                                    >{{ job.posted_at|timesince }} atrás</small
                                 >
                             </div>
                         </div>
                     </a>
                 </div>
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <a href="job_details.html">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title text-center">
-                                    Desenvolvedor Java Pleno
-                                </h5>
-                                <p class="card-text">
-                                    Culpa duis in officia eu esse
-                                    enim commodo. Dolor et
-                                    consectetur amet incididunt.
-                                    Sint eu sint magna reprehenderit
-                                    dolor. Magna tempor sunt dolore
-                                    mollit culpa sit officia ullamco
-                                    tempor esse.
-                                </p>
-                            </div>
-                            <div class="card-footer">
-                                <small class="text-muted"
-                                    >Anunciada a 5 dias</small
-                                >
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <a href="job_details.html">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title text-center">
-                                    Tech Recruiter
-                                </h5>
-                                <p class="card-text">
-                                    This is a wider card with
-                                    supporting text below as a
-                                    natural lead-in to additional
-                                    content. This card has even
-                                    longer content than the first to
-                                    show that equal height action.
-                                </p>
-                            </div>
-                            <div class="card-footer">
-                                <small class="text-muted"
-                                    >Anunciada a 8 dias</small
-                                >
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <a href="job_details.html">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title text-center">
-                                    Desenvolvedor Front-end Pleno
-                                </h5>
-                                <p class="card-text">
-                                    This is a wider card with
-                                    supporting text below as a
-                                    natural lead-in to additional
-                                    content. This card has even
-                                    longer content than the first to
-                                    show that equal height action.
-                                </p>
-                            </div>
-                            <div class="card-footer">
-                                <small class="text-muted"
-                                    >Anunciada a 9 dias</small
-                                >
-                            </div>
-                        </div>
-                    </a>
-                </div>
+                {% endfor %}
             </div>
         </div>
         </div>

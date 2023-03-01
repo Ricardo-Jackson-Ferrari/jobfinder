@@ -9,6 +9,8 @@ python-decouple = "*"
 ipdb = "*"
 pillow = "*"
 django-widget-tweaks = "*"
+djangorestframework = "*"
+django-filter = "*"
 
 [dev-packages]
 isort = "*"
@@ -22,6 +24,7 @@ pytest-django = "*"
 model-bakery = "*"
 ipython = "*"
 django-extensions = "*"
+mixer = "*"
 
 [requires]
 python_version = "3.11"

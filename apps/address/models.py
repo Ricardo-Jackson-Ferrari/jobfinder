@@ -6,9 +6,11 @@ from .choices import states
 
 
 class Address(models.Model):
-    user = models.ForeignKey(to='account.User', on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        to='account.User', on_delete=models.CASCADE, related_name='adresses'
+    )
     title = models.CharField(max_length=100)
-    zipcode = models.CharField(max_length=8)
+    zipcode = models.CharField(max_length=9)
     uf = models.CharField(max_length=2, choices=states)
     city = models.CharField(max_length=100)
     district = models.CharField(max_length=100)
@@ -20,18 +22,10 @@ class Address(models.Model):
         return self.title
 
     def clean(self) -> None:
-        if self.user.address_set.exclude(pk=self.pk).count() >= 5:
+        if self.user.adresses.exclude(pk=self.pk).count() >= 5:
             raise ValidationError(
                 _('maximum number of address already registered')
             )
-
-    def unique_error_message(self, model_class, unique_check):
-        error = super().unique_error_message(model_class, unique_check)
-
-        error.message = _('An address with title %(title)s already exists.')
-        error.params['title'] = self.title
-
-        return error
 
     class Meta:
         unique_together = ['user', 'title']

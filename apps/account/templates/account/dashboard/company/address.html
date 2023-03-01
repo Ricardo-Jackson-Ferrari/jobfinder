@@ -5,6 +5,7 @@
 
 <script src="{% static 'js/bootstrap-table.min.js' %}" defer></script>
 <script src="{% static 'js/bootstrap-table-pt-BR.js' %}" defer></script>
+<script src="{% static 'js/jquery.mask.min.js' %}" defer></script>
 <script src="{% static 'js/address_manage.js' %}" defer></script>
 {% endblock head %}
 {% block content_dashboard %}
@@ -25,11 +26,12 @@
             data-toggle="table"
             data-locale="pt-BR"
             data-search="true"
+            data-side-pagination="client"
             data-search-accent-neutralise="true"
             data-sort-name="main"
             data-sort-order="asc"
             data-id-field="id"
-            data-url="{% url 'address:list' %}"
+            data-url="{% url 'address:api_list' %}"
         >
         <caption>Lista de endereços</caption>
             <thead>
@@ -91,7 +93,7 @@
                 <div class="modal-body">
                     <form
                         action="#"
-                        method="POST"
+                        data-method="POST"
                         id="form_address"
                     >
                     {% csrf_token %}

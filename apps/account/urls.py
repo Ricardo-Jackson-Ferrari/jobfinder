@@ -34,7 +34,11 @@ urlpatterns = [
     ),
     path('settings/', views.SettingsView.as_view(), name='settings'),
     path('dashboard/', views.DashboardView.as_view(), name='dashboard'),
-    path('profile/<int:pk>/', views.ProfileView.as_view(), name='profile'),
+    path(
+        'company/<str:title>/<int:pk>/',
+        views.ProfileView.as_view(),
+        name='profile_company',
+    ),
     path(
         'company/profile_update/',
         views.ProfileCompanyUpdateView.as_view(),
@@ -42,7 +46,7 @@ urlpatterns = [
     ),
     path(
         'company/address/',
-        views.AddressCompany.as_view(),
+        views.AddressManage.as_view(),
         name='company_address',
     ),
     path(

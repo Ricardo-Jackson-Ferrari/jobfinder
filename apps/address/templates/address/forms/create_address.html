@@ -30,8 +30,6 @@
 		id="zipcode"
 		name="zipcode"
 		class="form-control"
-		maxlength="8"
-		oninput="this.value = this.value.replace(/\D*/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');"
 		required=""
 		value="{{ form.zipcode.value|default:'' }}"
 	/>
@@ -43,7 +41,7 @@
 	</div>
 	{% endif %}
 </div>
-<div class="form-select">
+<div>
 	<label for="uf">Estado</label>
 	<select name="uf" required="" id="uf" class="select-mod">
 		<option value="" selected="">---------</option>

@@ -41,7 +41,7 @@ class RegisterBaseView(SuccessMessageMixin, CreateView):
     success_url = ACCOUNT_LOGIN_URL
     success_message = _('Successfully registered!')
     error_message = _('Error when registering')
-    user_group: str = ''
+    user_group = ''
 
     def post(
         self, request: HttpRequest, *args: str, **kwargs: Any
@@ -196,6 +196,7 @@ class ProfileView(DetailView):
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         ctx = super().get_context_data(**kwargs)
         ctx['title'] = f'Profile | {self.object.name}'
+        ctx['jobs'] = get_job_available().filter(company=self.object)
         return ctx
 
 
@@ -227,7 +228,7 @@ class ProfileCandidateUpdateView(
     success_url = reverse_lazy('account:profile_candidate_update')
 
 
-class AddressCompany(CompanyUserMixin, TemplateView):
+class AddressManage(CompanyUserMixin, TemplateView):
     template_name = 'account/dashboard/company/address.html'
     extra_context = {'title': _('Address management')}
 
