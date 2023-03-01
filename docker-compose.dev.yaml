@@ -5,7 +5,7 @@ services:
     container_name: app
     build:
       context: .
-      dockerfile: dockerfile.dev
+      dockerfile: Dockerfile.dev
     ports:
       - 8000:8000
     command: pipenv run python manage.py runserver 0.0.0.0:8000
