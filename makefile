@@ -9,6 +9,9 @@ down: ## stop docker compose
 local: ## stop application in localhost without db
 	@python manage.py runserver
 
+mail:
+	@docker run -p 8025:8025 -p 1025:1025 mailhog/mailhog
+
 ## @ format
 .PHONY: black isort format
 isort:

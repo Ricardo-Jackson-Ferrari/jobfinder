@@ -2,33 +2,106 @@
 
 import account.managers
 import django.core.validators
-from django.db import migrations, models
 import django.utils.timezone
+from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
             name='User',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('password', models.CharField(max_length=128, verbose_name='password')),
-                ('last_login', models.DateTimeField(blank=True, null=True, verbose_name='last login')),
-                ('is_superuser', models.BooleanField(default=False, help_text='Designates that this user has all permissions without explicitly assigning them.', verbose_name='superuser status')),
-                ('first_name', models.CharField(blank=True, max_length=150, verbose_name='first name')),
-                ('last_name', models.CharField(blank=True, max_length=150, verbose_name='last name')),
-                ('is_staff', models.BooleanField(default=False, help_text='Designates whether the user can log into this admin site.', verbose_name='staff status')),
-                ('is_active', models.BooleanField(default=True, help_text='Designates whether this user should be treated as active. Unselect this instead of deleting accounts.', verbose_name='active')),
-                ('date_joined', models.DateTimeField(default=django.utils.timezone.now, verbose_name='date joined')),
-                ('email', models.EmailField(error_messages={'unique': 'A user with that email already exists.'}, help_text='Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.', max_length=150, unique=True, verbose_name='email address')),
-                ('is_candidate', models.BooleanField(default=False, verbose_name='candidate status')),
-                ('is_company', models.BooleanField(default=False, verbose_name='company status')),
+                (
+                    'id',
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name='ID',
+                    ),
+                ),
+                (
+                    'password',
+                    models.CharField(max_length=128, verbose_name='password'),
+                ),
+                (
+                    'last_login',
+                    models.DateTimeField(
+                        blank=True, null=True, verbose_name='last login'
+                    ),
+                ),
+                (
+                    'is_superuser',
+                    models.BooleanField(
+                        default=False,
+                        help_text='Designates that this user has all permissions without explicitly assigning them.',
+                        verbose_name='superuser status',
+                    ),
+                ),
+                (
+                    'first_name',
+                    models.CharField(
+                        blank=True, max_length=150, verbose_name='first name'
+                    ),
+                ),
+                (
+                    'last_name',
+                    models.CharField(
+                        blank=True, max_length=150, verbose_name='last name'
+                    ),
+                ),
+                (
+                    'is_staff',
+                    models.BooleanField(
+                        default=False,
+                        help_text='Designates whether the user can log into this admin site.',
+                        verbose_name='staff status',
+                    ),
+                ),
+                (
+                    'is_active',
+                    models.BooleanField(
+                        default=True,
+                        help_text='Designates whether this user should be treated as active. Unselect this instead of deleting accounts.',
+                        verbose_name='active',
+                    ),
+                ),
+                (
+                    'date_joined',
+                    models.DateTimeField(
+                        default=django.utils.timezone.now,
+                        verbose_name='date joined',
+                    ),
+                ),
+                (
+                    'email',
+                    models.EmailField(
+                        error_messages={
+                            'unique': 'A user with that email already exists.'
+                        },
+                        help_text='Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.',
+                        max_length=150,
+                        unique=True,
+                        verbose_name='email address',
+                    ),
+                ),
+                (
+                    'is_candidate',
+                    models.BooleanField(
+                        default=False, verbose_name='candidate status'
+                    ),
+                ),
+                (
+                    'is_company',
+                    models.BooleanField(
+                        default=False, verbose_name='company status'
+                    ),
+                ),
             ],
             options={
                 'verbose_name': 'user',
@@ -42,10 +115,38 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='ProfileCandidate',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('first_name', models.CharField(max_length=150, verbose_name='first name')),
-                ('last_name', models.CharField(max_length=150, verbose_name='last name')),
-                ('cv', models.FileField(blank=True, null=True, upload_to='cv', validators=[django.core.validators.FileExtensionValidator(allowed_extensions=('pdf',))])),
+                (
+                    'id',
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name='ID',
+                    ),
+                ),
+                (
+                    'first_name',
+                    models.CharField(
+                        max_length=150, verbose_name='first name'
+                    ),
+                ),
+                (
+                    'last_name',
+                    models.CharField(max_length=150, verbose_name='last name'),
+                ),
+                (
+                    'cv',
+                    models.FileField(
+                        blank=True,
+                        null=True,
+                        upload_to='cv',
+                        validators=[
+                            django.core.validators.FileExtensionValidator(
+                                allowed_extensions=('pdf',)
+                            )
+                        ],
+                    ),
+                ),
             ],
             options={
                 'abstract': False,
@@ -54,16 +155,49 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='ProfileCompany',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('logo', models.ImageField(blank=True, upload_to='logo_company')),
-                ('name', models.CharField(max_length=100, verbose_name='name')),
-                ('contact_email', models.EmailField(blank=True, max_length=255, verbose_name='contact email')),
+                (
+                    'id',
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name='ID',
+                    ),
+                ),
+                (
+                    'logo',
+                    models.ImageField(blank=True, upload_to='logo_company'),
+                ),
+                (
+                    'name',
+                    models.CharField(max_length=100, verbose_name='name'),
+                ),
+                (
+                    'contact_email',
+                    models.EmailField(
+                        blank=True,
+                        max_length=255,
+                        verbose_name='contact email',
+                    ),
+                ),
                 ('website', models.CharField(blank=True, max_length=100)),
                 ('facebook', models.CharField(blank=True, max_length=100)),
                 ('instagram', models.CharField(blank=True, max_length=100)),
                 ('twitter', models.CharField(blank=True, max_length=100)),
-                ('short_description', models.CharField(blank=True, max_length=50, verbose_name='short description')),
-                ('description', models.TextField(blank=True, max_length=500, verbose_name='description')),
+                (
+                    'short_description',
+                    models.CharField(
+                        blank=True,
+                        max_length=50,
+                        verbose_name='short description',
+                    ),
+                ),
+                (
+                    'description',
+                    models.TextField(
+                        blank=True, max_length=500, verbose_name='description'
+                    ),
+                ),
             ],
             options={
                 'abstract': False,
