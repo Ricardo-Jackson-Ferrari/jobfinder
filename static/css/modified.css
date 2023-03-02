@@ -14,6 +14,8 @@ input[type="number"] {
 	overflow: hidden;
 }
 
+.nice-select,
+.list,
 .select,
 #locale {
 	width: 100%;
@@ -224,6 +226,23 @@ body {
 	color: gray;
 }
 
+.job-company-socials a {
+	color: black;
+}
+
+.job-company-socials a:hover {
+	color: black;
+}
+
+.job-company-socials > li {
+	display: flex !important;
+	flex-wrap: nowrap;
+}
+.job-company-socials > li > span {
+	margin-top: auto;
+	margin-bottom: auto;
+}
+
 .sidebar li:hover {
 	background-color: rgb(80, 101, 140);
 }
@@ -303,13 +322,13 @@ body {
 	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.close-btn {
+.danger-btn {
 	color: red;
 	font-weight: bold;
 	float: none;
 }
 
-.close-btn:hover {
+.danger-btn:hover {
 	color: darkred;
 }
 
@@ -354,11 +373,6 @@ body {
 	color: royalblue;
 }
 
-.item {
-	display: flex;
-	justify-content: space-between;
-}
-
 .nice-select.select-mod > span {
 	display: -webkit-box;
 }
@@ -391,6 +405,45 @@ body {
 
 .embed-pdf {
 	height: 80vh;
+}
+
+#group-sections {
+	padding: 15px;
+	width: 100%;
+}
+
+.section_wrapper {
+	padding: 10px;
+	border-radius: 10px;
+	box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
+}
+
+.itens {
+	padding: 5px;
+	box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+}
+
+.item {
+	display: flex;
+	justify-content: space-between;
+}
+
+body.dragging, body.dragging * {
+	cursor: move !important;
+}
+
+.dragged {
+	position: absolute;
+	opacity: 0.5;
+	z-index: 2000;
+}
+
+.item input {
+	position: relative;
+}
+
+.item input:before {
+	position: absolute;
 }
 
 @media (max-width: 991px) {

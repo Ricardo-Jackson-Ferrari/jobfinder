@@ -50,6 +50,11 @@ urlpatterns = [
         name='company_address',
     ),
     path(
+        'company/job/',
+        views.JobManage.as_view(),
+        name='company_job',
+    ),
+    path(
         'candidate/profile_update/',
         views.ProfileCandidateUpdateView.as_view(),
         name='profile_candidate_update',

@@ -31,7 +31,7 @@ function refresh() {
     let select = document.querySelector('select[name="address"]')
     let html = `<option value="">---------</option>`
 
-    fetch('/address/list/')
+    fetch('/address/api/')
     .then(res => {
         if(!res.ok && res.status != 400){
             throw new Error(res, res.json())
@@ -56,26 +56,29 @@ form_address.addEventListener('submit', (e) => {
     fetch(form.action, {
         method: "POST",
         body: payload,
+        headers: {
+            "X-CSRFToken": form.querySelector('input[name="csrfmiddlewaretoken"]').value,
+        }
     })
     .then(res => {
         if(!res.ok && res.status != 400){
             throw new Error(res, res.json())
         }
-        return res.json()
-    })
-    .then(data => {
-        if (data.status_code == 201){
+        if (res.status == 201){
             let msg = `<div class="alert alert-success mt-10" role="alert">
-                    <span>${data.message}</span>
+                    <span>Endereço criado com sucesso!</span>
                 </div>`
             submit_msg.innerHTML = msg
             refresh()
         }else{
-            let msg = `<div class="alert alert-danger mt-10" role="alert">
-                            <span>${data.message}</span>
-                        </div>`
-            for (const [key, value] of Object.entries(data.errors)) {
-                if(key != '__all__'){
+            return res.json()
+        }
+    })
+    .then(data => {
+        if (data){
+            let msg = ''
+            for (const [key, value] of Object.entries(data)) {
+                if(key != 'non_field_errors'){
                     msg += `<div class="alert alert-warning mt-10" role="alert">
                                 <span>${key}:${value}</span>
                             </div>`

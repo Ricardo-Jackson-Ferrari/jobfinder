@@ -3,6 +3,7 @@ from unittest.mock import patch
 from account.forms import ProfileCandidateForm, RegisterCandidateForm
 from account.models import ProfileCandidate
 from account.views import (
+    JobManage,
     LoginView,
     ProfileCompanyUpdateView,
     ProfileView,
@@ -277,3 +278,18 @@ class TestProfileCompanyUpdateView:
         form = view.get_form(form_class=view.form_class)
 
         assert form.fields['address'].queryset.count() == 0
+
+
+class TestJobManageView:
+    def test_context_data(self, company_user):
+        factory = RequestFactory()
+        request = factory.get(reverse('account:company_job'))
+        request.user = company_user
+        view = JobManage.as_view()
+        response = view(request)
+
+        assert response.status_code == 200
+        assert 'categories' in response.context_data
+        assert 'modalities' in response.context_data
+        assert 'hierarchies' in response.context_data
+        assert 'experiencies' in response.context_data

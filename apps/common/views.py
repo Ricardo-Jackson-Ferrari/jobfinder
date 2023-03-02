@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import FormView, TemplateView
+from job.facade import get_job_available
 
 from .forms import ContactForm
 
@@ -13,6 +14,7 @@ class IndexView(TemplateView):
     template_name = 'common/index.html'
     extra_context = {
         'title': _('Home'),
+        'jobs': get_job_available().order_by('-posted_at')[:3],
     }
 
 

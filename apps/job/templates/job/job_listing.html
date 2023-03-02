@@ -1,0 +1,218 @@
+{% extends 'global/base.html' %}
+{% load static %}
+{% load humanize %}
+{% load pagination_tags %}
+
+{% block content %}
+			<!-- Job List Area Start -->
+			<div class="job-listing-area pt-120 pb-120">
+				<div class="container">
+					<div class="row">
+						<!-- Left content -->
+						<div class="col-xl-3 col-lg-3 col-md-4">
+							<div class="row">
+								<div class="col-12">
+									<div class="small-section-tittle2 mb-45">
+										<div class="ion">
+											<svg
+												xmlns="http://www.w3.org/2000/svg"
+												xmlns:xlink="http://www.w3.org/1999/xlink"
+												width="20px"
+												height="12px"
+											>
+												<path
+													fill-rule="evenodd"
+													fill="rgb(27, 207, 107)"
+													d="M7.778,12.000 L12.222,12.000 L12.222,10.000 L7.778,10.000 L7.778,12.000 ZM-0.000,-0.000 L-0.000,2.000 L20.000,2.000 L20.000,-0.000 L-0.000,-0.000 ZM3.333,7.000 L16.667,7.000 L16.667,5.000 L3.333,5.000 L3.333,7.000 Z"
+												/>
+											</svg>
+										</div>
+										<h4>Filtrar empregos</h4>
+									</div>
+								</div>
+							</div>
+							<!-- Job Category Listing start -->
+							<form>
+								<div class="job-category-listing mb-50">
+									<!-- single one -->
+									<div class="single-listing">
+										<div class="select-Categories pb-50">
+											<div class="small-section-tittle2">
+												<h4>Palavra chave</h4>
+											</div>
+											<input
+												class="form-control"
+												type="text"
+												name="q"
+												value="{{ filter.form.q.value|default:'' }}"
+											/>
+										</div>
+									</div>
+									<div class="single-listing">
+										<div class="small-section-tittle2">
+											<h4>Categorias</h4>
+										</div>
+										<!-- Select job items start -->
+										<div class="select-job-items2">
+											{{ filter.form.category }}
+										</div>
+										<!--  Select job items End-->
+										<!-- select-Categories start -->
+										<div class="select-Categories pt-80 pb-50">
+											<div class="small-section-tittle2">
+												<h4>Modalidade</h4>
+											</div>
+											{% for modality in filter.form.modality %}
+											<label class="container">
+												{{ modality.tag }} {{ modality.choice_label }}
+												<span class="checkmark"></span>
+											</label>
+											{% endfor %}
+										</div>
+										<!-- select-Categories End -->
+									</div>
+									<!-- single two -->
+									<div class="single-listing">
+										<div class="small-section-tittle2">
+											<h4>Estado</h4>
+										</div>
+										<!-- Select job items start -->
+										<div class="select-job-items2">
+											{{ filter.form.address__uf }}
+										</div>
+										<!--  Select job items End-->
+										<!-- select-Categories start -->
+										<div class="select-Categories pt-80 pb-50">
+											<div class="small-section-tittle2">
+												<h4>Hierarquia</h4>
+											</div>
+											{% for hierarchy in filter.form.hierarchy %}
+											<label class="container">
+												{{ hierarchy.tag }} {{ hierarchy.choice_label }}
+												<span class="checkmark"></span>
+											</label>
+											{% endfor %}
+										</div>
+										<div class="select-Categories pb-50">
+											<div class="small-section-tittle2">
+												<h4>Experiência</h4>
+											</div>
+											{% for experience in filter.form.experience %}
+											<label class="container">
+												{{ experience.tag }} {{ experience.choice_label }}
+												<span class="checkmark"></span>
+											</label>
+											{% endfor %}
+										</div>
+										<!-- select-Categories End -->
+									</div>
+									<!-- single three -->
+									<div class="single-listing">
+										<!-- select-Categories start -->
+										<div class="select-Categories pb-50">
+											<div class="small-section-tittle2">
+												<h4>Publicado</h4>
+											</div>
+											{{ filter.form.period }}
+										</div>
+										<!-- select-Categories End -->
+									</div>
+									<div class="text-center">
+										<button class="btn genric-btn" type="submit">Buscar</button>
+									</div>
+								</div>
+							</form>
+							<!-- Job Category Listing End -->
+						</div>
+						<!-- Right content -->
+						<div class="col-xl-9 col-lg-9 col-md-8">
+							<!-- Featured_job_start -->
+							<section class="featured-job-area">
+								<div class="container">
+									<!-- Count of Job list Start -->
+									<div class="row">
+										<div class="col-lg-12">
+											<div class="count-job mb-35">
+												<span>{{ paginator.count }} Empregos encontrados</span>
+											</div>
+										</div>
+									</div>
+									<!-- Count of Job list End -->
+									<!-- single-job-content -->
+									{% for job in jobs %}
+									<div class="single-job-items mb-30">
+										<div class="job-items">
+											<div class="job-tittle">
+												<a href="{% url 'job:detail' job.title|slugify job.id  %}"
+													><h4>{{ job.title }}</h4></a
+												>
+												<ul>
+													<li>{{ job.category.title|capfirst }}</li>
+													<li>
+														<i
+															class="fas fa-map-marker-alt"
+														></i>
+														{% if job.address %}
+															{{ job.address.city }} - {{ job.address.uf }}
+														{% else %}
+															Não especificado
+														{% endif %}
+													</li>
+													<li>{% if job.salary > 0 %}R$ {{ job.salary|intcomma }}{% else %}A combinar{% endif %}</li>
+												</ul>
+											</div>
+										</div>
+										<div class="items-link f-right">
+											<a href="job_details.html">{{ job.get_modality_display }}</a>
+											<span>{{ job.posted_at|naturaltime }}</span>
+										</div>
+									</div>
+									{% endfor %}
+								</div>
+							</section>
+							<!-- Featured_job_end -->
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Job List Area End -->
+			{% if is_paginated %}
+			<!-- Pagination Start -->
+			<div class="pagination-area pb-115 text-center">
+				<div class="container">
+					<div class="row">
+						<div class="col-xl-12">
+							<div
+								class="single-wrap d-flex justify-content-center"
+							>
+								<nav aria-label="Page navigation example">
+									<ul
+										class="pagination justify-content-start"
+									>
+										{% if page_obj.has_previous %}
+										<li><a class="page-link" href="?{% url_replace request 'page' page_obj.previous_page_number %}"><span
+											class="ti-angle-left"
+										></span></a>
+										</li>
+										{% endif %}
+										{% for i in paginator.page_range %}
+										<li class="page-item {% if page_obj.number == i %}active{% endif %}">
+											<a class="page-link" href="?{% url_replace request 'page' i %}">{{ i }}</a>
+										</li>
+										{% endfor %}
+										{% if page_obj.has_next %}
+										<li><a class="page-link" href="?{% url_replace request 'page' page_obj.next_page_number %}"><span
+											class="ti-angle-right"
+										></span></a>
+										</li>
+										{% endif %}
+									</ul>
+								</nav>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--Pagination End  -->
+			{% endif %}
+{% endblock content %}

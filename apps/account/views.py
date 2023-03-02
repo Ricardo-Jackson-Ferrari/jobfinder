@@ -21,6 +21,9 @@ from django.views.generic import (
     TemplateView,
     UpdateView,
 )
+from job.choices import EXPERIENCIES, HIERARCHIES, MODALITIES
+from job.facade import get_job_available
+from job.models import Category
 
 from .facade import send_recovery_email
 from .forms import (
@@ -248,3 +251,16 @@ class SettingsView(
     success_url = reverse_lazy('account:settings')
     success_message = _('Password change complete')
     extra_context = {'title': _('Settings')}
+
+
+class JobManage(CompanyUserMixin, TemplateView):
+    template_name = 'account/dashboard/company/job.html'
+    extra_context = {'title': _('Job management')}
+
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        ctx = super().get_context_data(**kwargs)
+        ctx['categories'] = Category.objects.all()
+        ctx['modalities'] = MODALITIES
+        ctx['hierarchies'] = HIERARCHIES
+        ctx['experiencies'] = EXPERIENCIES
+        return ctx

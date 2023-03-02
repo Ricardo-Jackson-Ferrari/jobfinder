@@ -1,5 +1,6 @@
 {% extends 'global/base.html' %}
 {% load static %}
+{% load humanize %}
 {% block content %}
 <!-- slider Area Start-->
 <div class="slider-area">
@@ -24,12 +25,14 @@
                     <div class="col-xl-8">
                         <!-- form -->
                         <form
-                            action="job_listing.html"
+                            action="{% url 'job:search' %}"
+                            method="GET"
                             class="search-box"
                         >
                             <div class="input-group">
                                 <input
                                     type="text"
+                                    name="q"
                                     class="form-control h-100"
                                     placeholder="Emprego ou palavra chave"
                                     aria-label="Emprego ou palavra chave"
@@ -37,7 +40,7 @@
                                 <div class="input-group-append">
                                     <button
                                         class="btn"
-                                        type="button"
+                                        type="submit"
                                     >
                                         Encontrar
                                     </button>
@@ -67,129 +70,42 @@
         <div class="row justify-content-center">
             <div class="col-xl-10">
                 <!-- single-job-content -->
+                {% for job in jobs %}
                 <div class="single-job-items mb-30">
                     <div class="job-items">
                         <div class="company-img">
-                            <a href="job_details.html"
+                            <a href="{% url 'job:detail' job.title job.id  %}"
                                 ><img
-                                    src="{% get_media_prefix %}icon/job-list1.png"
-                                    alt=""
-                            /></a>
+                                src="{% get_media_prefix %}{% if job.company.logo %}{{ job.company.logo }}{% else %}logo/no-image.jpg{% endif %}"
+                                alt="logo empresa"
+                        /></a>
                         </div>
                         <div class="job-tittle">
-                            <a href="job_details.html"
-                                ><h4>Desenvolvedor C#</h4></a
+                            <a href="{% url 'job:detail' job.title|slugify job.id  %}"
+                                ><h4>{{ job.title }}</h4></a
                             >
                             <ul>
-                                <li>Empresa de tecnologia</li>
+                                <li>{{ job.company.short_description }}</li>
                                 <li>
                                     <i
                                         class="fas fa-map-marker-alt"
-                                    ></i
-                                    >Rio de Janeiro - RJ
+                                    ></i>
+                                    {% if job.address %}
+                                        {{ job.address.city }} - {{ job.address.uf }}
+                                    {% else %}
+                                        Não especificado
+                                    {% endif %}
                                 </li>
-                                <li>R$4500</li>
+                                <li>{% if job.salary > 0 %}R$ {{ job.salary|intcomma }}{% else %}A combinar{% endif %}</li>
                             </ul>
                         </div>
                     </div>
                     <div class="items-link f-right">
-                        <a href="job_details.html">Remoto</a>
-                        <span>5 horas atrás</span>
+                        <a href="job_details.html">{{ job.get_modality_display }}</a>
+                        <span>{{ job.posted_at|naturaltime }}</span>
                     </div>
                 </div>
-                <!-- single-job-content -->
-                <div class="single-job-items mb-30">
-                    <div class="job-items">
-                        <div class="company-img">
-                            <a href="job_details.html"
-                                ><img
-                                    src="{% get_media_prefix %}icon/job-list2.png"
-                                    alt=""
-                            /></a>
-                        </div>
-                        <div class="job-tittle">
-                            <a href="job_details.html"
-                                ><h4>Auxiliar Administrativo</h4></a
-                            >
-                            <ul>
-                                <li>Agência Criativa</li>
-                                <li>
-                                    <i
-                                        class="fas fa-map-marker-alt"
-                                    ></i
-                                    >São Paulo - SP
-                                </li>
-                                <li>R$1850</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="items-link f-right">
-                        <a href="job_details.html">Presencial</a>
-                        <span>7 horas atrás</span>
-                    </div>
-                </div>
-                <!-- single-job-content -->
-                <div class="single-job-items mb-30">
-                    <div class="job-items">
-                        <div class="company-img">
-                            <a href="job_details.html"
-                                ><img
-                                    src="{% get_media_prefix %}icon/job-list3.png"
-                                    alt=""
-                            /></a>
-                        </div>
-                        <div class="job-tittle">
-                            <a href="job_details.html"
-                                ><h4>Interprete de libras</h4></a
-                            >
-                            <ul>
-                                <li>Agência de comunicação</li>
-                                <li>
-                                    <i
-                                        class="fas fa-map-marker-alt"
-                                    ></i
-                                    >Rio de Janeiro - RJ
-                                </li>
-                                <li>A combinar</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="items-link f-right">
-                        <a href="job_details.html">Presencial</a>
-                        <span>10 horas atrás</span>
-                    </div>
-                </div>
-                <!-- single-job-content -->
-                <div class="single-job-items mb-30">
-                    <div class="job-items">
-                        <div class="company-img">
-                            <a href="job_details.html"
-                                ><img
-                                    src="{% get_media_prefix %}icon/job-list4.png"
-                                    alt=""
-                            /></a>
-                        </div>
-                        <div class="job-tittle">
-                            <a href="job_details.html"
-                                ><h4>Desenvolvedor Python</h4></a
-                            >
-                            <ul>
-                                <li>Empresa de automação</li>
-                                <li>
-                                    <i
-                                        class="fas fa-map-marker-alt"
-                                    ></i
-                                    >Manaus - AM
-                                </li>
-                                <li>A combinar</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="items-link f-right">
-                        <a href="job_details.html">Híbrido</a>
-                        <span>11 horas atrás</span>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
         </div>
     </div>

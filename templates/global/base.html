@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta http-equiv="x-ua-compatible" content="ie=edge" />
-		<title>{{ title }}</title>
+		<title>{% block title %}{{ title }}{% endblock title %}</title>
 		<meta name="description" content="" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="manifest" href="site.webmanifest" />
@@ -74,7 +74,7 @@
 													>
 												</li>
 												<li>
-													<a href="job_listing.html"
+													<a href="{% url 'job:search' %}"
 														>Vagas
 													</a>
 												</li>
@@ -178,7 +178,7 @@
 									<h4>Links importantes</h4>
 									<ul>
 										<li>
-											<a href="job_listing.html">Vagas</a>
+											<a href="{% url 'job:search' %}">Vagas</a>
 										</li>
 										<li>
 											<a href="{% url 'common:contact' %}"

@@ -1,0 +1,157 @@
+{% extends 'global/base.html' %}
+{% load static %}
+{% load humanize %}
+{% block title %}Vaga | {{job.title}}{% endblock title %}
+{% block content %}
+<div class="job-post-company pt-120 pb-120">
+	<div class="container">
+		<div class="row justify-content-between">
+			<!-- Left Content -->
+			<div class="col-xl-8 col-lg-9">
+				<!-- job single -->
+				<div class="single-job-items mb-50">
+					<div class="job-items">
+						<div
+							class="company-img company-img-details"
+						>
+							<a href="{% url 'account:profile_company' job.company.name job.company.id %}"
+								><img
+									src="{% get_media_prefix %}{% if job.company.logo %}{{ job.company.logo }}{% else %}logo/no-image.jpg{% endif %}"
+									alt="logo empresa"
+							/></a>
+						</div>
+						<div class="job-tittle">
+							<h4>{{ job.company.name }}</h4>
+							<ul>
+								<li>{{ job.company.short_description }}</li>
+								<li>
+									<i
+										class="fas fa-map-marker-alt"
+									></i
+									>{{ job.company.address.city }} - {{ job.company.address.uf }}
+								</li>
+								<li>{% if job.salary > 0 %}R$ {{ job.salary|intcomma }}{% else %}A combinar{% endif %}</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<!-- job single End -->
+
+				<div class="job-post-details">
+					<div class="post-details1 mb-50">
+						<!-- Small Section Tittle -->
+						<div class="small-section-tittle text-center">
+							<h2>{{ job.title }}</h2>
+						</div>
+					</div>
+					<div class="post-details1 mb-50">
+						<!-- Small Section Tittle -->
+						<div class="small-section-tittle">
+							<h4>Descrição da vaga</h4>
+						</div>
+						<p>
+							{{ job.description }}
+						</p>
+					</div>
+					{% for section in job.sections.all|dictsort:"order" %}
+					<div class="post-details2 mb-50">
+						<!-- Small Section Tittle -->
+						<div class="small-section-tittle">
+							<h4>
+								{{ section.title }}
+							</h4>
+						</div>
+						<ul>
+							{% for item in section.itens.all %}
+							<li>{{ item.item }}</li>
+							{% endfor %}
+						</ul>
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+			<!-- Right Content -->
+			<div class="col-xl-4 col-lg-4">
+				<div class="post-details3 mb-50">
+					<!-- Small Section Tittle -->
+					<div class="small-section-tittle">
+						<h4>Detalhes da vaga</h4>
+					</div>
+					<ul>
+						<li>
+							Postada em : <span>{{ job.posted_at|date:"d/m/Y" }}</span>
+						</li>
+						<li>Local : <span>{{ job.company.address.city }} - {{ job.company.address.uf }}</span></li>
+						<li>Vagas : <span>{{ job.vacancies }}</span></li>
+						<li>Modalidade : <span>{{ job.get_modality_display }}</span></li>
+						<li>Hierarquia : <span>{{ job.get_hierarchy_display }}</span></li>
+						{% if job.salary > 0 %}
+							{% widthratio job.salary 1 13 as annual_salary %}
+							<li>Salário : <span>R$ {{ annual_salary|intcomma }},00 anual</span></li>
+						{% endif %}
+					</ul>
+				</div>
+				<div class="post-details4 mb-50">
+					<!-- Small Section Tittle -->
+					<div class="small-section-tittle">
+						<h4>Informações da Empresa</h4>
+					</div>
+					<span>{{ job.company.name }}</span>
+					<p>
+						{{ job.company.description }}
+					</p>
+					<ul class="job-company-socials">
+						{% if job.company.contact_email %}
+						<li class="mb-10">Email:<span>{{ job.company.contact_email }}</span></li>
+						{% endif %}
+						{% if job.company.website %}
+						<li class="mb-10">Website:<span><a href="{{ job.company.website }}" target="_blank" rel="noopener noreferrer">{{ job.company.website }}</a></span></li>
+						{% endif %}
+						{% if job.company.instagram %}
+						<li class="mb-10">Instagram:<span><a href="{{ job.company.instagram }}" target="_blank" rel="noopener noreferrer">{{ job.company.instagram }}</a></span></li>
+						{% endif %}
+						{% if job.company.twitter %}
+						<li class="mb-10">Twitter:<span><a href="{{ job.company.twitter }}" target="_blank" rel="noopener noreferrer">{{ job.company.twitter }}</a></span></li>
+						{% endif %}
+						{% if job.company.facebook %}
+						<li>Facebook:<span><a href="{{ job.company.facebook }}" target="_blank" rel="noopener noreferrer">{{ job.company.facebook }}</a></span></li>
+						{% endif %}
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="row justify-content-center">
+			<form
+				action=""
+				class="d-flex flex-column subscription-form"
+			>
+				<div class="mt-10 form-group">
+					<label for="cv_input "
+						>Pretensão salarial</label
+					>
+					<input
+						type="number"
+						name="claim_salary"
+						required=""
+						class="input-default pr-20 pl-20"
+					/>
+				</div>
+				<div class="mt-10 form-group">
+					<label for="cv_input">Currículo</label>
+					<input
+						class="input-default pr-20"
+						required=""
+						name="cv_input"
+						id="cv_input"
+						name="cv"
+						type="file"
+					/>
+				</div>
+				<button type="submit" class="btn post-btn mt-40">
+					Inscrever-se
+				</button>
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock content %}

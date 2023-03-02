@@ -8,6 +8,7 @@ urlpatterns = [
     path('', include('common.urls')),
     path('account/', include('account.urls')),
     path('address/', include('address.urls')),
+    path('job/', include('job.urls')),
 ]
 
 if settings.DEBUG:

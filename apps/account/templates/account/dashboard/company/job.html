@@ -1,0 +1,239 @@
+{% extends 'account/dashboard/base.html' %}
+{% load static %}
+{% block head %}
+<link href="https://unpkg.com/bootstrap-table@1.21.2/dist/bootstrap-table.min.css" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'js/jquery-ui.min.css' %}">
+
+<script src="{% static 'js/jquery-ui.min.js' %}" defer></script>
+<script src="{% static 'js/js2form.js' %}" defer></script>
+<script src="{% static 'js/form2js.js' %}" defer></script>
+<script src="{% static 'js/bootstrap-table.min.js' %}" defer></script>
+<script src="{% static 'js/bootstrap-table-pt-BR.js' %}" defer></script>
+<script src="{% static 'js/job_manager.js' %}" defer></script>
+{% endblock head %}
+{% block content_dashboard %}
+<section class="section-content job-manager-section mb-100">
+    <div>
+        <div id="toolbar">
+            <button
+                class="genric-btn btn-success"
+                onclick="show_modal_add_job()"
+            >
+                <i class="fas fa-plus"></i>Criar vaga
+            </button>
+        </div>
+        <table
+            id="table"
+            data-toolbar="#toolbar"
+            data-toggle="table"
+            data-locale="pt-BR"
+            data-search="true"
+            data-search-accent-neutralise="true"
+            data-id-field="id"
+            data-detail-view="true"
+            data-detail-formatter="detailFormatter"
+            data-side-pagination="server"
+            data-response-handler="responseHandler"
+            data-pagination="true"
+            data-page-size="5"
+            data-url="{% url 'job:api_list' %}"
+        >
+        <caption>Lista de vagas</caption>
+            <thead>
+                <tr>
+                    <th data-field="title">Título</th>
+                    <th data-field="subscribed" data-align="center">Inscritos</th>
+                    <th
+                        data-field="salary"
+                        data-sortable="true"
+                        data-formatter="salaryFormatter"
+                    >
+                        Salário
+                    </th>
+                    <th
+                        data-field="posted_at"
+                        data-sortable="true"
+                        data-formatter="posted_atFormatter"
+                    >
+                        Postado
+                    </th>
+                    <th
+                        data-field="status"
+                        data-sortable="true"
+                        data-formatter="statusFormatter"
+                        data-align="center"
+                        class="position-relative"
+                    >
+                        Situação
+                    </th>
+                    <th
+                        data-field="view"
+                        data-events="operateEvents"
+                        data-formatter="viewFormatter"
+                        data-align="center"
+                    >
+                        Visualizar
+                    </th>
+                    <th
+                        data-field="close"
+                        data-events="operateEvents"
+                        data-formatter="closeFormatter"
+                        data-align="center"
+                    >
+                        Deletar
+                    </th>
+                </tr>
+            </thead>
+            
+        </table>
+    </div>
+    <!-- Start Modal Job Detail -->
+    <div
+    class="modal fade"
+    id="modal_job_detail"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="modal_job_detail_title"
+    aria-hidden="true"
+>
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header d-flex justify-content-center">
+                <h5 class="modal-title" id="modal_job_detail_title">
+                    Visão geral da vaga
+                </h5>
+                <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                >
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">...</div>
+            <div class="modal-footer">
+                <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-dismiss="modal"
+                >
+                    Fechar
+                </button>
+            </div>
+        </div>
+    </div>
+    </div>
+    <!-- End Modal Job Detail -->
+    <!-- Start Modal Job Create -->
+    <div
+        class="modal fade"
+        id="modal_job_create"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="modal_job_create_title"
+        aria-hidden="true"
+    >
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header d-flex justify-content-center">
+                    <h5 class="modal-title" id="modal_job_create_title">
+                        Cadastro de Emprego
+                    </h5>
+                    <button
+                        type="button"
+                        class="close"
+                        data-dismiss="modal"
+                        aria-label="Close"
+                    >
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="{% url 'job:api_list' %}" data-method="POST" class="row" id="form_job" data-csrftoken="{{ csrf_token }}">
+                        {% include 'job/forms/create_job.html' %}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Modal Job Create -->
+    <!-- Modal Pdf -->
+    <div id="modal_pdf" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-xl">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button
+                        type="button"
+                        class="close"
+                        data-dismiss="modal"
+                    >
+                        &times;
+                    </button>
+                    <h4 class="modal-title">Currículo</h4>
+                </div>
+                <div class="modal-body">
+                    <embed
+                        src="files/cv.pdf"
+                        frameborder="0"
+                        width="100%"
+                        class="embed-pdf"
+                    />
+
+                    <div class="modal-footer">
+                        <button
+                            type="button"
+                            class="btn btn-default"
+                            data-dismiss="modal"
+                        >
+                            Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Modal Pdf -->
+    <!-- Modal Delete -->
+    <div class="modal" id="modal_delete" tabindex="-1" role="dialog" data-csrf="{{ csrf_token }}">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Deletar Vaga</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              
+            </div>
+            <div class="modal-footer">
+              <button type="button" id="btn_delete_job" class="btn-genric btn-danger" data-dismiss="modal">Deletar</button>
+            </div>
+          </div>
+        </div>
+    </div>
+    <!-- Modal Delete End -->
+    <!-- Modal Close -->
+    <div class="modal" id="modal_close" tabindex="-1" role="dialog" data-csrf="{{ csrf_token }}">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Encerrar Vaga</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              
+            </div>
+            <div class="modal-footer">
+              <button type="button" id="btn_close_job" class="btn-genric btn-danger" data-dismiss="modal">Encerrar</button>
+            </div>
+          </div>
+        </div>
+    </div>
+    <!-- Modal Close End -->
+</section>
+{% endblock content_dashboard %}

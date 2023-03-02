@@ -1,0 +1,150 @@
+<div class="form-group mt-10 col-lg-6 col-md-12">
+    <label for="title">Título</label>
+    <div>
+        <input
+            type="text"
+            name="title"
+            required=""
+            value="{{ form.title.value|default:'' }}"
+            class="form-control"
+        />
+    </div>
+</div>
+<div class="form-group mt-10 col-lg-6 col-md-12">
+    <label for="vacancies">Número de vagas</label>
+    <input
+        type="text"
+        name="vacancies"
+        min="0"
+        required=""
+        oninput="this.value = this.value.replace(/\D*/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');"
+        value="{{ form.vacancies.value|default:'' }}"
+        class="form-control"
+    />
+</div>
+<div class="form-group mt-10 col-lg-6 col-md-12">
+    <label for="hierarchy">Nível</label>
+    <div>
+        <select
+            class="select-mod"
+            name="hierarchy"
+            id="hierarchy"
+            required=""
+        >
+            {% for hierarchy in hierarchies %}    
+            <option value="{{ hierarchy.0 }}">{{ hierarchy.1 }}</option>
+            {% endfor %}
+        </select>
+    </div>
+</div>
+<div class="form-group mt-10 col-lg-6 col-md-12">
+    <label for="address">Endereço</label>
+    <div class="select-mod">
+        <select
+            name="address"
+            id="address"
+        >
+            {% for address in user.adresses.all %}
+            <option value="{{ address.id }}">{{ address.title }}</option>
+            {% endfor %}
+            
+        </select>
+    </div>
+</div>
+<div class="form-group mt-10 col-lg-6 col-md-12">
+    <label for="salary">Salário</label>
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <div class="input-group-text">R$</div>
+        </div>
+        <input
+            type="number"
+            name="salary"
+            min="0"
+            placeholder="0"
+            onfocus="this.placeholder = ''"
+            onblur="this.placeholder = '0'"
+            class="form-control"
+        />
+    </div>
+</div>
+<div class="form-group mt-10 col-lg-6 col-md-12">
+    <label for="modality">Tipo</label>
+    <div>
+        <select
+            class="select-mod"
+            name="modality"
+            id="modality"
+            required=""
+        >
+            {% for modality in modalities %}    
+            <option value="{{ modality.0 }}">{{ modality.1 }}</option>
+            {% endfor %}
+        </select>
+    </div>
+</div>
+<div class="form-group mt-10 col-lg-6 col-md-12">
+    <label for="category">Categoria</label>
+    <div>
+        <select
+            class="select-mod"
+            name="category"
+            id="category"
+            required=""
+        >
+            {% for category in categories %}    
+            <option value="{{ category.id }}">{{ category.title|capfirst }}</option>
+            {% endfor %}
+        </select>
+    </div>
+</div>
+<div class="form-group mt-10 col-lg-6 col-md-12">
+    <label for="experience">Experiência</label>
+    <div>
+        <select
+            class="select-mod"
+            name="experience"
+            id="experience"
+            required=""
+            value="{{ form.experience.value|default:'' }}"
+        >
+            {% for experience in experiencies %}    
+            <option value="{{ experience.0 }}">{{ experience.1 }}</option>
+            {% endfor %}
+        </select>
+    </div>
+</div>
+<div class="form-group mt-10 col-12">
+    <label for="description">Descrição</label>
+    <textarea
+        class="form-control"
+        rows="3"
+        name="description"
+        placeholder="descrição"
+        onfocus="this.placeholder = ''"
+        onblur="this.placeholder = 'descrição'"
+        required=""
+        value="{{ form.description.value|default:'' }}"
+    ></textarea>
+</div>
+<div id="group-sections" class="mt-10"></div>
+<div class="form-group mt-10 col-12">
+    <div class="text-center">
+        <button
+            type="button"
+            class="add_group genric-btn btn-success large"
+            title="Add section"
+            ><i class="fa fa-plus">&nbsp</i>Adicionar
+            sessão</button
+        >
+    </div>
+</div>
+<div class="submit-msg"></div>
+<div class="form-group mt-3 col-12 text-center">
+    <button
+        type="submit"
+        class="genric-btn primary circle e-large"
+    >
+        Cadastrar
+    </button>
+</div>

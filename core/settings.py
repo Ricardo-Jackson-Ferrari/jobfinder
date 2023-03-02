@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'account',
     'common',
     'address',
+    'job',
 ]
 
 if DEBUG:
