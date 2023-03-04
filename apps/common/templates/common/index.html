@@ -74,14 +74,14 @@
                 <div class="single-job-items mb-30">
                     <div class="job-items">
                         <div class="company-img">
-                            <a href="{% url 'job:detail' job.title job.id  %}"
+                            <a href="{{ job.get_absolute_url }}"
                                 ><img
                                 src="{% get_media_prefix %}{% if job.company.logo %}{{ job.company.logo }}{% else %}logo/no-image.jpg{% endif %}"
                                 alt="logo empresa"
                         /></a>
                         </div>
                         <div class="job-tittle">
-                            <a href="{% url 'job:detail' job.title|slugify job.id  %}"
+                            <a href="{{ job.get_absolute_url }}"
                                 ><h4>{{ job.title }}</h4></a
                             >
                             <ul>

@@ -2,6 +2,8 @@ from address.models import Address
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import FileExtensionValidator
 from django.db import models
+from django.urls import reverse_lazy
+from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 
 from .managers import UserManager
@@ -69,3 +71,9 @@ class ProfileCompany(ProfileAbstract):
     description = models.TextField(
         _('description'), max_length=500, blank=True
     )
+
+    def get_absolute_url(self):
+        return reverse_lazy(
+            'account:profile_company',
+            kwargs={'title': slugify(self.name), 'pk': self.pk},
+        )

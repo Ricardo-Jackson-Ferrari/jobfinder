@@ -1,0 +1,232 @@
+{% extends 'account/dashboard/base.html' %} {% load static %} {% block head %}
+<link
+	href="https://unpkg.com/bootstrap-table@1.21.2/dist/bootstrap-table.min.css"
+	rel="stylesheet"
+/>
+<link rel="stylesheet" href="{% static 'js/jquery-ui.min.css' %}" />
+
+<script src="{% static 'js/bootstrap-table.min.js' %}" defer></script>
+<script src="{% static 'js/bootstrap-table-pt-BR.js' %}" defer></script>
+<script src="{% static 'js/job_detail.js' %}" defer></script>
+{% endblock head %} {% block content_dashboard %}
+<section class="section-content job-manager-section mb-100">
+	<div>
+		<div id="toolbar">
+			<a
+				class="default-link"
+				href="{% url 'account:company_job' %}"
+				title="Voltar"
+			>
+                <i class="fas fa-undo-alt"></i>
+				Voltar
+			</a>
+			<button
+				class="view btn-clean"
+				onclick="show_modal_job()"
+				title="Visualizar emprego"
+			>
+                <i class="fas fa-file"></i>
+				Visualizar emprego
+			</button>
+		</div>
+		<table
+			id="table"
+			data-toolbar="#toolbar"
+			data-toggle="table"
+			data-locale="pt-BR"
+			data-search="true"
+			data-search-accent-neutralise="true"
+			data-id-field="id"
+			data-side-pagination="server"
+			data-response-handler="responseHandler"
+			data-pagination="true"
+			data-page-size="5"
+			data-url="{% url 'job:job_application_api_list' pk=job.id %}"
+		>
+			<caption>
+				Lista de inscritos
+			</caption>
+			<thead>
+				<tr>
+					<th data-formatter="candidateFormatter">Candidato</th>
+					<th
+						data-field="salary_claim"
+						data-sortable="true"
+						data-formatter="salaryFormatter"
+					>
+						Pretensão salarial
+					</th>
+					<th
+						data-field="created_at"
+						data-sortable="true"
+						data-formatter="dateFormatter"
+					>
+						Postado
+					</th>
+                    <th
+                        data-formatter="cvFormatter"
+                        data-align="center"
+                    >
+                        Visualizar
+                    </th>
+					<th
+						data-field="evaluation"
+						data-sortable="true"
+						data-formatter="evaluationFormatter"
+						data-align="center"
+					>
+						Avaliação
+					</th>
+				</tr>
+			</thead>
+		</table>
+	</div>
+	<!-- Start Modal Job Detail -->
+	<div
+		class="modal fade"
+		id="modal_job_detail"
+		tabindex="-1"
+		role="dialog"
+		aria-labelledby="modal_job_detail_title"
+		aria-hidden="true"
+	>
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header d-flex justify-content-center">
+					<h5 class="modal-title" id="modal_job_detail_title">
+						Visão geral da vaga
+					</h5>
+					<button
+						type="button"
+						class="close"
+						data-dismiss="modal"
+						aria-label="Close"
+					>
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="job-post-details">
+						<div class="post-details1 mb-10">
+							<div class="small-section-tittle">
+								<h4>Título</h4>
+							</div>
+							<p>{{ job.title }}</p>
+						</div>
+						<div class="post-details1 mb-10">
+							<div class="small-section-tittle">
+								<h4>Status</h4>
+							</div>
+							<p>{% if job.status %}Ativa{% else %}Encerrada{% endif %}</p>
+						</div>
+						<div class="post-details1 mb-10">
+							<div class="small-section-tittle">
+								<h4>Local</h4>
+							</div>
+							<p>{% if job.address %}{{ job.address }}{% else %}Não especificado{% endif %}</p>
+						</div>
+						<div class="post-details1 mb-10">
+							<div class="small-section-tittle">
+								<h4>Salário</h4>
+							</div>
+							<p>R$&nbsp;{{ job.salary }}</p>
+						</div>
+						<div class="post-details1 mb-30">
+							<div class="small-section-tittle">
+								<h4>Modalidade</h4>
+							</div>
+							<p>{{ job.get_modality_display }}</p>
+						</div>
+						<div class="post-details1 mb-30">
+							<div class="small-section-tittle">
+								<h4>Descrição</h4>
+							</div>
+							<p>{{ job.description }}</p>
+						</div>
+                        {% for section in job.sections.all %}
+                            <div class="post-details2 mb-30">
+                                <div class="small-section-tittle">
+                                    <h4>{{ section.title }}</h4>
+                                </div>
+                                <ul>
+                                    {% for item in section.itens.all %}
+                                    <li>{{ item.item }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        {% endfor %}
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button
+						type="button"
+						class="btn btn-secondary"
+						data-dismiss="modal"
+					>
+						Fechar
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- End Modal Job Detail -->
+	<!-- Modal Pdf -->
+	<div id="modal_pdf" class="modal fade" role="dialog" data-csrf="{{ csrf_token }}">
+		<div class="modal-dialog modal-xl">
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						&times;
+					</button>
+					<h4 class="modal-title">Currículo</h4>
+				</div>
+				<div class="modal-body">
+					<embed
+						src="files/cv.pdf"
+						frameborder="0"
+						width="100%"
+						class="embed-pdf"
+					/>
+					<div class="modal-footer">
+						<div class="rating-buttons">
+                            <button
+                            onclick="application_patch(this)"
+                            data-value="0"
+                            class="button button-secondary"
+                            >Não avaliado
+                            </button>
+                            <button
+                                onclick="application_patch(this)"
+                                data-value="1"
+                                class="button button-error"
+                            >Não apto
+                            </button>
+                            <button
+                                onclick="application_patch(this)"
+                                data-value="2"
+                                class="button button-info"
+                            >Incerto
+                            </button>
+                            <button
+                                onclick="application_patch(this)"
+                                data-value="3"
+                                class="button button-success"
+                            >Apto
+                            </button>
+                        </div>
+						<button
+							type="button"
+							class="btn btn-default"
+							data-dismiss="modal"
+						>
+							Fechar
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- End Modal Pdf -->
+</section>
+{% endblock content_dashboard %}

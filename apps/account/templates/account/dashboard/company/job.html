@@ -30,8 +30,6 @@
             data-search="true"
             data-search-accent-neutralise="true"
             data-id-field="id"
-            data-detail-view="true"
-            data-detail-formatter="detailFormatter"
             data-side-pagination="server"
             data-response-handler="responseHandler"
             data-pagination="true"
@@ -41,6 +39,11 @@
         <caption>Lista de vagas</caption>
             <thead>
                 <tr>
+                    <th
+                        data-formatter="detailFormatter"
+                        data-align="center"
+                    >
+                    </th>
                     <th data-field="title">Título</th>
                     <th data-field="subscribed" data-align="center">Inscritos</th>
                     <th

@@ -1,7 +1,11 @@
 from django.urls import reverse_lazy
 from job.choices import EXPERIENCIES, HIERARCHIES, MODALITIES
 from job.models import Job
-from job.serializers import JobShowSerializer
+from job.serializers import (
+    CandidateApplicationSerializer,
+    JobApplicationSerializer,
+    JobShowSerializer,
+)
 from model_bakery import baker
 from rest_framework.test import APIClient
 
@@ -84,3 +88,33 @@ class TestJobCreateSerializer:
         assert job.hierarchy == job_data['hierarchy']
         assert job.experience == job_data['experience']
         assert job.company == company_user.profilecompany
+
+
+class TestCandidateApplicationSerializer:
+    def test_candidate_application_serializer_methods(self, db):
+        job = baker.make('job.Job')
+        application = baker.prepare('job.JobApplication', job=job)
+        application_serializer = CandidateApplicationSerializer(application)
+        assert (
+            application_serializer.get_status(application)
+            == application.job.status
+        )
+        assert (
+            application_serializer.get_url(application)
+            == application.job.get_absolute_url()
+        )
+
+
+class TestJobApplicationSerializer:
+    def test_job_application_serializer_methods(self, db):
+        job = baker.make('job.Job')
+        application = baker.prepare('job.JobApplication', job=job)
+        application_serializer = JobApplicationSerializer(application)
+        assert (
+            application_serializer.get_evaluation(application)
+            == application.get_evaluation_display()
+        )
+        assert (
+            application_serializer.get_url(application)
+            == application.job.get_absolute_url()
+        )

@@ -21,6 +21,71 @@ input[type="number"] {
 	width: 100%;
 }
 
+.default-link {
+	color: black;
+	font-size: 1.05em;
+}
+
+.default-link:hover {
+	color: rgba(0, 0, 0, 0.6);
+}
+
+.rating-buttons{
+	display: flex;
+	flex-grow: 1;
+	justify-content: center;
+	align-items: center;
+	gap: 15px;
+}
+
+.button {
+	cursor: pointer;
+}
+
+.button-success,
+.button-error,
+.button-warning,
+.button-info,
+.button-secondary {
+	color: white;
+	border-radius: 4px;
+	border: none;
+	padding: 10px;
+	opacity: 0.85;
+}
+
+.button.button-success:hover,
+.button.button-error:hover,
+.button.button-warning:hover,
+.button.button-info:hover,
+.button.button-secondary:hover {
+	opacity: 1;
+}
+
+.button-success {
+	background: rgb(28, 184, 65);
+}
+
+.button-error {
+	background: rgb(202, 60, 60);
+}
+
+.button-warning {
+	background: rgb(223, 117, 20);
+}
+
+.button-info {
+	background: rgb(66, 184, 221);
+}
+
+.button-secondary {
+	background: rgb(130, 131, 131);
+}
+
+.fz-2 {
+	font-size: 1.05em;
+}
+
 .like {
 	margin-right: 10px;
 }

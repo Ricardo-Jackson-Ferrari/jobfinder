@@ -1,0 +1,148 @@
+{% extends 'account/dashboard/base.html' %}
+{% load static %}
+{% block head %}
+<link href="https://unpkg.com/bootstrap-table@1.21.2/dist/bootstrap-table.min.css" rel="stylesheet">
+
+<script src="{% static 'js/bootstrap-table.min.js' %}" defer></script>
+<script src="{% static 'js/bootstrap-table-pt-BR.js' %}" defer></script>
+<script src="{% static 'js/subscription_manage.js' %}" defer></script>
+{% endblock head %}
+{% block content_dashboard %}
+<section class="section-content job-manager-section mb-100">
+	<div>
+		<div id="toolbar">
+            <button class="cv-view btn-clean" title="Visualizar currículo">
+				<i class="fas fa-file-alt"></i>
+				Visualizar currículo
+			</button>
+        </div>
+		<table
+			id="table"
+			data-locale="pt-BR"
+			data-toolbar="#toolbar"
+            data-toggle="table"
+			data-search="true"
+			data-search-accent-neutralise="true"
+			data-sort-name="created_at"
+			data-side-pagination="server"
+			data-sort-order="desc"
+			data-id-field="id"
+			data-pagination="true"
+			data-page-size="10"
+			data-response-handler="responseHandler"
+			data-url="{% url 'job:application_api_list' %}"
+		>
+		<caption>Lista de Inscrições</caption>
+			<thead>
+				<tr>
+					<th data-field="job">Vaga</th>
+					<th
+					data-field="status"
+					data-formatter="statusFormatter"
+					data-sortable="true"
+					data-sort-name="job__status"
+					>
+						Situação
+					</th>
+					<th
+					data-field="created_at"
+					data-formatter="created_atFormatter"
+					data-sortable="true"
+					>
+					Data inscrição
+					</th>
+					<th
+						data-field="salary_claim"
+						data-formatter="claimFormatter"
+						>
+						Pretensão
+					
+					</th>
+					<th
+						data-field="view"
+						data-formatter="viewFormatter"
+						data-align="center"
+					>
+						Visualizar
+					</th>
+				</tr>
+			</thead>
+		</table>
+	</div>
+</section>
+<!-- Modal Job Description -->
+<div
+class="modal fade"
+id="exampleModalLong"
+tabindex="-1"
+role="dialog"
+aria-labelledby="exampleModalLongTitle"
+aria-hidden="true"
+>
+<div class="modal-dialog modal-lg" role="document">
+	<div class="modal-content">
+		<div class="modal-header d-flex justify-content-center">
+			<h5 class="modal-title" id="exampleModalLongTitle">
+				Visão geral da vaga
+			</h5>
+			<button
+				type="button"
+				class="close"
+				data-dismiss="modal"
+				aria-label="Close"
+			>
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div class="modal-body">...</div>
+		<div class="modal-footer">
+			<button
+				type="button"
+				class="btn btn-secondary"
+				data-dismiss="modal"
+			>
+				Fechar
+			</button>
+		</div>
+	</div>
+</div>
+</div>
+<!-- Modal Pdf -->
+<div id="modal_pdf" class="modal fade" role="dialog">
+<div class="modal-dialog modal-xl">
+	<!-- Modal content-->
+	<div class="modal-content">
+		<div class="modal-header">
+			<button
+				type="button"
+				class="close"
+				data-dismiss="modal"
+			>
+				&times;
+			</button>
+			<h4 class="modal-title">Currículo</h4>
+		</div>
+		<div class="modal-body">
+			<embed
+				src="{{ user.profilecandidate.cv.url }}"
+				frameborder="0"
+				width="100%"
+				class="embed-pdf"
+				type="application/pdf"
+			/>
+
+			<div class="modal-footer">
+				<button
+					type="button"
+					class="btn btn-default"
+					data-dismiss="modal"
+				>
+					Fechar
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+<!-- End Modal Pdf -->
+{% endblock content_dashboard %}

@@ -1,6 +1,7 @@
+from account.serializers import CandidateSerializer
 from rest_framework import serializers
 
-from .models import Item, Job, Section
+from .models import Item, Job, JobApplication, Section
 
 
 class ItemSerializer(serializers.ModelSerializer):
@@ -35,6 +36,7 @@ class JobShowSerializer(serializers.ModelSerializer):
     experience = serializers.SerializerMethodField()
     hierarchy = serializers.SerializerMethodField()
     modality = serializers.SerializerMethodField()
+    subscribed = serializers.SerializerMethodField()
     company = serializers.StringRelatedField()
 
     def get_experience(self, obj):
@@ -46,12 +48,16 @@ class JobShowSerializer(serializers.ModelSerializer):
     def get_modality(self, obj):
         return obj.get_modality_display()
 
+    def get_subscribed(self, obj):
+        return obj.applications.count()
+
     class Meta:
         model = Job
         fields = (
             'id',
             'title',
             'company',
+            'subscribed',
             'created_at',
             'posted_at',
             'vacancies',
@@ -111,3 +117,56 @@ class JobPatchSerializer(serializers.ModelSerializer):
     class Meta:
         model = Job
         fields = ('status',)
+
+
+class CandidateApplicationSerializer(serializers.ModelSerializer):
+    id = serializers.ReadOnlyField()
+    job = serializers.StringRelatedField()
+    status = serializers.SerializerMethodField()
+    url = serializers.SerializerMethodField()
+
+    def get_status(self, obj):
+        return obj.job.status
+
+    def get_url(self, obj):
+        return obj.job.get_absolute_url()
+
+    class Meta:
+        model = JobApplication
+        fields = (
+            'id',
+            'created_at',
+            'job',
+            'url',
+            'status',
+            'candidate',
+            'salary_claim',
+        )
+
+
+class JobApplicationSerializer(serializers.ModelSerializer):
+    id = serializers.ReadOnlyField()
+    candidate = CandidateSerializer()
+    evaluation = serializers.SerializerMethodField()
+
+    def get_evaluation(self, obj):
+        return obj.get_evaluation_display()
+
+    def get_url(self, obj):
+        return obj.job.get_absolute_url()
+
+    class Meta:
+        model = JobApplication
+        fields = (
+            'id',
+            'created_at',
+            'candidate',
+            'salary_claim',
+            'evaluation',
+        )
+
+
+class JobApplicationPatchSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = JobApplication
+        fields = ('evaluation',)

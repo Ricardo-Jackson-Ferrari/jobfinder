@@ -64,16 +64,8 @@ function salaryFormatter(value) {
   return formatMoney(value)
 }
 
-function detailFormatter(index, row) {
-  let table = document.createElement('table')
-  row.subscribeds.forEach(obj => {
-    let tr = document.createElement('tr')
-    tr.innerHTML = `<td>${obj.name}</td>
-      <td>${formatMoney(obj.salary)}</td>
-      <td><button class="genric-btn btn-info show_cv" onclick="show_modal_cv('${obj.curriculum}')">Currículo</button></td>`
-    table.appendChild(tr)
-  })
-  return table
+function detailFormatter(value, row) {
+  return `<a href="/account/company/job/${row.id}/" class="view"><i class="fas fa-plus"></i></a>`
 }
 
 function formatMoney(value) {

@@ -3,7 +3,7 @@ from unittest.mock import patch
 from account.forms import ProfileCandidateForm, RegisterCandidateForm
 from account.models import ProfileCandidate
 from account.views import (
-    JobManage,
+    JobManageView,
     LoginView,
     ProfileCompanyUpdateView,
     ProfileView,
@@ -19,8 +19,10 @@ from django.http import HttpResponse
 from django.test import RequestFactory
 from django.urls import reverse, reverse_lazy
 from django.utils.translation import gettext_lazy as _
+from job.models import Job
 from model_bakery import baker
 from pytest import raises
+from rest_framework.test import APIClient
 
 ACCOUNT_RECOVERY_URL = reverse_lazy('account:recovery')
 ACCOUNT_REGISTER_CANDIDATE_URL = reverse_lazy('account:candidate_signup')
@@ -285,7 +287,7 @@ class TestJobManageView:
         factory = RequestFactory()
         request = factory.get(reverse('account:company_job'))
         request.user = company_user
-        view = JobManage.as_view()
+        view = JobManageView.as_view()
         response = view(request)
 
         assert response.status_code == 200
@@ -293,3 +295,17 @@ class TestJobManageView:
         assert 'modalities' in response.context_data
         assert 'hierarchies' in response.context_data
         assert 'experiencies' in response.context_data
+
+
+class TestJobDetailView:
+    def test_get_queryset(self, company_user):
+        client = APIClient()
+        client.force_login(user=company_user)
+
+        job = baker.make(Job, company=company_user.profilecompany)
+
+        response = client.get(
+            reverse_lazy('account:company_job_detail', args=[job.id])
+        )
+        assert response.status_code == 200
+        assert response.context_data['object'].id == job.id

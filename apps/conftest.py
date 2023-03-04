@@ -13,7 +13,7 @@ def common_user(db):
 @fixture
 def candidate_user(db):
     user = baker.make(get_user_model(), is_candidate=True)
-    baker.make(ProfileCandidate, user=user)
+    baker.make(ProfileCandidate, user=user, cv='cv.pdf')
     return user
 
 

@@ -143,7 +143,7 @@
 									<div class="single-job-items mb-30">
 										<div class="job-items">
 											<div class="job-tittle">
-												<a href="{% url 'job:detail' job.title|slugify job.id  %}"
+												<a href="{{ job.get_absolute_url }}"
 													><h4>{{ job.title }}</h4></a
 												>
 												<ul>

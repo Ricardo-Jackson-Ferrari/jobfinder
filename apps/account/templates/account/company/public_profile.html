@@ -80,7 +80,7 @@
             <div class="row company-jobs">
                 {% for job in jobs %}
                 <div class="col-lg-4 col-md-6 mb-4">
-                    <a href="{% url 'job:detail' job.title|slugify job.id %}">
+                    <a href="{{ job.get_absolute_url }}">
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="card-title text-center">

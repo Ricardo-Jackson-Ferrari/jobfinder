@@ -8,6 +8,7 @@ from django.contrib.auth.views import LogoutView as DjangoLogoutView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.exceptions import ImproperlyConfigured
 from django.db import DatabaseError
+from django.db.models.query import QuerySet
 from django.db.transaction import atomic
 from django.forms import BaseForm, BaseModelForm, models
 from django.http import HttpRequest, HttpResponse
@@ -23,7 +24,7 @@ from django.views.generic import (
 )
 from job.choices import EXPERIENCIES, HIERARCHIES, MODALITIES
 from job.facade import get_job_available
-from job.models import Category
+from job.models import Category, Job
 
 from .facade import send_recovery_email
 from .forms import (
@@ -192,7 +193,7 @@ class DashboardView(LoginRequiredMixin, TemplateView):
 
 
 class ProfileView(DetailView):
-    template_name = 'account/profile.html'
+    template_name = 'account/company/public_profile.html'
     model = ProfileCompany
     context_object_name = 'company'
 
@@ -231,7 +232,7 @@ class ProfileCandidateUpdateView(
     success_url = reverse_lazy('account:profile_candidate_update')
 
 
-class AddressManage(CompanyUserMixin, TemplateView):
+class AddressManageView(CompanyUserMixin, TemplateView):
     template_name = 'account/dashboard/company/address.html'
     extra_context = {'title': _('Address management')}
 
@@ -253,7 +254,7 @@ class SettingsView(
     extra_context = {'title': _('Settings')}
 
 
-class JobManage(CompanyUserMixin, TemplateView):
+class JobManageView(CompanyUserMixin, TemplateView):
     template_name = 'account/dashboard/company/job.html'
     extra_context = {'title': _('Job management')}
 
@@ -264,3 +265,20 @@ class JobManage(CompanyUserMixin, TemplateView):
         ctx['hierarchies'] = HIERARCHIES
         ctx['experiencies'] = EXPERIENCIES
         return ctx
+
+
+class JobApplicationManageView(CandidateUserMixin, TemplateView):
+    template_name = 'account/dashboard/candidate/application.html'
+    extra_context = {'title': _('Application management')}
+
+
+class JobDetailView(CompanyUserMixin, DetailView):
+    template_name = 'account/dashboard/company/job_detail.html'
+    extra_context = {'title': _('Job Detail')}
+    model = Job
+    context_object_name = 'job'
+
+    def get_queryset(self) -> QuerySet[Any]:
+        qs = super().get_queryset()
+        qs = qs.filter(company=self.request.user.profilecompany)
+        return qs

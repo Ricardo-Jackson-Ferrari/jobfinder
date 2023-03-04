@@ -32,4 +32,19 @@ urlpatterns = [
         ),
         name='api_detail',
     ),
+    path(
+        'api/candidate/application/',
+        views.CandidateApplicationListAPIView.as_view(),
+        name='application_api_list',
+    ),
+    path(
+        'api/<int:pk>/application/',
+        views.JobApplicationListAPIView.as_view(),
+        name='job_application_api_list',
+    ),
+    path(
+        'api/application/<int:pk>/',
+        views.JobApplicationPatchView.as_view(),
+        name='job_application_api_detail',
+    ),
 ]

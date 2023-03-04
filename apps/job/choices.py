@@ -30,3 +30,10 @@ PERIOD_CHOICES = (
     ('last_2_weeks', 'Últimas 2 semanas'),
     ('last_month', 'Último mês'),
 )
+
+EVALUATION_CHOICES = (
+    (0, 'Não avaliado'),
+    (1, 'Não apto'),
+    (2, 'Incerto'),
+    (3, 'Apto'),
+)
