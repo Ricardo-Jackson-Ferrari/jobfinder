@@ -11,6 +11,8 @@ pillow = "*"
 django-widget-tweaks = "*"
 djangorestframework = "*"
 django-filter = "*"
+django-cleanup = "*"
+django-resized = "*"
 
 [dev-packages]
 isort = "*"

@@ -5,6 +5,7 @@ from django.db import models
 from django.urls import reverse_lazy
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
+from django_resized import ResizedImageField
 
 from .managers import UserManager
 
@@ -53,7 +54,11 @@ class ProfileCandidate(ProfileAbstract):
 
 
 class ProfileCompany(ProfileAbstract):
-    logo = models.ImageField(upload_to='logo_company', blank=True)
+    logo = ResizedImageField(
+        upload_to='logo_company',
+        size=(85, 85),
+        blank=True,
+    )
     name = models.CharField(_('name'), max_length=100)
     address = models.ForeignKey(
         to=Address, on_delete=models.SET_NULL, blank=True, null=True

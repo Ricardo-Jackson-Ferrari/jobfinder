@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'rest_framework',
     'django_filters',
+    'django_cleanup.apps.CleanupConfig',
     # Own
     'account',
     'common',
