@@ -14,8 +14,12 @@ class IndexView(TemplateView):
     template_name = 'common/index.html'
     extra_context = {
         'title': _('Home'),
-        'jobs': get_job_available().order_by('-posted_at')[:3],
     }
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx['jobs'] = get_job_available().order_by('-posted_at')[:3]
+        return ctx
 
 
 class AboutView(TemplateView):
