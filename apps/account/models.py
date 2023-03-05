@@ -6,6 +6,7 @@ from django.urls import reverse_lazy
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 from django_resized import ResizedImageField
+from tools.validators import validate_file_size
 
 from .managers import UserManager
 
@@ -47,7 +48,10 @@ class ProfileCandidate(ProfileAbstract):
     last_name = models.CharField(_('last name'), max_length=150)
     cv = models.FileField(
         upload_to='cv',
-        validators=[FileExtensionValidator(allowed_extensions=('pdf',))],
+        validators=(
+            FileExtensionValidator(allowed_extensions=('pdf',)),
+            validate_file_size,
+        ),
         blank=True,
         null=True,
     )
@@ -58,6 +62,7 @@ class ProfileCompany(ProfileAbstract):
         upload_to='logo_company',
         size=(85, 85),
         blank=True,
+        validators=(validate_file_size,),
     )
     name = models.CharField(_('name'), max_length=100)
     address = models.ForeignKey(
