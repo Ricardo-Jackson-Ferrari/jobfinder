@@ -49,7 +49,7 @@
                                     onblur="this.placeholder = 'nome'"
                                     required=""
                                     value="{{ form_profile.first_name.value|default:'' }}"
-                                    class="single-input form-control"
+                                    class="pl-50 form-control"
                                 />
                             </div>
                             {% if form_profile.first_name.errors %}
@@ -73,7 +73,7 @@
                                     onfocus="this.placeholder = ''"
                                     onblur="this.placeholder = 'sobrenome'"
                                     value="{{ form_profile.last_name.value|default:'' }}"
-                                    class="single-input form-control"
+                                    class="pl-50 form-control"
                                 />
                             </div>
                             {% if form_profile.last_name.errors %}
@@ -98,7 +98,7 @@
                                     onblur="this.placeholder = 'email'"
                                     required=""
                                     value="{{ form.email.value|default:'' }}"
-                                    class="single-input form-control"
+                                    class="pl-50 form-control"
                                 />
                             </div>
                             {% if form.email.errors %}
@@ -123,7 +123,7 @@
                                     onblur="this.placeholder = 'senha'"
                                     required=""
                                     value="{{ form.password1.value|default:'' }}"
-                                    class="single-input form-control"
+                                    class="pl-50 pr-50 form-control"
                                 />
                                 <div class="icon-right">
                                     <i
@@ -154,7 +154,7 @@
                                     onblur="this.placeholder = 'confirmação da senha'"
                                     required=""
                                     value="{{ form.password2.value|default:'' }}"
-                                    class="single-input form-control"
+                                    class="pl-50 pr-50 form-control"
                                 />
                                 <div class="icon-right">
                                     <i
@@ -176,18 +176,17 @@
                                 <h5>
                                     Dados do perfil
                                 </h5>
-                                <span class="text-danger">(Opcional)</span>
                             </div>
-                            <div class="form-group mt-10">
+                            <div class="input-file-group form-group mt-10">
                                 <label for="cv" class="input-file-label" id="cv-label">Selecionar Currículo</label>
-                                <span id="file-chosen">Nenhum arquivo escolhido</span>
-                                <input 
+                                <input
                                     type="file"
                                     name="cv"
                                     id="cv"
                                     accept=".pdf"
-                                    class="d-none"
+                                    class="input-file-hidden-btn"
                                     value="{{ form_profile.cv.content_type|default:'' }}"
+                                    required
                                 />
                             </div>
                         </div>

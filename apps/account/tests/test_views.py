@@ -1,3 +1,5 @@
+import os
+from io import BytesIO
 from unittest.mock import patch
 
 from account.forms import ProfileCandidateForm, RegisterCandidateForm
@@ -13,6 +15,7 @@ from account.views import (
 )
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ImproperlyConfigured
+from django.core.files.uploadedfile import SimpleUploadedFile
 from django.db import DatabaseError
 from django.forms.models import BaseModelForm
 from django.http import HttpResponse
@@ -76,16 +79,27 @@ class TestRecoveryView:
 
 
 class TestRegisterBaseView:
+    def setup_method(self):
+        self.created_files = []
+
+    def teardown_method(self):
+        for file_path in self.created_files:
+            os.remove(file_path)
+
     def test_register_base_view_post_request_with_valid_forms(
         self, client, db
     ):  # sourcery skip: class-extract-method
+        loaded_file = BytesIO(b'some dummy bcode data: \x00\x01')
+        loaded_file.name = 'test_file_name.pdf'
         data = {
             'first_name': 'test',
             'last_name': 'user',
             'email': 'test@example.com',
             'password1': 'testpassword1',
             'password2': 'testpassword1',
+            'cv': SimpleUploadedFile(loaded_file.name, loaded_file.read()),
         }
+
         response = client.post(ACCOUNT_REGISTER_CANDIDATE_URL, data)
         assert response.status_code == 302
         assert get_user_model().objects.count() == 1
@@ -193,8 +207,17 @@ class TestRegisterBaseView:
             'first_name': 'test',
             'last_name': 'user',
         }
+
+        loaded_file = BytesIO(b'some dummy bcode data: \x00\x01')
+        loaded_file.name = 'test_file_name.pdf'
+        files_profile = {
+            'cv': SimpleUploadedFile(loaded_file.name, loaded_file.read())
+        }
+
         form = RegisterCandidateForm(data=data_user)
-        form_profile = ProfileCandidateForm(data=data_profile)
+        form_profile = ProfileCandidateForm(
+            data=data_profile, files=files_profile
+        )
         assert TestView().form_valid(form, form_profile).status_code == 302
 
     def test_form_valid_error(self, set_request_message):

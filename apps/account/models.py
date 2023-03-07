@@ -52,8 +52,6 @@ class ProfileCandidate(ProfileAbstract):
             FileExtensionValidator(allowed_extensions=('pdf',)),
             validate_file_size,
         ),
-        blank=True,
-        null=True,
     )
 
 
