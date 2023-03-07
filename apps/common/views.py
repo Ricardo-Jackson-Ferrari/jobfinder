@@ -33,7 +33,7 @@ class ContactView(SuccessMessageMixin, FormView):
     template_name = 'common/contact.html'
     form_class = ContactForm
     success_url = reverse_lazy('common:contact')
-    success_message = _('Message sent successfully')
+    success_message = _('message sent successfully')
     extra_context = {
         'title': _('Contact'),
     }

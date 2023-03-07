@@ -1,6 +1,7 @@
 {% extends 'account/dashboard/base.html' %}
 {% load static %}
 {% block head %}
+<script src="{% static 'js/jquery.mask.min.js' %}" defer></script>
 <script src="{% static 'js/profile_company.js' %}" defer></script>
 {% endblock head %}
 {% block content_dashboard %}
@@ -18,16 +19,24 @@
             <div
                 class="company-profile d-flex flex-column align-middle m-auto"
             >
-                <div class="d-flex mb-10">
+                <div class="d-flex mb-10 justify-content-center flex-column" style="gap:5px;">
                     <img
                         class="m-auto"
-                        src="{% get_media_prefix %}{% if form.logo %}{{ form.logo.value.default }}{% else %}logo/logo_default.png{% endif %}"
+                        id="logo_img"
+                        src="{% get_media_prefix %}{% if form.logo.value %}{{ form.logo.value }}{% else %}logo/logo_default.png{% endif %}"
                         alt="Logo da empresa"
+                        style="max-width:85px; max-height:85px"
                     />
+                    <input id="input_logo" type="file" hidden src="" name="logo" alt="logo empresa" accept="image/*" onchange="show_preview(event);">
+                    <button type="button" class="button button-info" onclick="$('#input_logo').click()">Alterar logo</button>
                 </div>
-                <div class="text-center">
-                    <h4>{{ user.profilecompany.name }}</h4>
-                </div>
+                {% if form.logo.errors %}
+                    <div class="alert alert-danger mt-10" role="alert">
+                {% for error in form.logo.errors %}
+                    <span>{{ error }}</span>
+                {% endfor %}
+                    </div>
+                {% endif %}
             </div>
         </div>
         <div class="row justify-content-center">
@@ -85,11 +94,10 @@
 					</div>
 				{% endif %}
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-4 col-md-6">
                 <label for="address">Endereço</label>
-                <div class="form-select d-flex">
+                <div class="select-mod d-flex">
                     <select
-                        class="select-mod"
                         name="address"
                         id="address"
                         value="{{ form.address.value }}"

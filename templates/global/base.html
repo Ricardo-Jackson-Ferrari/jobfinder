@@ -7,7 +7,6 @@
 		<title>{% block title %}{{ title }}{% endblock title %}</title>
 		<meta name="description" content="" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<link rel="manifest" href="site.webmanifest" />
 		<link
 			rel="shortcut icon"
 			type="image/x-icon"
@@ -19,7 +18,6 @@
 		<link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}" />
 		<link rel="stylesheet" href="{% static 'css/flaticon.css' %}" />
 		<link rel="stylesheet" href="{% static 'css/price_rangs.css' %}" />
-		<link rel="stylesheet" href="{% static 'css/slicknav.css' %}" />
 		<link rel="stylesheet" href="{% static 'css/animate.min.css' %}" />
 		<link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}" />
 		<link rel="stylesheet" href="{% static 'css/fontawesome-all.min.css' %}" />
@@ -52,7 +50,7 @@
 				<div class="header-top header-sticky sticky-bar sticky">
 					<div>
 						<div class="row align-items-center pl-20 pr-20">
-							<div class="col-lg-3 col-md-2">
+							<div class="col-lg-3 col-md-6 col-6">
 								<!-- Logo -->
 								<div class="logo">
 									<a href="{% url 'common:index' %}"
@@ -62,7 +60,7 @@
 									/></a>
 								</div>
 							</div>
-							<div class="col-lg-9 col-md-9">
+							<div class="col-lg-9 col-md-9 hidden-small">
 								<div class="menu-wrapper">
 									<!-- Main-menu -->
 									<div class="main-menu">
@@ -95,38 +93,12 @@
 									<div
 										class="header-btn d-none f-right d-lg-block"
 									>
-									{% if user.is_authenticated %}
-									<div class="dropdown">
-										<button class="genric-btn btn-user dropdown-toggle" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-										  {% if user.is_candidate %}{{ user.profilecandidate.first_name|capfirst }}{% elif user.is_company %}{{ user.profilecompany.name|capfirst }}{% else %}{{ user.first_name }}{% endif %}
-										</button>
-										<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
-											<a class="dropdown-item" href="{% url 'account:dashboard' %}">Dashboard</a>
-											<div class="dropdown-divider"></div>
-										  	<a class="dropdown-item" href="{% url 'account:logout' %}">Sair</a>
-										</div>
-									  </div>
-									{% else %}
-										<a
-											href="{% url 'account:signup' %}"
-											class="btn head-btn1"
-											>Registro</a
-										>
-										<a
-											href="{% url 'account:login' %}"
-											class="btn head-btn2"
-											>Acesso</a
-										>
-									{% endif %}
+									{% include 'global/components/menu_auth.html' %}
 									</div>
 								</div>
 							</div>
-							<!-- Mobile Menu -->
-							<div class="col-12">
-								<div
-									class="mobile_menu d-block d-lg-none"
-								></div>
-							</div>
+							{% include 'global/components/menu-collapsed.html' %}
+							
 						</div>
 					</div>
 				</div>
@@ -134,7 +106,9 @@
 			<!-- Header End -->
 		</header>
 		<main>
-			{% include 'global/partials/_messages.html' %}
+			{% block messages %}
+				{% include 'global/partials/_messages.html' %}
+			{% endblock messages %}
 			{% block content %}
 			{% endblock content %}
 		</main>
@@ -287,13 +261,9 @@
 		<script src="{% static 'js/vendor/jquery-1.12.4.min.js' %}"></script>
 		<script src="{% static 'js/popper.min.js' %}"></script>
 		<script src="{% static 'js/bootstrap.min.js' %}"></script>
-		<!-- Jquery Mobile Menu -->
-		<script src="{% static 'js/jquery.slicknav.min.js' %}"></script>
 
 		<!-- Jquery Slick , Owl-Carousel Plugins -->
-		<script src="{% static 'js/owl.carousel.min.js' %}"></script>
 		<script src="{% static 'js/slick.min.js' %}"></script>
-		<script src="{% static 'js/price_rangs.js' %}"></script>
 
 		<!-- One Page, Animated-HeadLin -->
 		<script src="{% static 'js/wow.min.js' %}"></script>

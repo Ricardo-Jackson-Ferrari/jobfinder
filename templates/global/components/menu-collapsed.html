@@ -1,0 +1,105 @@
+<div class="div-menu-collapse col-md-2 col-2 offset-4">
+    <div id="js-iconMenu" class="IconMenu">
+        <div class="IconMenu-line  IconMenu--lineTop"></div>
+        <div class="IconMenu-line  IconMenu--lineCenter"></div>
+        <div class="IconMenu-line  IconMenu--lineBottom"></div>
+    </div>
+</div>
+<div class="div-menu-collapse">
+      <nav class="main-nav js-toggleEffect">
+        <ul class="Menu-list">
+          <li class="Menu-item">
+            <a href="{% url 'common:index' %}" class="Menu-link">
+              <span class="Menu-text">Início</span>
+            </a>
+          </li>
+          <li class="Menu-item">
+            <a href="{% url 'job:search' %}" class="Menu-link">
+              <span class="Menu-text">Vagas</span>
+            </a>
+          </li>
+          <li class="Menu-item">
+            <a href="{% url 'common:about' %}" class="Menu-link">
+              <span class="Menu-text">Sobre</span>
+            </a>
+          </li>
+          <li class="Menu-item">
+            <a href="{% url 'common:contact' %}" class="Menu-link">
+              <span class="Menu-text">Contato</span>
+            </a>
+          </li>
+          <hr>
+          {% if user.is_authenticated %}
+            {% if user.is_candidate %}
+            <li class="Menu-item">
+              <a class="Menu-link" href="{% url 'account:dashboard' %}">
+                <span class="Menu-text">Dashboard</span>
+              </a>
+            </li>
+            <li class="Menu-item">
+              <a class="Menu-link" href="{% url 'account:profile_candidate_update' %}">
+                <span class="Menu-text">Perfil</span>
+              </a>
+            </li>
+            <li class="Menu-item">
+              <a class="Menu-link" href="{% url 'account:candidate_application' %}">
+                <span class="Menu-text">Inscrições</span>
+              </a>
+            </li>
+            <li class="Menu-item">
+              <a class="Menu-link" href="{% url 'account:settings' %}">
+                <span class="Menu-text">Configurações</span>
+              </a>
+            </li>
+            <li class="Menu-item">
+              <a class="Menu-link" href="{% url 'account:logout' %}">
+                <span class="Menu-text">Sair</span>
+              </a>
+            </li>
+            {% elif user.is_company %}
+                <li class="Menu-item">
+                  <a class="Menu-link" href="{% url 'account:dashboard' %}">
+                    <span class="Menu-text">Dashboard</span>
+                  </a>
+                </li>
+                <li class="Menu-item">
+                  <a class="Menu-link" href="{% url 'account:profile_company_update' %}">
+                    <span class="Menu-text">Perfil</span>
+                  </a>
+                </li>
+                <li class="Menu-item">
+                  <a class="Menu-link" href="{% url 'account:company_job' %}">
+                    <span class="Menu-text">Vagas</span>
+                  </a>
+                </li>
+                <li class="Menu-item">
+                  <a class="Menu-link" href="{% url 'account:company_address' %}">
+                    <span class="Menu-text">Endereços</span>
+                  </a>
+                </li>
+                <li class="Menu-item">
+                  <a class="Menu-link" href="{% url 'account:settings' %}">
+                    <span class="Menu-text">Configurações</span>
+                  </a>
+                </li>
+                <li class="Menu-item">
+                  <a class="Menu-link" href="{% url 'account:logout' %}">
+                    <span class="Menu-text">Sair</span>
+                  </a>
+                </li>
+              {% endif %}
+            {% else %}
+              <li class="Menu-item">
+                <a href="{% url 'account:signup' %}" class="Menu-link">
+                  <span class="Menu-text">Registro</span>
+                </a>
+              </li>
+              <li class="Menu-item">
+                <a href="{% url 'account:login' %}" class="Menu-link">
+                  <span class="Menu-text">Acesso</span>
+                </a>
+              </li>
+          {% endif %}
+        </ul>
+      </nav>
+</div>

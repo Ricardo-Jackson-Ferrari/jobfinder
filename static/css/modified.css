@@ -21,6 +21,17 @@ input[type="number"] {
 	width: 100%;
 }
 
+.input-file-hidden-btn::file-selector-button {
+	display: none;
+}
+
+.register-div {
+	display: flex;
+	flex-direction: row;
+	gap: 20px;
+	font-size: 2em;
+}
+
 .default-link {
 	color: black;
 	font-size: 1.05em;
@@ -179,7 +190,7 @@ body {
 }
 
 .subscription-form {
-	font-size: 1rem;
+	font-size: 1.1em;
 	padding: 30px 50px;
 	background-color: #f5f5f5;
 	border: 1px solid #bebebe;
@@ -203,17 +214,13 @@ body {
 	background-color: #fff;
 }
 
-.input-file {
-	padding: 0;
-	line-height: 1.9;
-}
-
 .input-file-label {
 	padding: 2px 6px;
 	background-color: #021942;
 	border: solid 1px #010b1d;
 	color: #fff;
 	white-space: nowrap;
+	margin: 0;
 }
 
 .input-file-group {
@@ -522,6 +529,9 @@ body.dragging, body.dragging * {
 	.dashboard-content {
 		margin: 0;
 	}
+	.hidden-small {
+		display: none;
+	}
 }
 
 @media only screen and (min-width: 992px) and (max-width: 1200px) {
@@ -530,3 +540,67 @@ body.dragging, body.dragging * {
 		margin: 0;
 	}
 }
+
+@media (min-width:992px) {
+	.div-menu-collapse {
+		display: none;
+	}
+}
+.div-menu-collapse {
+	width: 100%;
+}
+  /*-----------------*\
+	$Icon menu
+  \*-----------------*/
+  .IconMenu {
+	padding: 1em;
+	width: 2.4rem;
+	cursor: pointer;
+	min-width: 70px;
+	float: right;
+  }
+	.IconMenu .IconMenu-line {
+	  background-color: #000;
+	  border-radius: 0.1rem;
+	  height: 0.4rem;
+	  width: 100%;  
+	  transition: all 0.3s;
+	}
+	.IconMenu .IconMenu-line:nth-child(2) { margin: .4em 0; }
+	/* Effects */
+	.on .IconMenu--lineTop { transform: rotate(45deg) translate(.41rem, .81rem); }
+	.on .IconMenu--lineCenter { opacity: 0; }
+	.on .IconMenu--lineBottom { transform: rotate(-45deg) translate(.34rem, -.7rem); }
+  
+  /*-----------------*\
+	$Layout
+  \*-----------------*/
+  .main-nav { display: none; }
+  
+  
+  /*-----------------*\
+	$Menu
+  \*-----------------*/
+  .Menu-list {
+	margin: 0;
+	padding: 0;
+  }
+	.Menu-item { list-style: none; }
+	.Menu-link {
+	  --padding: 1em;
+	  
+	  display: block;
+	  padding: var(--padding) 0 var(--padding) var(--padding);
+	  color: #263238;
+	  background-color: #fff;
+	  font-size: 1.2rem;
+	  text-decoration: none;
+	  transition: 0.3s;
+	}
+	.Menu-icon,
+	.Menu-text {
+	  display: inline-block;
+	  vertical-align: middle; 
+	}
+	.Menu-link:hover .Menu-text { color: #f50057; }
+	.Menu-link:hover { background-color: #ECEFF1; }

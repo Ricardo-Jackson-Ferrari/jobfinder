@@ -1,0 +1,39 @@
+{% if user.is_authenticated %}
+<div class="dropdown">
+  {% if user.is_candidate %}
+    <button class="genric-btn btn-user dropdown-toggle" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      {{ user.profilecandidate.first_name|capfirst }}
+    </button>
+    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+        <a class="dropdown-item" href="{% url 'account:dashboard' %}">Dashboard</a>
+        <a class="dropdown-item" href="{% url 'account:profile_candidate_update' %}">Perfil</a>
+        <a class="dropdown-item" href="{% url 'account:candidate_application' %}">Inscrições</a>
+        <a class="dropdown-item" href="{% url 'account:settings' %}">Configurações</a>
+        <a class="dropdown-item" href="{% url 'account:logout' %}">Sair</a>
+    </div>
+  {% elif user.is_company %}
+  <button class="genric-btn btn-user dropdown-toggle" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    {{ user.profilecompany.name|capfirst }}
+  </button>
+  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+      <a class="dropdown-item" href="{% url 'account:dashboard' %}">Dashboard</a>
+      <a class="dropdown-item" href="{% url 'account:profile_company_update' %}">Perfil</a>
+      <a class="dropdown-item" href="{% url 'account:company_job' %}">Vagas</a>
+      <a class="dropdown-item" href="{% url 'account:company_address' %}">Endereços</a>
+      <a class="dropdown-item" href="{% url 'account:settings' %}">Configurações</a>
+      <a class="dropdown-item" href="{% url 'account:logout' %}">Sair</a>
+  </div>
+  {% endif %}
+</div>
+{% else %}
+    <a
+        href="{% url 'account:signup' %}"
+        class="btn head-btn1"
+        >Registro</a
+    >
+    <a
+        href="{% url 'account:login' %}"
+        class="btn head-btn2"
+        >Acesso</a
+    >
+{% endif %}

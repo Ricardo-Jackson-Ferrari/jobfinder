@@ -1,4 +1,5 @@
 {% extends 'global/base.html' %}
+{% block messages %}{% endblock messages %}
 {% block content %}
 <div class="dashboard">
     {% if user.is_candidate %}
@@ -7,6 +8,7 @@
         {% include 'account/dashboard/company/sidebar_company.html' %}
     {% endif %}
     <div class="dashboard-content">
+        {% include 'global/partials/_messages.html' %}
         {% block content_dashboard %}
         {% endblock content_dashboard %}
     </div>

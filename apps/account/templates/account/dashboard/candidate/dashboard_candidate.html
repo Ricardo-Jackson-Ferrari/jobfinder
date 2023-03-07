@@ -4,7 +4,7 @@
 			class="white-bg border-dark card card-body text-dark"
 		>
 			<h2 class="card-title mb-40">
-				Bem vindo(a), Ricardo
+				Bem vindo(a), {{ user.profilecandidate.first_name }}
 			</h2>
 			<span>
 				Lembre-se de manter seu currículo atualizado,
@@ -12,21 +12,6 @@
 				e suas experiências, um currículo atualizado lhe
 				da mais chances.
 			</span>
-		</div>
-	</div>
-	<div class="col-lg-5 height-inherit mb-3">
-		<div class="card-deck text-center">
-			<div
-				class="card border-dark mb-3"
-				style="max-width: 18rem"
-			>
-				<div class="card-body">
-					<h5 class="card-title mb-30">
-						Inscrições ativas
-					</h5>
-					<span class="recent-text">3</span>
-				</div>
-			</div>
 		</div>
 	</div>
 </div>

@@ -49,7 +49,7 @@
                                     onblur="this.placeholder = 'nome'"
                                     required=""
                                     value="{{ form_profile.name.value|default:'' }}"
-                                    class="single-input form-control"
+                                    class="pl-50 form-control"
                                 />
                             </div>
                             {% if form_profile.name.errors %}
@@ -74,7 +74,7 @@
                                     onblur="this.placeholder = 'email'"
                                     required=""
                                     value="{{ form.email.value|default:'' }}"
-                                    class="single-input form-control"
+                                    class="pl-50 form-control"
                                 />
                             </div>
                             {% if form.email.errors %}
@@ -99,7 +99,7 @@
                                     onblur="this.placeholder = 'senha'"
                                     required=""
                                     value="{{ form.password1.value|default:'' }}"
-                                    class="single-input form-control"
+                                    class="pl-50 form-control"
                                 />
                                 <div class="icon-right">
                                     <i
@@ -130,7 +130,7 @@
                                     onblur="this.placeholder = 'confirmação da senha'"
                                     required=""
                                     value="{{ form.password2.value|default:'' }}"
-                                    class="single-input form-control"
+                                    class="pl-50 form-control"
                                 />
                                 <div class="icon-right">
                                     <i
@@ -147,7 +147,7 @@
                                 </div>
                             {% endif %}
                         </div>
-                        <div class="profile-inputs mt-20">
+                        {% comment %} <div class="profile-inputs mt-20">
                             <div class="mb-20 text-center">
                                 <h5>
                                     Dados do perfil
@@ -280,7 +280,7 @@
                                 {% endfor %}
                                 </div>
                             {% endif %}
-                        </div>
+                        </div> {% endcomment %}
                         <div class="form-group mt-70 text-center">
                             <button
                                 type="submit"

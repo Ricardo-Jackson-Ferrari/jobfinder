@@ -1,4 +1,8 @@
 {% extends 'account/dashboard/base.html' %}
+{% load static %}
+{% block head %}
+<script src="{% static 'js/profile_candidate.js' %}"></script>
+{% endblock head %}
 {% block content_dashboard %}
 <section class="section-content job-manager-section mb-100">
 	<form action="{% url 'account:profile_candidate_update' %}" method="POST" enctype="multipart/form-data" class="form-profile">
@@ -60,13 +64,22 @@
 		<div class="row justify-content-center">
 			<div class="col-lg-4 col-md-6">
 				<label for="cv_input">Currículo</label>
-				<input
+				<div>
+					<button class="cv-view btn-clean" type="button" onclick="show_cv()" title="Visualizar currículo">
+						<i class="fas fa-file-alt"></i>
+						Visualizar currículo
+					</button>
+					<button type="button" class="button button-info" onclick="$('#cv_input').click();">Alterar</button>
+					<input
 					class="form-control p-0 input-file"
 					id="cv_input"
 					name="cv"
 					type="file"
 					accept=".pdf"
-				/>
+					onchange="update_preview_cv(event)"
+					hidden
+					/>
+				</div>
 				{% if form.cv.errors %}
 					<div class="alert alert-danger mt-10" role="alert">
 				{% for error in form.cv.errors %}
@@ -86,5 +99,43 @@
 			</div>
 		</div>
 	</form>
+	<!-- Modal Pdf -->
+<div id="modal_pdf" class="modal fade" role="dialog">
+	<div class="modal-dialog modal-xl">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button
+					type="button"
+					class="close"
+					data-dismiss="modal"
+				>
+					&times;
+				</button>
+				<h4 class="modal-title">Currículo</h4>
+			</div>
+			<div class="modal-body">
+				<embed
+					src="{{ user.profilecandidate.cv.url }}"
+					frameborder="0"
+					width="100%"
+					class="embed-pdf"
+					type="application/pdf"
+				/>
+	
+				<div class="modal-footer">
+					<button
+						type="button"
+						class="btn btn-default"
+						data-dismiss="modal"
+					>
+						Fechar
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+	<!-- End Modal Pdf -->
 </section>
 {% endblock content_dashboard %}

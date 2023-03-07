@@ -1,19 +1,5 @@
 let $table = $('#table')
 
-let $button_remove = $('#close')
-
-$(function () {
-  $button_remove.click(function () {
-    let ids = $.map($table.bootstrapTable('getSelections'), function (row) {
-      return row.id
-    })
-    $table.bootstrapTable('remove', {
-      field: 'id',
-      values: ids
-    })
-  })
-})
-
 function responseHandler(res) {
   let json = {
     total: res.count,
@@ -179,6 +165,20 @@ function refresh() {
   $('#table').bootstrapTable('refresh', '/job/api/');
 }
 
+function message_close_modal(modal, text, status) {
+  let msg = `<div class="text-center mb-3 message-content">
+                    <div class="alert alert-${status ? status : 'success'}" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span>&times;</span>
+                        </button>
+                        ${text}
+                    </div>
+            </div>`
+  refresh()
+  $('.dashboard-content').prepend(msg)
+  modal.modal('hide')
+}
+
 $(document).ready(function(){
   let aux_group = 0
   let max_group = 5
@@ -286,10 +286,10 @@ $(document).ready(function(){
 document.querySelector('#form_job').addEventListener('submit', (e) => {
   e.preventDefault()
   const form = e.target
+  const modal = $(`#${e.target.id}`).closest('.modal')
   
   const submit_msg = form.querySelector('.submit-msg')
   const payload = form2js(form, '.', true)
-  console.log(JSON.stringify(payload));
   const data = {
       method: form.dataset.method,
       body: JSON.stringify(payload),
@@ -306,11 +306,7 @@ document.querySelector('#form_job').addEventListener('submit', (e) => {
           throw new Error(res, res.json())
       }
       if (res.status == 201){
-          let msg = `<div class="alert alert-success mt-10" role="alert">
-                  <span>Emprego criado com sucesso!</span>
-              </div>`
-          submit_msg.innerHTML = msg
-          refresh()
+          message_close_modal(modal, 'vaga criada com sucesso!')
       }else{
           return res.json()
       }
@@ -337,24 +333,26 @@ document.querySelector('#form_job').addEventListener('submit', (e) => {
 
 document.querySelector('#btn_delete_job').addEventListener('click', e=>{
   let modal = document.querySelector('#modal_delete')
+  const modal_jquery = $(`#${e.target.id}`).closest('.modal')
   fetch(`/job/api/${modal.dataset.id}/`, {method: "DELETE", headers: { "X-CSRFToken": modal.dataset.csrf },})
   .then(res => {
       if(!res.ok){
           throw new Error(res, res.json())
       }
-      refresh()
+      message_close_modal(modal_jquery, 'vaga deletada com sucesso!', 'warning')
   })
   .catch(err => {console.log(err)})
 })
 
 document.querySelector('#btn_close_job').addEventListener('click', e=>{
   let modal = document.querySelector('#modal_close')
+  const modal_jquery = $(`#${e.target.id}`).closest('.modal')
   fetch(`/job/api/${modal.dataset.id}/`, {method: "PATCH", headers: { "X-CSRFToken": modal.dataset.csrf },})
   .then(res => {
       if(!res.ok){
           throw new Error(res, res.json())
       }
-      refresh()
+      message_close_modal(modal_jquery, 'vaga encerrada com sucesso!')
   })
   .catch(err => {console.log(err)})
 })

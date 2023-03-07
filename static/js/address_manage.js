@@ -1,17 +1,6 @@
 let $table = $('#table')
 
-let $button_remove = $('#close')
-
 $(function () {
-    $button_remove.click(function () {
-        let ids = $.map($table.bootstrapTable('getSelections'), function (row) {
-            return row.id
-        })
-        $table.bootstrapTable('remove', {
-            field: 'id',
-            values: ids
-        })
-    })
     $('input[name="zipcode"]').mask('00000-000');
 })
 
@@ -73,6 +62,21 @@ function refresh() {
     $('#table').bootstrapTable('refresh', '/address/api/');
 }
 
+
+function message_close_modal(text, status) {
+    let msg = `<div class="text-center mb-3 message-content">
+                            <div class="alert alert-${status ? status : 'success'}" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span>&times;</span>
+                                </button>
+                                ${text}
+                            </div>
+                    </div>`
+    refresh()
+    $('.dashboard-content').prepend(msg)
+    $('#modal_form_address').modal('hide')
+}
+
 document.querySelector('input[name="zipcode"]').addEventListener('change', (e) => {
     if (e.target.value.length == 9) {
         fetch(`https://viacep.com.br/ws/${e.target.value}/json/`)
@@ -115,19 +119,9 @@ document.querySelector('#form_address').addEventListener('submit', (e) => {
             throw new Error(res, res.json())
         }
         if (res.status == 201){
-            let msg = `<div class="alert alert-success mt-10" role="alert">
-                    <span>Endereço criado com sucesso!</span>
-                </div>`
-            submit_msg.innerHTML = msg
-            refresh()
-            return
-        }
-        else if (res.status == 200){
-            let msg = `<div class="alert alert-success mt-10" role="alert">
-                    <span>Endereço atualizado com sucesso!</span>
-                </div>`
-            submit_msg.innerHTML = msg
-            refresh()
+            message_close_modal('endereço criado com sucesso!')
+        }else if (res.status == 200){
+            message_close_modal('endereço atualizado com sucesso!')
             return
         }else{
             return res.json()
@@ -160,7 +154,7 @@ document.querySelector('#btn_delete_address').addEventListener('click', e=>{
         if(!res.ok){
             throw new Error(res, res.json())
         }
-        refresh()
+        message_close_modal('endereço deletado com sucesso!', 'warning')
     })
     .catch(err => {console.log(err)})
 })

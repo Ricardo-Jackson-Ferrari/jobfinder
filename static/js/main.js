@@ -8,20 +8,7 @@
       'overflow': 'visible'
     });
   });
-
-
-  /* 2. slick Nav */
-  // mobile_menu
-  var menu = $('ul#navigation');
-  if (menu.length) {
-    menu.slicknav({
-      prependTo: ".mobile_menu",
-      closedSymbol: '+',
-      openedSymbol: '-'
-    });
-  };
-
-
+  
   /* 3. MainSlider-1 */
   function mainSlider() {
     var BasicSlider = $('.slider-active');
@@ -237,3 +224,13 @@
 
 
 })(jQuery);
+
+let $btn = $('#js-iconMenu'), $menu = $('.js-toggleEffect');
+  
+function menuToggle(e) {
+  $menu.slideToggle();
+  $(this).toggleClass('on');
+  e.preventDefault();
+}
+
+$btn.on('click', menuToggle);

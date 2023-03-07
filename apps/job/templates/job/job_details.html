@@ -21,7 +21,9 @@
 							/></a>
 						</div>
 						<div class="job-tittle">
-							<h4>{{ job.company.name }}</h4>
+							<a href="{{ job.company.get_absolute_url }}">
+								<h4>{{ job.company.name }}</h4>
+							</a>
 							<ul>
 								<li>{{ job.company.short_description }}</li>
 								<li>

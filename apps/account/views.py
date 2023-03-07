@@ -205,12 +205,13 @@ class ProfileView(DetailView):
 
 
 class ProfileCompanyUpdateView(
-    CompanyUserMixin, OwnerProfileMixin, UpdateView
+    CompanyUserMixin, OwnerProfileMixin, SuccessMessageMixin, UpdateView
 ):
     template_name = 'account/dashboard/company/profile_company_update.html'
     model = ProfileCompany
     form_class = ProfileCompanyForm
     extra_context = {'title': _('Edit profile')}
+    success_message = _('profile updated successfully')
     success_url = reverse_lazy('account:profile_company_update')
 
     def get_form(
@@ -223,18 +224,19 @@ class ProfileCompanyUpdateView(
 
 
 class ProfileCandidateUpdateView(
-    CandidateUserMixin, OwnerProfileMixin, UpdateView
+    CandidateUserMixin, OwnerProfileMixin, SuccessMessageMixin, UpdateView
 ):
     template_name = 'account/dashboard/candidate/profile_candidate_update.html'
     model = ProfileCandidate
     form_class = ProfileCandidateForm
     extra_context = {'title': _('Edit profile')}
+    success_message = _('profile updated successfully')
     success_url = reverse_lazy('account:profile_candidate_update')
 
 
 class AddressManageView(CompanyUserMixin, TemplateView):
     template_name = 'account/dashboard/company/address.html'
-    extra_context = {'title': _('Address management')}
+    extra_context = {'title': _('address management')}
 
 
 class PasswordResetView(
@@ -242,7 +244,7 @@ class PasswordResetView(
 ):
     template_name = 'account/auth/password_reset.html'
     success_url = reverse_lazy('account:login')
-    success_message = _('Password reset complete')
+    success_message = _('password reset complete')
 
 
 class SettingsView(
@@ -250,7 +252,7 @@ class SettingsView(
 ):
     template_name = 'account/auth/settings.html'
     success_url = reverse_lazy('account:settings')
-    success_message = _('Password change complete')
+    success_message = _('password change complete')
     extra_context = {'title': _('Settings')}
 
 

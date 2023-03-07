@@ -1,12 +1,16 @@
 let form_address = document.querySelector('#form_address')
 
+$(function () {
+    $('input[name="zipcode"]').mask('00000-000');
+})
+
 document.querySelector('.btn-add').addEventListener('click', () => {
     form_address.reset()
     $('#exampleModalLong').modal('show')
 })
 
 document.querySelector('input[name="zipcode"]').addEventListener('change', (e) => {
-    if (e.target.value.length == 8) {
+    if (e.target.value.length == 9) {
         fetch(`https://viacep.com.br/ws/${e.target.value}/json/`)
             .then(resp => {
                 if (resp.ok) {
@@ -42,7 +46,9 @@ function refresh() {
         data.forEach(el => {
             html += `<option value="${el.id}">${el.title}</option>`
         })
+        let selected = $('#address').val()
         select.innerHTML = html
+        $("#address").val(selected);
         $('select').niceSelect('update')
     })
     .catch(err => console.log(err))
@@ -93,3 +99,11 @@ form_address.addEventListener('submit', (e) => {
     })
     .catch(err => console.log(err))
 })
+
+function show_preview(event){
+    if(event.target.files.length > 0){
+        let src = URL.createObjectURL(event.target.files[0])
+        let preview = document.querySelector('#logo_img')
+        preview.src = src
+    }
+}
