@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  app:
+    container_name: app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: pipenv run python manage.py runserver 0.0.0.0:8000
+    env_file:
+      - .env.prod
+    ports:
+      - 8000:8000
+    depends_on:
+      db:
+        condition: service_healthy
+    links:
+      - 'mailhog'
+  db:
+    container_name: db
+    image: postgres:alpine
+    volumes:
+      - ./.database:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    environment:
+      - LC_ALL=C.UTF-8
+      - POSTGRES_USER=${SQL_USER}
+      - POSTGRES_PASSWORD=${SQL_PASSWORD}
+    env_file:
+      - .env
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
+      interval: 3s
+      timeout: 3s
+      retries: 10
+  mailhog:
+    container_name: mailhog
+    image: mailhog/mailhog:latest
+    restart: always
+    logging:
+      driver: 'none'
+    ports:
+      - 1025:1025
+      - 8025:8025

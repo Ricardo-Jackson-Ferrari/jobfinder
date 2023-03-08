@@ -139,3 +139,7 @@ GitHub.sublime-settings
 # Personal
 .database
 lab/
+.env.dev
+.env.prod
+.static_volume
+staticfiles/

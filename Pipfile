@@ -8,11 +8,12 @@ django = "*"
 python-decouple = "*"
 ipdb = "*"
 pillow = "*"
-django-widget-tweaks = "*"
 djangorestframework = "*"
 django-filter = "*"
 django-cleanup = "*"
 django-resized = "*"
+psycopg2-binary = "*"
+gunicorn = "*"
 
 [dev-packages]
 isort = "*"

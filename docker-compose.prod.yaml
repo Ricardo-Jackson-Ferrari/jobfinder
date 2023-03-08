@@ -5,14 +5,17 @@ services:
     container_name: app
     build:
       context: .
-      dockerfile: Dockerfile.dev
-    ports:
-      - 8000:8000
-    command: pipenv run python manage.py runserver 0.0.0.0:8000
+      dockerfile: Dockerfile.prod
+    command: gunicorn core.wsgi:application --bind 0.0.0.0:8000
+    env_file:
+      - .env.prod
+    expose:
+      - 8000
     stdin_open: true
     tty: true
     volumes:
-      - .:/home/python/app
+      - ./staticfiles:/home/python/app/staticfiles
+      - ./media:/home/python/app/mediafiles
     depends_on:
       db:
         condition: service_healthy
@@ -27,10 +30,10 @@ services:
       - 5432:5432
     environment:
       - LC_ALL=C.UTF-8
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_USER=${SQL_USER}
+      - POSTGRES_PASSWORD=${SQL_PASSWORD}
     env_file:
-      - .env
+      - .env.prod
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
       interval: 3s
@@ -45,3 +48,12 @@ services:
     ports:
       - 1025:1025
       - 8025:8025
+  nginx:
+    build: ./nginx
+    ports:
+      - 80:80
+    volumes:
+      - ./staticfiles:/home/python/app/staticfiles
+      - ./media:/home/python/app/mediafiles
+    depends_on:
+      - app

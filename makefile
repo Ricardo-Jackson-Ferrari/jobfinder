@@ -1,16 +1,19 @@
 ## @ start
-.PHONY: up down
+.PHONY: up down local mail staticfiles
 up: ## run docker compose
-	@docker compose -f docker-compose.dev.yaml up
+	@docker compose -f docker-compose.prod.yaml up
 
 down: ## stop docker compose
-	@docker compose -f docker-compose.dev.yaml down
+	@docker compose -f docker-compose.prod.yaml down
 
 local: ## stop application in localhost without db
 	@python manage.py runserver
 
 mail:
 	@docker run -p 8025:8025 -p 1025:1025 mailhog/mailhog
+
+staticfiles:
+	@pipenv run python manage.py collectstatic --no-input --clear
 
 ## @ format
 .PHONY: black isort format
