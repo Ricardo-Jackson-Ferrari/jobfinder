@@ -46,7 +46,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     # 3th
-    'widget_tweaks',
     'rest_framework',
     'django_filters',
     'django_cleanup.apps.CleanupConfig',
@@ -107,8 +106,12 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': config('SQL_ENGINE', 'django.db.backends.sqlite3'),
+        'NAME': config('SQL_USER', BASE_DIR / 'db.sqlite3'),
+        'USER': config('SQL_USER', 'django_user'),
+        'PASSWORD': config('SQL_PASSWORD', 'django_password'),
+        'HOST': config('SQL_HOST', 'localhost'),
+        'PORT': config('SQL_PORT', '5432'),
     }
 }
 
