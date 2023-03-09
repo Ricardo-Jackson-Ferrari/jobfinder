@@ -1,7 +1,7 @@
 ## @ start
 .PHONY: up down local mail staticfiles
 up: ## run docker compose
-	@docker compose up -V
+	@docker compose up -V -d
 
 down: ## stop docker compose
 	@docker compose down
