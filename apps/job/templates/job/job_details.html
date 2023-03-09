@@ -16,7 +16,7 @@
 						>
 							<a href="{{ job.company.get_absolute_url }}"
 								><img
-									src="{% get_media_prefix %}{% if job.company.logo %}{{ job.company.logo }}{% else %}logo/no-image.jpg{% endif %}"
+									src="{% if job.company.logo %}{{ job.company.logo.url }}{% else %}{% static 'img/logo/no-image.jpg' %}{% endif %}"
 									alt="logo empresa"
 							/></a>
 						</div>

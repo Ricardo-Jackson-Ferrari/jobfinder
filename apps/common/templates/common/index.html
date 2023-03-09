@@ -8,7 +8,7 @@
     <div class="slider-active">
         <div
             class="single-slider slider-height d-flex align-items-center"
-            data-background="{% get_media_prefix %}hero/h1_hero.jpg"
+            data-background="{% static 'img/hero/h1_hero.jpg' %}"
         >
             <div class="container">
                 <div class="row">
@@ -76,7 +76,7 @@
                         <div class="company-img">
                             <a href="{{ job.get_absolute_url }}"
                                 ><img
-                                src="{% get_media_prefix %}{% if job.company.logo %}{{ job.company.logo }}{% else %}logo/logo_default.png{% endif %}"
+                                src="{% if job.company.logo %}{{ job.company.logo.url }}{% else %}{% static 'img/logo/logo_default.png' %}{% endif %}"
                                 alt="logo empresa"
                                 /></a>
                         </div>
@@ -114,7 +114,7 @@
 <!-- How  Apply Process Start-->
 <div
     class="apply-process-area apply-bg pt-150 pb-150"
-    data-background="{% get_media_prefix %}gallery/how-applybg.png"
+    data-background="{% static 'img/gallery/how-applybg.png' %}"
 >
     <div class="container">
         <!-- Section Tittle -->

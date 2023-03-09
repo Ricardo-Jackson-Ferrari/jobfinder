@@ -10,14 +10,12 @@
 		<link
 			rel="shortcut icon"
 			type="image/x-icon"
-			href="{% get_media_prefix %}favicon.ico"
+			href="{% static 'img/favicon.ico' %}"
 		/>
 
 		<!-- CSS here -->
 		<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
-		<link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}" />
 		<link rel="stylesheet" href="{% static 'css/flaticon.css' %}" />
-		<link rel="stylesheet" href="{% static 'css/price_rangs.css' %}" />
 		<link rel="stylesheet" href="{% static 'css/animate.min.css' %}" />
 		<link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}" />
 		<link rel="stylesheet" href="{% static 'css/fontawesome-all.min.css' %}" />
@@ -38,7 +36,7 @@
 				<div class="preloader-inner position-relative">
 					<div class="preloader-circle"></div>
 					<div class="preloader-img pere-text">
-						<img src="{% get_media_prefix %}logo/logo.png" alt="" />
+						<img src="{% static 'img/logo/logo.png' %}" alt="" />
 					</div>
 				</div>
 			</div>
@@ -55,7 +53,7 @@
 								<div class="logo">
 									<a href="{% url 'common:index' %}"
 										><img
-											src="{% get_media_prefix %}logo/logo.png"
+											src="{% static 'img/logo/logo.png' %}"
 											alt=""
 									/></a>
 								</div>
@@ -172,7 +170,7 @@
 							<div class="footer-logo mb-20">
 								<a href="{% url 'common:index' %}"
 									><img
-										src="{% get_media_prefix %}logo/logo2_footer.png"
+										src="{% static 'img/logo/logo2_footer.png' %}"
 										alt=""
 								/></a>
 							</div>
@@ -278,8 +276,6 @@
 		<!-- contact js -->
 		<script src="{% static 'js/jquery.form.js' %}"></script>
 		<script src="{% static 'js/jquery.validate.min.js' %}"></script>
-		<script src="{% static 'js/mail-script.js' %}"></script>
-		<script src="{% static 'js/jquery.ajaxchimp.min.js' %}"></script>
 
 		<!-- Jquery Plugins, main Jquery -->
 		<script src="{% static 'js/plugins.js' %}"></script>

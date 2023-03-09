@@ -13,7 +13,7 @@
                             <div class="company-img-socials">
                                 <div class="company-img-details">
                                     <img
-                                        src="{% get_media_prefix %}{% if company.logo %}{{ company.logo }}{% else %}logo/logo_default.png{% endif %}"
+                                        src="{% if company.logo %}{{ company.logo.url }}{% else %}{% static 'img/logo/logo_default.png' %}{% endif %}"
                                         alt=""
                                     />
                                 </div>
