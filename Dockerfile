@@ -10,7 +10,7 @@ RUN pip install pipenv
 COPY Pipfile .
 COPY Pipfile.lock .
 
-RUN pipenv install --dev --system --deploy --ignore-pipfile
+RUN pipenv install --system --deploy --ignore-pipfile
 
 RUN mkdir -p /home/python
 

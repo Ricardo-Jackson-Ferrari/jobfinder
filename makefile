@@ -1,10 +1,10 @@
 ## @ start
 .PHONY: up down local mail staticfiles
 up: ## run docker compose
-	@docker compose -f docker-compose.prod.yaml up
+	@docker compose up -V
 
 down: ## stop docker compose
-	@docker compose -f docker-compose.prod.yaml down
+	@docker compose down
 
 local: ## stop application in localhost without db
 	@python manage.py runserver

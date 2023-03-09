@@ -6,11 +6,16 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: pipenv run python manage.py runserver 0.0.0.0:8000
+    command: > 
+      sh -c "python manage.py migrate &&
+             gunicorn core.wsgi:application --bind 0.0.0.0:8000"
     env_file:
       - .env.prod
-    ports:
-      - 8000:8000
+    expose:
+      - 8000
+    volumes:
+      - ./staticfiles:/home/python/app/staticfiles
+      - ./media:/home/python/app/mediafiles
     depends_on:
       db:
         condition: service_healthy
@@ -28,7 +33,7 @@ services:
       - POSTGRES_USER=${SQL_USER}
       - POSTGRES_PASSWORD=${SQL_PASSWORD}
     env_file:
-      - .env
+      - .env.prod
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
       interval: 3s
@@ -43,3 +48,12 @@ services:
     ports:
       - 1025:1025
       - 8025:8025
+  nginx:
+    build: ./nginx
+    ports:
+      - 80:80
+    volumes:
+      - ./staticfiles:/home/python/app/staticfiles
+      - ./media:/home/python/app/mediafiles
+    depends_on:
+      - app
