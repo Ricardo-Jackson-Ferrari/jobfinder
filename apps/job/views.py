@@ -35,7 +35,7 @@ class JobListView(FilterView):
     template_name = 'job/job_listing.html'
     context_object_name = 'jobs'
     extra_context = {
-        'title': 'Busca de vagas',
+        'title': _('job search'),
     }
 
 

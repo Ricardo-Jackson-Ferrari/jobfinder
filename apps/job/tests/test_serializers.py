@@ -1,4 +1,5 @@
 from django.urls import reverse_lazy
+from django.utils.translation import gettext_lazy as _
 from job.choices import EXPERIENCIES, HIERARCHIES, MODALITIES
 from job.models import Job
 from job.serializers import (
@@ -145,9 +146,8 @@ class TestSectionListSerializer:
         )
         with raises(ValidationError) as excinfo:
             serializer.is_valid(raise_exception=True)
-        assert (
-            str(excinfo.value.detail['non_field_errors'][0])
-            == 'limit number of sections reached'
+        assert str(excinfo.value.detail['non_field_errors'][0]) == _(
+            'limit number of sections reached'
         )
 
 
@@ -163,7 +163,6 @@ class TestItemListSerializer:
         serializer = ItemListSerializer(child=ItemSerializer(), data=data)
         with raises(ValidationError) as excinfo:
             serializer.is_valid(raise_exception=True)
-        assert (
-            str(excinfo.value.detail['non_field_errors'][0])
-            == 'limit number of itens reached'
+        assert str(excinfo.value.detail['non_field_errors'][0]) == _(
+            'limit number of items reached'
         )

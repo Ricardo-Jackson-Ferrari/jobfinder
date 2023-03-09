@@ -9,7 +9,7 @@ from .models import Item, Job, JobApplication, Section
 class ItemListSerializer(serializers.ListSerializer):
     def validate(self, attrs):
         if len(attrs) > 5:
-            raise ValidationError(_('limit number of itens reached'))
+            raise ValidationError(_('limit number of items reached'))
         return super().validate(attrs)
 
 

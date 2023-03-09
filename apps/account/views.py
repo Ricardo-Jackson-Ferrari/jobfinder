@@ -43,8 +43,8 @@ ACCOUNT_LOGIN_URL = reverse_lazy('account:login')
 class RegisterBaseView(SuccessMessageMixin, CreateView):
     form_profile_class: BaseModelForm = None
     success_url = ACCOUNT_LOGIN_URL
-    success_message = _('Successfully registered!')
-    error_message = _('Error when registering')
+    success_message = _('successfully registered!')
+    error_message = _('error when registering')
     user_group = ''
 
     def post(
@@ -134,7 +134,7 @@ class RegisterCandidateView(RegisterBaseView):
     form_profile_class = ProfileCandidateForm
     user_group = 'is_candidate'
     extra_context = {
-        'title': 'Cadastro Candidato',
+        'title': _('candidate registration'),
     }
 
 
@@ -144,14 +144,14 @@ class RegisterCompanyView(RegisterBaseView):
     form_profile_class = ProfileCompanyForm
     user_group = 'is_company'
     extra_context = {
-        'title': 'Cadastro Empresa',
+        'title': _('company registration'),
     }
 
 
 class RegisterView(TemplateView):
     template_name = 'account/auth/register.html'
     extra_context = {
-        'title': 'Cadastro',
+        'title': _('record choice'),
     }
 
 
@@ -159,15 +159,15 @@ class RecoveryView(SuccessMessageMixin, FormView):
     template_name = 'account/auth/recovery.html'
     form_class = RecoveryForm
     success_url = reverse_lazy('account:recovery')
-    success_message = 'Solicitação realizada com sucesso!'
+    success_message = _('request successfully completed!')
     extra_context = {
-        'title': 'Recuperação de senha',
+        'title': _('password recovery'),
     }
 
     def form_valid(self, form: BaseForm) -> HttpResponse:
         if send_recovery_email(self.request.POST.get('email')):
             return super().form_valid(form)
-        messages.error(self.request, _('Error sending email'))
+        messages.error(self.request, _('error sending email'))
         return self.form_invalid(form)
 
 
@@ -176,7 +176,7 @@ class LoginView(DjangoLoginView):
     redirect_authenticated_user = True
     success_url = reverse_lazy('account:dashboard')
     extra_context = {
-        'title': 'Acesso',
+        'title': _('access'),
     }
 
     def get_success_url(self) -> str:
@@ -189,7 +189,7 @@ class LogoutView(DjangoLogoutView):
 
 class DashboardView(LoginRequiredMixin, TemplateView):
     template_name = 'account/dashboard/dashboard.html'
-    extra_context = {'title': 'Painel'}
+    extra_context = {'title': _('dashboard')}
 
 
 class ProfileView(DetailView):
@@ -199,7 +199,7 @@ class ProfileView(DetailView):
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         ctx = super().get_context_data(**kwargs)
-        ctx['title'] = f'Profile | {self.object.name}'
+        ctx['title'] = _(f'profile | {self.object.name}')
         ctx['jobs'] = get_job_available().filter(company=self.object)
         return ctx
 
@@ -210,7 +210,7 @@ class ProfileCompanyUpdateView(
     template_name = 'account/dashboard/company/profile_company_update.html'
     model = ProfileCompany
     form_class = ProfileCompanyForm
-    extra_context = {'title': _('Edit profile')}
+    extra_context = {'title': _('edit profile')}
     success_message = _('profile updated successfully')
     success_url = reverse_lazy('account:profile_company_update')
 
@@ -229,7 +229,7 @@ class ProfileCandidateUpdateView(
     template_name = 'account/dashboard/candidate/profile_candidate_update.html'
     model = ProfileCandidate
     form_class = ProfileCandidateForm
-    extra_context = {'title': _('Edit profile')}
+    extra_context = {'title': _('edit profile')}
     success_message = _('profile updated successfully')
     success_url = reverse_lazy('account:profile_candidate_update')
 
@@ -253,12 +253,12 @@ class SettingsView(
     template_name = 'account/auth/settings.html'
     success_url = reverse_lazy('account:settings')
     success_message = _('password change complete')
-    extra_context = {'title': _('Settings')}
+    extra_context = {'title': _('settings')}
 
 
 class JobManageView(CompanyUserMixin, TemplateView):
     template_name = 'account/dashboard/company/job.html'
-    extra_context = {'title': _('Job management')}
+    extra_context = {'title': _('job management')}
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         ctx = super().get_context_data(**kwargs)
@@ -271,12 +271,12 @@ class JobManageView(CompanyUserMixin, TemplateView):
 
 class JobApplicationManageView(CandidateUserMixin, TemplateView):
     template_name = 'account/dashboard/candidate/application.html'
-    extra_context = {'title': _('Application management')}
+    extra_context = {'title': _('application management')}
 
 
 class JobDetailView(CompanyUserMixin, DetailView):
     template_name = 'account/dashboard/company/job_detail.html'
-    extra_context = {'title': _('Job Detail')}
+    extra_context = {'title': _('job Detail')}
     model = Job
     context_object_name = 'job'
 

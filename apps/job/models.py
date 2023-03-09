@@ -78,7 +78,7 @@ class Item(models.Model):
     def clean(self) -> None:
         if self.section.itens.exclude(pk=self.pk).count() >= 5:
             raise ValidationError(
-                _('maximum number of itens already registered')
+                _('maximum number of items already registered')
             )
 
 

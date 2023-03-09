@@ -1,6 +1,7 @@
 from django.core.exceptions import ValidationError
 from django.urls import reverse_lazy
 from django.utils.text import slugify
+from django.utils.translation import gettext_lazy as _
 from job.models import Category, Item, Job, Section
 from model_bakery import baker
 from pytest import raises
@@ -45,9 +46,8 @@ class TestSection:
         with raises(ValidationError) as excinfo:
             section = Section(title='Test section 5', job=job)
             section.clean()
-        assert (
-            excinfo.value.message
-            == 'maximum number of sections already registered'
+        assert excinfo.value.message == _(
+            'maximum number of sections already registered'
         )
 
 
@@ -70,7 +70,6 @@ class TestItem:
         with raises(ValidationError) as excinfo:
             item = Item(item='Test item 5', section=section)
             item.clean()
-        assert (
-            excinfo.value.message
-            == 'maximum number of itens already registered'
+        assert excinfo.value.message == _(
+            'maximum number of items already registered'
         )

@@ -1,11 +1,8 @@
-from django.contrib.auth import get_user_model
 from django.contrib.messages import get_messages
-from django.http import HttpRequest
 from django.urls import reverse_lazy
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 from job.models import Job
-from job.views import JobDetailView
-from mixer.backend.django import mixer
 from model_bakery import baker
 from pytest import fixture
 from rest_framework import status
@@ -153,7 +150,7 @@ class TestJobDetailView:
         messages = list(get_messages(response.wsgi_request))
         assert response.status_code == 302
         assert response.url == job.get_absolute_url()
-        assert str(messages[0]) == 'Successful job application'
+        assert str(messages[0]) == _('Successful job application')
 
     def test_view_displays_errors_on_invalid_form_submission(
         self, candidate_user

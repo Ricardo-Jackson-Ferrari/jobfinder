@@ -1,6 +1,7 @@
 import pytest
 from django.forms.models import model_to_dict
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 from job.forms import JobApplicationForm
 from job.models import Job, JobApplication
 from mixer.backend.django import mixer
@@ -29,7 +30,7 @@ class TestJobApplicationForm:
         form.is_valid()
 
         assert 'job' in form.errors
-        assert form.errors['job'][0] == 'job vacancy closed'
+        assert form.errors['job'][0] == _('job vacancy closed')
 
     def test_clean_job_with_unpublished_job_should_raise_validation_error(
         self, job
@@ -41,7 +42,7 @@ class TestJobApplicationForm:
         form.is_valid()
 
         assert 'job' in form.errors
-        assert form.errors['job'][0] == 'unpublished job'
+        assert form.errors['job'][0] == _('unpublished job')
 
     def test_full_clean_with_already_applied_job_application(
         self, job, candidate_user
@@ -61,4 +62,6 @@ class TestJobApplicationForm:
         form.full_clean()
 
         assert '__all__' in form.errors.keys()
-        assert form.errors['__all__'][0] == 'You already applied for this job'
+        assert form.errors['__all__'][0] == _(
+            'You already applied for this job'
+        )

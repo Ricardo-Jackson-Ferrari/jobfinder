@@ -13,7 +13,7 @@ from .forms import ContactForm
 class IndexView(TemplateView):
     template_name = 'common/index.html'
     extra_context = {
-        'title': _('Home'),
+        'title': _('home'),
     }
 
     def get_context_data(self, **kwargs):
@@ -25,7 +25,7 @@ class IndexView(TemplateView):
 class AboutView(TemplateView):
     template_name = 'common/about.html'
     extra_context = {
-        'title': _('About Us'),
+        'title': _('about us'),
     }
 
 
@@ -35,7 +35,7 @@ class ContactView(SuccessMessageMixin, FormView):
     success_url = reverse_lazy('common:contact')
     success_message = _('message sent successfully')
     extra_context = {
-        'title': _('Contact'),
+        'title': _('contact'),
     }
 
     def form_valid(self, form) -> HttpResponse:
