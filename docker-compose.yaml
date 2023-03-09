@@ -15,7 +15,7 @@ services:
       - 8000
     volumes:
       - ./staticfiles:/home/python/app/staticfiles
-      - ./media:/home/python/app/mediafiles
+      - ./media:/home/python/app/media
     depends_on:
       db:
         condition: service_healthy
@@ -52,6 +52,6 @@ services:
       - 80:80
     volumes:
       - ./staticfiles:/home/python/app/staticfiles
-      - ./media:/home/python/app/mediafiles
+      - ./media:/home/python/app/media
     depends_on:
       - app
