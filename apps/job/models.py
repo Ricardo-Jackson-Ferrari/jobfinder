@@ -2,10 +2,12 @@ from decimal import Decimal
 
 from account.models import ProfileCandidate, ProfileCompany
 from address.models import Address
+from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator
 from django.db import models
 from django.urls import reverse_lazy
 from django.utils.text import slugify
+from django.utils.translation import gettext_lazy as _
 
 from .choices import EVALUATION_CHOICES, EXPERIENCIES, HIERARCHIES, MODALITIES
 
@@ -57,6 +59,12 @@ class Section(models.Model):
     def __str__(self):
         return self.title
 
+    def clean(self) -> None:
+        if self.job.sections.exclude(pk=self.pk).count() >= 5:
+            raise ValidationError(
+                _('maximum number of sections already registered')
+            )
+
 
 class Item(models.Model):
     item = models.CharField(max_length=150)
@@ -66,6 +74,12 @@ class Item(models.Model):
 
     def __str__(self):
         return self.item
+
+    def clean(self) -> None:
+        if self.section.itens.exclude(pk=self.pk).count() >= 5:
+            raise ValidationError(
+                _('maximum number of itens already registered')
+            )
 
 
 class JobApplication(models.Model):

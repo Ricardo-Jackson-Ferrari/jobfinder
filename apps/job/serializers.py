@@ -1,7 +1,16 @@
 from account.serializers import CandidateSerializer
+from django.core.exceptions import ValidationError
+from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
 
 from .models import Item, Job, JobApplication, Section
+
+
+class ItemListSerializer(serializers.ListSerializer):
+    def validate(self, attrs):
+        if len(attrs) > 5:
+            raise ValidationError(_('limit number of itens reached'))
+        return super().validate(attrs)
 
 
 class ItemSerializer(serializers.ModelSerializer):
@@ -9,6 +18,7 @@ class ItemSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Item
+        list_serializer_class = ItemListSerializer
         fields = ('item', 'section')
 
 
@@ -20,12 +30,20 @@ class SectionShowSerializer(serializers.ModelSerializer):
         fields = ('title', 'itens')
 
 
+class SectionListSerializer(serializers.ListSerializer):
+    def validate(self, attrs):
+        if len(attrs) > 5:
+            raise ValidationError(_('limit number of sections reached'))
+        return super().validate(attrs)
+
+
 class SectionCreateSerializer(serializers.ModelSerializer):
     job = serializers.PrimaryKeyRelatedField(read_only=True)
     itens = ItemSerializer(many=True)
 
     class Meta:
         model = Section
+        list_serializer_class = SectionListSerializer
         fields = ('title', 'job', 'itens')
 
 

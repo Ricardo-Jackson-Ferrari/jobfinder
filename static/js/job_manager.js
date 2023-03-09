@@ -1,4 +1,5 @@
 let $table = $('#table')
+let xd
 
 function responseHandler(res) {
   let json = {
@@ -175,15 +176,18 @@ function message_close_modal(modal, text, status) {
                     </div>
             </div>`
   refresh()
-  $('.dashboard-content').prepend(msg)
+  $('#div-messages').html(msg)
   modal.modal('hide')
 }
 
 $(document).ready(function(){
   let aux_group = 0
   let max_group = 5
+  let max_field = 5
   let add_group = $('.add_group')
   let group_wrapper = $('#group-sections')
+  let section_wrapper = $('.section-wrapper')
+
   group_wrapper.sortable({
     group: 'no-drop',
     handle: 'i.fa-arrows-alt',
@@ -193,30 +197,27 @@ $(document).ready(function(){
       _super($item, container);
     }
   })
-  let section_wrapper = $('.section_wrapper')
-
-  let max_field = 10
 
   function html_group(section_number) {
-    return `<div class="section_wrapper mt-10" data-section-number="${section_number}" >
+    return `<div class="section-wrapper mt-10" data-section-number="${section_number}" >
               <div class="d-flex justify-content-between mb-10 align-items-center">
-              <i class="fas fa-arrows-alt"></i>
-              <button type="button" href="javascript:void(0);" class="remove_group genric-btn btn-danger large" title="Remove sessão"><i class="fa fa-minus">&nbsp</i>Remover sessão</button>
+              <i class="fas fa-arrows-alt" title="Mover"></i>
+              <button type="button" href="javascript:void(0);" class="remove_group genric-btn button button-error" title="Remove seção"><i class="fa fa-minus">&nbsp</i>Remover seção</button>
               </div>
               <div class="field_wrapper">
                   <div class="item mb-10">
-                      <input type="text" name="sections[${section_number}].title" class="form-control" placeholder="Sessão"/>
+                      <input type="text" name="sections[${section_number}].title" class="form-control" required placeholder="Seção"/>
                   </div>
               </div>
               <div class="itens mb-10" data-count-itens="1">
                   <div class="item mb-10 align-items-center">
-                      <i class="fas fa-arrows-alt"></i>
-                      <input type="text" name="sections[${section_number}].itens[0].item" class="form-control" placeholder="Item"/>
-                      <button type="button" class="remove_button genric-btn btn-danger" title="Remove item"><i class="fa fa-minus"></i></button>
+                      <i class="fas fa-arrows-alt" title="Mover"></i>
+                      <input type="text" name="sections[${section_number}].itens[0].item" class="form-control" placeholder="Item" required/>
+                      <button type="button" class="remove_button button button-error" title="Remover item"><i class="fa fa-minus"></i></button>
                   </div>
               </div>
               <div class="text-center">
-              <button type="button" class="add_row genric-btn btn-success large" title="Add row"><i class="fa fa-plus">&nbsp;</i>Adicionar item</button>
+              <button type="button" class="add_row button button-info" title="Adicionar item"><i class="fa fa-plus">&nbsp;</i>Adicionar item</button>
               </div>
               <div style="display:flex; justify-content: right;">
               
@@ -229,12 +230,12 @@ $(document).ready(function(){
   function html_fields(section_number, item_number) {
     return `<div class="item mb-10 align-items-center">
               <i class="fas fa-arrows-alt"></i>
-              <input type="text" name="sections[${section_number}].itens[${item_number}].item" class="form-control" placeholder="Item"/>
-              <button type="button" class="remove_button genric-btn btn-danger" title="Remove item"><i class="fa fa-minus"></i></button>
+              <input type="text" name="sections[${section_number}].itens[${item_number}].item" class="form-control" required placeholder="Item"/>
+              <button type="button" class="remove_button button button-error" title="Remover item"><i class="fa fa-minus"></i></button>
           </div>
         `
   }
-    
+
 
   let y = 1
 
@@ -263,9 +264,8 @@ $(document).ready(function(){
     y--
   })
 
-
   $('body').on('click','.add_row',function(){
-      let count_elements = $(this).closest(".itens").children().length
+      let count_elements = $(this).closest('.section-wrapper').find(".itens").children().length
       if(count_elements < max_field){
         let current_section_number = $(this).parent().parent().data('section-number')
         
@@ -282,6 +282,7 @@ $(document).ready(function(){
       $(this).closest('div').remove()
   })
 })
+let errors
 
 document.querySelector('#form_job').addEventListener('submit', (e) => {
   e.preventDefault()
@@ -314,11 +315,20 @@ document.querySelector('#form_job').addEventListener('submit', (e) => {
   .then(data => {
       if (data){
           let msg = ''
+          errors = data
           for (const [key, value] of Object.entries(data)) {
               if(key != 'non_field_errors'){
+                if (key == 'sections') {
+                  for(const [field, error] of value){
+                    msg += `<div class="alert alert-warning mt-10" role="alert">
+                                <span>${key}:${error}</span>
+                            </div>`
+                  }
+                }else{
                   msg += `<div class="alert alert-warning mt-10" role="alert">
                               <span>${key}:${value}</span>
                           </div>`
+                }
               }else{
                   msg += `<div class="alert alert-warning mt-10" role="alert">
                               <span>${value}</span>

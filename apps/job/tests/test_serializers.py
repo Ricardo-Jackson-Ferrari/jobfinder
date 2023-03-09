@@ -3,10 +3,16 @@ from job.choices import EXPERIENCIES, HIERARCHIES, MODALITIES
 from job.models import Job
 from job.serializers import (
     CandidateApplicationSerializer,
+    ItemListSerializer,
+    ItemSerializer,
     JobApplicationSerializer,
     JobShowSerializer,
+    SectionCreateSerializer,
+    SectionListSerializer,
 )
 from model_bakery import baker
+from pytest import raises
+from rest_framework.exceptions import ValidationError
 from rest_framework.test import APIClient
 
 
@@ -117,4 +123,47 @@ class TestJobApplicationSerializer:
         assert (
             application_serializer.get_url(application)
             == application.job.get_absolute_url()
+        )
+
+
+class TestSectionListSerializer:
+    def test_validate_with_valid_data(self):
+        data = [{'title': 'Section 1', 'itens': [{'item': 'item 1'}]}]
+        serializer = SectionListSerializer(
+            child=SectionCreateSerializer(), data=data
+        )
+        assert serializer.is_valid() == True
+        assert serializer.validated_data == data
+
+    def test_validate_with_too_many_sections(self):
+        data = [
+            {'title': f'Section {i}', 'itens': [{'item': 'item 1'}]}
+            for i in range(6)
+        ]
+        serializer = SectionListSerializer(
+            child=SectionCreateSerializer(), data=data
+        )
+        with raises(ValidationError) as excinfo:
+            serializer.is_valid(raise_exception=True)
+        assert (
+            str(excinfo.value.detail['non_field_errors'][0])
+            == 'limit number of sections reached'
+        )
+
+
+class TestItemListSerializer:
+    def test_validate_with_valid_data(self):
+        data = [{'item': 'item i'}]
+        serializer = ItemListSerializer(child=ItemSerializer(), data=data)
+        assert serializer.is_valid() == True
+        assert serializer.validated_data == data
+
+    def test_validate_with_too_many_sections(self):
+        data = [{'item': f'item {i}'} for i in range(6)]
+        serializer = ItemListSerializer(child=ItemSerializer(), data=data)
+        with raises(ValidationError) as excinfo:
+            serializer.is_valid(raise_exception=True)
+        assert (
+            str(excinfo.value.detail['non_field_errors'][0])
+            == 'limit number of itens reached'
         )

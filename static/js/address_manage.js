@@ -73,7 +73,7 @@ function message_close_modal(text, status) {
                             </div>
                     </div>`
     refresh()
-    $('.dashboard-content').prepend(msg)
+    $('#div-messages').html(msg)
     $('#modal_form_address').modal('hide')
 }
 

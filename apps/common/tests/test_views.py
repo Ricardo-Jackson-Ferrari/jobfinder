@@ -2,6 +2,9 @@ from unittest import mock
 
 from common.views import ContactView
 from django.conf import settings
+from django.urls import reverse_lazy
+from django.utils import timezone
+from model_bakery import baker
 
 
 class TestContactView:
@@ -27,3 +30,11 @@ class TestContactView:
             [settings.EMAIL_HOST_USER],
             fail_silently=False,
         )
+
+
+class TestIndexView:
+    def test_get_context_data(self, db, client):
+        baker.make('job.Job', posted_at=timezone.now(), _quantity=4)
+        response = client.get(reverse_lazy('common:index'))
+        assert response.status_code == 200
+        assert len(response.context['jobs']) == 3
