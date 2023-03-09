@@ -8,7 +8,9 @@
         {% include 'account/dashboard/company/sidebar_company.html' %}
     {% endif %}
     <div class="dashboard-content">
-        {% include 'global/partials/_messages.html' %}
+        <div id="div-messages">
+            {% include 'global/partials/_messages.html' %}
+        </div>
         {% block content_dashboard %}
         {% endblock content_dashboard %}
     </div>

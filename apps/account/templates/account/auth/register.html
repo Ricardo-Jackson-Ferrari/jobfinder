@@ -1,8 +1,8 @@
 {% extends 'global/base.html' %}
 {% block content %}
-<div class="container" style="margin-top: 300px; margin-bottom: 300px">
+<div class="container" style="margin-top: 250px; margin-bottom: 250px">
 	<div class="row justify-content-between">
-		<div class="col-4">
+		<div class="col-md-4 col-10 offset-1 mt-50">
 			<a href="{% url 'account:candidate_signup' %}" class="default-link">
 				<div class="register-div">
 					<span>Crie uma conta como candidato</span>
@@ -13,7 +13,7 @@
 				<hr style="border: 1px solid black;">
 			</a>
 		</div>
-		<div class="col-4">
+		<div class="col-md-4 col-10 offset-1 mt-50">
 			<a href="{% url 'account:company_signup' %}" class="default-link">
 				<div class="register-div">
 					<span>Crie uma conta como empresa</span>

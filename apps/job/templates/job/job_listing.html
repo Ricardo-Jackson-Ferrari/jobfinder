@@ -163,7 +163,7 @@
 											</div>
 										</div>
 										<div class="items-link f-right">
-											<a href="job_details.html">{{ job.get_modality_display }}</a>
+											<a href="{% url 'job:search' %}?modality={{job.modality}}">{{ job.get_modality_display }}</a>
 											<span>{{ job.posted_at|naturaltime }}</span>
 										</div>
 									</div>
