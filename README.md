@@ -1,8 +1,8 @@
-
 <p align="center">
   <a href="#-tecnologias">Tecnologias</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-projeto">Projeto</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-funcionalidades">Funcionalidades</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#-screenshots">Screenshots</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-como-executar">Como executar</a>
 </p>
 
@@ -43,74 +43,66 @@ A aplicação oferece uma interface fácil de usar e intuitiva, com recursos út
 - [x] Gerenciamento de perfil para empresas
 - [x] Busca avançada de vagas
 
-<p align="center">
+<a id="-screenshots"></a>
 
+## 📷 Screenshots
+
+### Tela inicial
+<p align="center">
   <img alt="Início" src=".github/media/home.jpg" width="100%">
-
 </p>
 
+### Contato
 <p align="center">
-
   <img alt="Contato" src=".github/media/contato.jpg" width="100%">
-
 </p>
 
+### Busca de vagas
 <p align="center">
-
-<img alt="Busca" src=".github/media/buscar_vagas.jpg" width="100%">
-
+  <img alt="Busca" src=".github/media/buscar_vagas.jpg" width="100%">
 </p>
 
+### Cadastro empresa
 <p align="center">
-
   <img alt="Cadastro empresa" src=".github/media/registro_empresa.jpg" width="100%">
-
 </p>
 
+### Painel da empresa
 <p align="center">
-
   <img alt="Painel empresa" src=".github/media/dashboard_empresa.jpg" width="100%">
-
 </p>
 
+### Gerenciamento de vagas
 <p align="center">
-
   <img alt="Gerenciar vagas" src=".github/media/gerenciar_vagas.jpg" width="100%">
-
 </p>
 
+### Gerenciamento de inscritos
 <p align="center">
-
   <img alt="Gerenciar inscritos" src=".github/media/gerenciar_inscritos.jpg" width="100%">
-
 </p>
 
+### Avaliação de inscrito
 <p align="center">
-
   <img alt="Avaliar inscrito" src=".github/media/modal_visualizar_curriculo_e_avaliar.jpg" width="100%">
-
 </p>
 
+### Cadastro candidato
 <p align="center">
-
   <img alt="Cadastro candidato" src=".github/media/registro_candidato.jpg" width="100%">
-
 </p>
 
+### Painel candidato
 <p align="center">
-
   <img alt="Painel candidato" src=".github/media/dashboard_candidato.jpg" width="100%">
-
 </p>
 
-
+### Gerenciamento de inscrições
 <p align="center">
-
   <img alt="Candidato inscrições" src=".github/media/gerenciar_inscricoes.jpg" width="100%">
-
 </p>
 
-Veja mais imagens [aqui](.github/media).
+Veja mais imagens <a href="https://imgur.com/a/vRrr8Bd" target="_blank">aqui</a>.
 
 <a id="-como-executar"></a>
 
