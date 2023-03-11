@@ -1,3 +1,8 @@
+[![Run tests](https://github.com/Ricardo-Jackson-Ferrari/jobfinder/actions/workflows/pytest.yml/badge.svg)](https://github.com/Ricardo-Jackson-Ferrari/jobfinder/actions/workflows/pytest.yml)
+[![codecov](https://codecov.io/gh/Ricardo-Jackson-Ferrari/jobfinder/branch/main/graph/badge.svg?token=3ZNLPIX9F9)](https://codecov.io/gh/Ricardo-Jackson-Ferrari/jobfinder)
+
+<hr>
+
 <p align="center">
   <a href="#-tecnologias">Tecnologias</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-projeto">Projeto</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
