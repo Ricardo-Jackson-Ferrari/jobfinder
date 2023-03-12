@@ -86,7 +86,7 @@ class JobApplication(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     job = models.ForeignKey(
         to=Job,
-        on_delete=models.SET_NULL,
+        on_delete=models.CASCADE,
         null=True,
         related_name='applications',
     )
