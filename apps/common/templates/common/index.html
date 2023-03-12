@@ -76,7 +76,7 @@
                         <div class="company-img">
                             <a href="{{ job.get_absolute_url }}"
                                 ><img
-                                src="{% if job.company.logo %}{{ job.company.logo.url }}{% else %}{% static 'img/logo/logo_default.png' %}{% endif %}"
+                                src="{% if job.company.logo %}{{ job.company.logo.url }}{% else %}{% static 'img/logo/no-image.jpg' %}{% endif %}"
                                 alt="logo empresa"
                                 /></a>
                         </div>
